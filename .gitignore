@@ -1,10 +1,9 @@
-
 # ==========================================
-# ACUITEY LMS - GITIGNORE
+# ACUITEY LMS — GITIGNORE
 # Moodle + OpenCode + Antigravity + Coolify
 # ==========================================
 
-# 1. Environment variables and secrets
+# Environment and secrets
 .env
 .env.*
 !.env.example
@@ -15,30 +14,34 @@
 *.pfx
 id_rsa
 id_ed25519
-**/config.php
-**/config-local.php
-**/config.override.php
+
+# Moodle site-specific configuration
+/moodle/config.php
+/moodle/config-local.php
+/moodle/config.override.php
+
+# Local MCP configuration
 **/mcp_config.json
 **/mcp_config.json.bak
-!.env.cgr.example
 
-# 2. Moodle data and temporary files
-moodledata/
-**/moodledata/
-**/cache/
-**/localcache/
-**/temp/
-**/sessions/
-**/trashdir/
+# Moodle runtime data (not source code)
+/moodledata/
+/moodle/moodledata/
+/moodle/public/moodledata/
+/moodle/cache/
+/moodle/localcache/
+/moodle/temp/
+/moodle/sessions/
+/moodle/trashdir/
 
-# 3. Database backups and exports
+# Database backups and exports
 *.sql
 *.sql.gz
 *.dump
 *.backup
 *.bak
 
-# 4. Archives
+# Archives
 *.zip
 *.tar
 *.tar.gz
@@ -46,14 +49,13 @@ moodledata/
 *.7z
 *.rar
 
-# 5. Logs
+# Logs
 *.log
 *.log.*
 filelog.txt
-logs/
-**/logs/
+/logs/
 
-# 6. Python environments and caches
+# Python
 .venv/
 venv/
 __pycache__/
@@ -62,14 +64,12 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 
-# 7. AI and graph analysis generated outputs
+# Graph and AI analysis outputs
 graphify-out/
-**/graphify-out/
 cgr-index/
-**/cgr-index/
 .graphify-cache/
 
-# 8. Local IDE settings
+# IDE files
 .vscode/
 .idea/
 *.code-workspace
@@ -77,7 +77,7 @@ cgr-index/
 *.swo
 *~
 
-# 9. Node and frontend generated files
+# Frontend generated artifacts
 node_modules/
 .npm/
 .pnpm-store/
@@ -85,27 +85,26 @@ dist/
 coverage/
 .next/
 
-# 10. OS generated files
+# OS files
 .DS_Store
 Thumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 
-# 11. Local deployment overrides
+# Local deployment overrides
 docker-compose.override.yml
 compose.override.yml
 *.local.yml
 *.local.yaml
 
-# 12. Temporary exports
-tmp/
-temporary/
+# Temporary files
+/tmp/
+/temporary/
 *.tmp
 *.temp
-
-# 13. Temporary Markdown files
 *.tmp.md
 *.draft.md
 *.scratch.md
 notes-private/
 scratch/
+project_structure.txt
