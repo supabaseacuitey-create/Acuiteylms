@@ -1,0 +1,147 @@
+name: acuitey-staging
+
+# STAGING (Coolify target). Local development ONLY for build/config validation.
+# NEVER run staging commands with `--env-file docker/local/.env` — staging
+# validation uses ONLY docker/staging/.env.staging.example (placeholders).
+# Real values live ONLY in Coolify environment settings.
+#
+# Ingress note: NOTHING here publishes host ports. `expose: ["80"]` documents
+# the container's internal port only — Traefik routing (target service, domain,
+# TLS, middleware) is configured in the Coolify UI per docker/staging/README.md.
+
+services:
+  db:
+    image: postgres:16-bookworm
+    container_name: acuitey-staging-db
+    restart: unless-stopped
+    mem_limit: 2g
+    cpus: 2.0
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-moodle}
+      POSTGRES_USER: ${POSTGRES_USER:-moodle}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in Coolify env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # No host port mapping: reachable only inside this Compose network.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-bookworm
+    container_name: acuitey-staging-redis
+    restart: unless-stopped
+    mem_limit: 512m
+    cpus: 1.0
+    # Ephemeral staging cache: persistence disabled. Backed by no volume.
+    command: ["redis-server", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru", "--save", "", "--appendonly", "no"]
+    # No host port mapping: reachable only inside this Compose network.
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - internal
+
+  app:
+    build:
+      # Repository root: Dockerfile COPYs `moodle/` and `docker/staging/*`.
+      context: ../..
+      dockerfile: docker/staging/Dockerfile
+    image: acuitey-staging-app:8.3
+    container_name: acuitey-staging-app
+    restart: unless-stopped
+    mem_limit: 2g
+    cpus: 4.0
+    # Internal port documentation ONLY — no ingress without Traefik/Coolify.
+    expose:
+      - "80"
+    volumes:
+      # Persistent moodledata OUTSIDE the webroot. No source bind in staging.
+      - moodledata:/var/moodledata
+      - backups:/backups
+    environment:
+      MOODLE_DB_HOST: ${MOODLE_DB_HOST:-db}
+      MOODLE_DB_NAME: ${MOODLE_DB_NAME:-moodle}
+      MOODLE_DB_USER: ${MOODLE_DB_USER:-moodle}
+      MOODLE_DB_PASSWORD: ${MOODLE_DB_PASSWORD:?Set MOODLE_DB_PASSWORD in Coolify env}
+      MOODLE_DB_PREFIX: ${MOODLE_DB_PREFIX:-mdl_}
+      STAGING_WWWROOT: ${STAGING_WWWROOT:?Set STAGING_WWWROOT in Coolify env}
+      MOODLE_DATAROOT: /var/moodledata
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      # LIVENESS ONLY — a HEALTHY result does NOT mean Moodle is installed.
+      # curl -f fails only on HTTP >= 400, so the pre-install 303 redirect
+      # into the installer exits 0 exactly like the post-install 200. The
+      # explicit 200|303 match below documents that: HEALTHY = "Apache + PHP
+      # serving", NOT "application ready". Readiness = HTTP 200 AFTER the CLI
+      # install (README step 9) + admin login + no redirect to install.php.
+      # A strict 200-only gate was deliberately NOT used: Coolify must report
+      # the stack up so the first install can run via `docker exec`
+      # (install_database.php); do NOT start the cron profile until then.
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null -w '%{http_code}' http://127.0.0.1/ | grep -Eq '^(200|303)$'"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+      start_period: 90s
+    networks:
+      - internal
+
+  # Recurring Moodle cron. DO NOT START until Moodle is installed.
+  # Start explicitly: docker compose -f docker/staging/compose.yml --profile cron up -d cron
+  # (with Coolify/production env — never the local .env).
+  cron:
+    build:
+      context: ../..
+      dockerfile: docker/staging/Dockerfile
+    image: acuitey-staging-app:8.3
+    container_name: acuitey-staging-cron
+    profiles: ["cron"]
+    restart: unless-stopped
+    mem_limit: 512m
+    cpus: 1.0
+    # www-data (same uid as Apache) so cron-created dataroot files stay writable.
+    user: www-data
+    command: ["/usr/local/bin/moodle-cron.sh"]
+    volumes:
+      - moodledata:/var/moodledata
+      - backups:/backups
+    environment:
+      MOODLE_DB_HOST: ${MOODLE_DB_HOST:-db}
+      MOODLE_DB_NAME: ${MOODLE_DB_NAME:-moodle}
+      MOODLE_DB_USER: ${MOODLE_DB_USER:-moodle}
+      MOODLE_DB_PASSWORD: ${MOODLE_DB_PASSWORD:?Set MOODLE_DB_PASSWORD in Coolify env}
+      MOODLE_DB_PREFIX: ${MOODLE_DB_PREFIX:-mdl_}
+      STAGING_WWWROOT: ${STAGING_WWWROOT:?Set STAGING_WWWROOT in Coolify env}
+      MOODLE_DATAROOT: /var/moodledata
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - internal
+
+volumes:
+  pgdata:
+    name: acuitey-staging-pgdata
+  moodledata:
+    name: acuitey-staging-moodledata
+  backups:
+    name: acuitey-staging-backups
+
+networks:
+  internal:
+    name: acuitey-staging-net
+    driver: bridge

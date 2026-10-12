@@ -1,0 +1,50 @@
+# Staging build context exclusions.
+# NOTE: `docker build` ignores `.gitignore` entirely — without this file,
+# local configuration and secrets would enter the image (and its layers).
+# In particular, `moodle/config.php` is excluded here so it can NEVER persist
+# in an intermediate layer, even though the staging template is COPY'd over
+# that path afterwards.
+
+# Git history (may contain secrets; always bloat)
+.git/
+
+# Local environments and secrets (ALL of them — examples included: nothing
+# env-like may enter any image layer)
+**/.env
+**/.env.*
+
+# Site configs and credentials
+moodle/config.php
+moodle/config-local.php
+moodle/config.override.php
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+
+# Archives and database dumps
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.rar
+*.sql
+*.sql.gz
+*.dump
+*.backup
+*.bak
+
+# Runtime data (volumes carry this, never the image)
+moodledata/
+**/moodledata/
+
+# Local tooling / analysis output (never shipped)
+.venv/
+graphify-out/
+cgr-index/
+
+# Planning docs (never COPY'd; excluded to keep the context lean)
+docs/
