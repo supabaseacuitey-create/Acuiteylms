@@ -1,0 +1,59 @@
+---
+title: "Vivid"
+description: "Deep violet palette, Nunito rounded sans-serif, playful but professional."
+---
+
+import { vividTheme } from "@/registry/themes";
+
+<ComponentPreview
+  base="forme"
+  name="invoice-creative"
+  theme={vividTheme}
+  hideCode
+/>
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/theme-vivid
+```
+
+</TabsContent>
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource src="registry/themes/vivid.ts" title="lib/themes/vivid.ts" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { PdfcnThemeProvider } from "@/components/pdf/theme-provider";
+import { vividTheme } from "@/lib/pdf-themes/vivid";
+
+export function Invoice() {
+  return (
+    <PdfcnThemeProvider theme={vividTheme}>
+      {/* Your PDF content */}
+    </PdfcnThemeProvider>
+  );
+}
+```

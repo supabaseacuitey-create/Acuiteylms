@@ -1,0 +1,59 @@
+---
+title: "Forest"
+description: "Natural deep greens, Merriweather headings, earthy and trustworthy."
+---
+
+import { forestTheme } from "@/registry/themes";
+
+<ComponentPreview
+  base="forme"
+  name="invoice-classic"
+  theme={forestTheme}
+  hideCode
+/>
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/theme-forest
+```
+
+</TabsContent>
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource src="registry/themes/forest.ts" title="lib/themes/forest.ts" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { PdfcnThemeProvider } from "@/components/pdf/theme-provider";
+import { forestTheme } from "@/lib/pdf-themes/forest";
+
+export function Invoice() {
+  return (
+    <PdfcnThemeProvider theme={forestTheme}>
+      {/* Your PDF content */}
+    </PdfcnThemeProvider>
+  );
+}
+```

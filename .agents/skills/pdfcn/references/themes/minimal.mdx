@@ -1,0 +1,62 @@
+---
+title: "Minimal"
+description: "Courier headings, zinc neutrals, maximum whitespace."
+---
+
+import { minimalTheme } from "@/registry/themes";
+
+<ComponentPreview
+  base="forme"
+  name="invoice-minimal"
+  theme={minimalTheme}
+  hideCode
+/>
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/theme-minimal
+```
+
+</TabsContent>
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/themes/minimal.ts"
+  title="lib/themes/minimal.ts"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { PdfcnThemeProvider } from "@/components/pdf/theme-provider";
+import { minimalTheme } from "@/lib/pdf-themes/minimal";
+
+export function Invoice() {
+  return (
+    <PdfcnThemeProvider theme={minimalTheme}>
+      {/* Your PDF content */}
+    </PdfcnThemeProvider>
+  );
+}
+```

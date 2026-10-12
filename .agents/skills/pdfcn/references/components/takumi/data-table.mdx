@@ -1,0 +1,146 @@
+---
+title: "Data Table"
+description: "Tabular data with columns and rows."
+---
+
+<ComponentPreview base="takumi" name="data-table" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/takumi/data-table
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install takumi-pdf @takumi-rs/helpers
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/takumi/components/data-table/data-table.tsx"
+  base="takumi"
+  title="components/pdf/data-table/data-table.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/components/theme-provider.tsx"
+  base="takumi"
+  title="components/pdf/theme-provider.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/resolve-color.ts"
+  base="takumi"
+  title="lib/resolve-color.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/pdf-primitives.tsx"
+  base="takumi"
+  title="lib/pdf-primitives.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/pdf-svg.tsx"
+  base="takumi"
+  title="lib/pdf-svg.tsx"
+/>
+
+<ComponentSource
+  src="registry/themes/professional.ts"
+  base="takumi"
+  title="lib/pdf-themes/professional.ts"
+/>
+
+<ComponentSource
+  src="registry/themes/primitives.ts"
+  base="takumi"
+  title="lib/pdf-themes/primitives.ts"
+/>
+
+<ComponentSource
+  src="registry/types/pdf-themes.ts"
+  base="takumi"
+  title="types/pdf-themes.ts"
+/>
+
+<ComponentSource
+  src="registry/types/pdf-components.ts"
+  base="takumi"
+  title="types/pdf-components.ts"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { DataTable } from "@/components/pdf/data-table";
+```
+
+```tsx
+<DataTable
+  columns={[{ key: "name", header: "Name" }]}
+  data={[{ name: "Widget" }]}
+/>
+```
+
+### Variants
+
+Use any `TableVariant` for the table treatment and `size="compact"` for denser reports.
+
+```tsx
+<DataTable columns={columns} data={rows} variant="striped" size="compact" />
+```
+
+## API Reference
+
+### DataTable
+
+| Prop      | Type                                                                                        | Default     |
+| --------- | ------------------------------------------------------------------------------------------- | ----------- |
+| `columns` | `DataTableColumn<T>[]`                                                                      | -           |
+| `data`    | `T[]`                                                                                       | -           |
+| `variant` | `'line' \| 'grid' \| 'minimal' \| 'striped' \| 'compact' \| 'bordered' \| 'primary-header'` | `'grid'`    |
+| `footer`  | `Partial<Record<keyof T, string \| number>>`                                                | -           |
+| `stripe`  | `boolean`                                                                                   | `false`     |
+| `size`    | `'default' \| 'compact'`                                                                    | `'default'` |
+| `noWrap`  | `boolean`                                                                                   | `false`     |
+| `style`   | `Style`                                                                                     | -           |
+
+### DataTableColumn
+
+`key` is the row-field accessor—for example, `key: "name"` reads `row.name`. It is not React's reserved `key` prop.
+
+| Prop           | Type                            | Default  |
+| -------------- | ------------------------------- | -------- |
+| `key`          | `keyof T & string`              | -        |
+| `header`       | `string`                        | -        |
+| `align`        | `'left' \| 'center' \| 'right'` | `'left'` |
+| `width`        | `string \| number`              | -        |
+| `render`       | `(value, row) => ReactNode`     | -        |
+| `renderFooter` | `(value) => ReactNode`          | -        |

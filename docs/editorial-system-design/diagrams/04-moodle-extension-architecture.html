@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moodle Extension Boundary - Acuitey Solutions LMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #F7F7F5;
+      --color-ink:     #252B36;
+      --color-muted:   #657080;
+      --color-accent:  #EF6A3A;
+      --color-link:    #315FA8;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+    .frame { width: 100%; max-width: 1140px; }
+    svg { width: 100%; height: auto; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <svg viewBox="0 0 1140 680" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ext-title ext-desc">
+      <title id="ext-title">Acuitey Solutions LMS - Moodle Extension Boundary &amp; Integration Architecture</title>
+      <desc id="ext-desc">Architectural boundary showing untouched Moodle 5.2 core subsystems communicating via standard hooks, events, APIs, and tasks with Acuitey's custom extension local_acuitey.</desc>
+      <defs>
+        <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="0.9" fill="rgba(37,43,54,0.08)"/>
+        </pattern>
+        <marker id="arr-muted" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#657080"/>
+        </marker>
+        <marker id="arr-accent" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#EF6A3A"/>
+        </marker>
+        <marker id="arr-blue" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#315FA8"/>
+        </marker>
+      </defs>
+
+      <!-- Background -->
+      <rect width="100%" height="100%" fill="#F7F7F5"/>
+      <rect width="100%" height="100%" fill="url(#dots)"/>
+
+      <!-- Large Faded Section Number -->
+      <text x="1100" y="70" font-family="'Geist Mono', monospace" font-size="76" font-weight="700" fill="rgba(37,43,54,0.05)" text-anchor="end">04</text>
+
+      <!-- Phase Banner / Top Flow Label -->
+      <g transform="translate(40, 20)">
+        <polygon points="0,0 520,0 532,14 520,28 0,28" fill="#252B36"/>
+        <polygon points="532,0 1060,0 1060,28 532,28 544,14" fill="#EF6A3A"/>
+
+        <text x="260" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="700" letter-spacing="0.14em" text-anchor="middle">ZONE A: MOODLE CORE SUBSYSTEMS (100% UNMODIFIED)</text>
+        <text x="796" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="700" letter-spacing="0.14em" text-anchor="middle">ZONE B: ACUITEY CUSTOM EXTENSION (local_acuitey)</text>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           ZONE A: MOODLE CORE (Left Half)
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(40, 75)">
+        <rect width="490" height="520" rx="4" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.22)" stroke-width="1"/>
+        
+        <!-- Header badge -->
+        <rect x="18" y="14" width="115" height="18" rx="2" fill="#252B36"/>
+        <text x="75" y="27" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">UPSTREAM MOODLE</text>
+
+        <text x="145" y="28" font-family="'Geist', sans-serif" font-size="13" font-weight="700" fill="#252B36">Core Platform Architecture</text>
+        
+        <rect x="360" y="14" width="112" height="18" rx="2" fill="rgba(22,101,52,0.1)" stroke="#166534" stroke-width="0.8"/>
+        <text x="416" y="27" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#166534" text-anchor="middle">CORE UNTOUCHED</text>
+
+        <!-- Subsystems Grid (9 Core Blocks) -->
+        <g transform="translate(18, 48)">
+          <!-- 1. Event Subsystem -->
+          <g transform="translate(0, 0)">
+            <rect width="144" height="66" rx="2" fill="#ffffff" stroke="rgba(37,43,54,0.18)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#252B36">EVENTS API</text>
+            <text x="10" y="32" font-family="'Geist', sans-serif" font-size="9" fill="#657080">\core\event\*</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Dispatches user, course,</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">and enrolment triggers</text>
+          </g>
+
+          <!-- 2. Access / Capabilities -->
+          <g transform="translate(154, 0)">
+            <rect width="144" height="66" rx="2" fill="#ffffff" stroke="rgba(37,43,54,0.18)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#252B36">CAPABILITIES</text>
+            <text x="10" y="32" font-family="'Geist', sans-serif" font-size="9" fill="#657080">has_capability()</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Granular contextual</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">permission checking</text>
+          </g>
+
+          <!-- 3. Users Subsystem -->
+          <g transform="translate(308, 0)">
+            <rect width="144" height="66" rx="2" fill="#ffffff" stroke="rgba(37,43,54,0.18)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#252B36">USERS &amp; AUTH</text>
+            <text x="10" y="32" font-family="'Geist', sans-serif" font-size="9" fill="#657080">core_user / auth_*</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Account lifecycles,</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">sessions &amp; user profiles</text>
+          </g>
+
+          <!-- 4. Enrolment API -->
+          <g transform="translate(0, 76)">
+            <rect width="144" height="66" rx="2" fill="#ffffff" stroke="rgba(37,43,54,0.18)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#252B36">ENROLMENT</text>
+            <text x="10" y="32" font-family="'Geist', sans-serif" font-size="9" fill="#657080">enrol_manual/self</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Cohort allocations,</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">expiry, course access</text>
+          </g>
+
+          <!-- 5. Messaging Subsystem -->
+          <g transform="translate(154, 76)">
+            <rect width="144" height="66" rx="2" fill="#ffffff" stroke="rgba(37,43,54,0.18)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#252B36">MESSAGING</text>
+            <text x="10" y="32" font-family="'Geist', sans-serif" font-size="9" fill="#657080">core_message</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Web notifications, email,</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">and real-time alerts</text>
+          </g>
+
+          <!-- 6. Tasks & Cron -->
+          <g transform="translate(308, 76)">
+            <rect width="144" height="66" rx="2" fill="#ffffff" stroke="rgba(37,43,54,0.18)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#252B36">TASK ENGINE</text>
+            <text x="10" y="32" font-family="'Geist', sans-serif" font-size="9" fill="#657080">\core\task\*</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Adhoc queues &amp;</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">scheduled cron runners</text>
+          </g>
+
+          <!-- 7. External Services API -->
+          <g transform="translate(0, 152)">
+            <rect width="144" height="66" rx="2" fill="#ffffff" stroke="rgba(37,43,54,0.18)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#252B36">EXTERNAL API</text>
+            <text x="10" y="32" font-family="'Geist', sans-serif" font-size="9" fill="#657080">core_webservice</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">RESTful endpoints,</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">mobile token service</text>
+          </g>
+
+          <!-- 8. LTI 1.3 Subsystem -->
+          <g transform="translate(154, 152)">
+            <rect width="144" height="66" rx="2" fill="#ffffff" stroke="rgba(37,43,54,0.18)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#252B36">LTI 1.3 ADVANTAGE</text>
+            <text x="10" y="32" font-family="'Geist', sans-serif" font-size="9" fill="#657080">mod_lti</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Zoom OIDC launch &amp;</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">NRPS roster provisioning</text>
+          </g>
+
+          <!-- 9. Payment API -->
+          <g transform="translate(308, 152)">
+            <rect width="144" height="66" rx="2" fill="#ffffff" stroke="rgba(37,43,54,0.18)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#252B36">PAYMENT API</text>
+            <text x="10" y="32" font-family="'Geist', sans-serif" font-size="9" fill="#657080">core_payment</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Multi-gateway broker</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">&amp; payment accounts</text>
+          </g>
+        </g>
+
+        <!-- Upstream Maintainability Callout -->
+        <g transform="translate(18, 290)">
+          <rect width="452" height="155" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.18)"/>
+          <text x="16" y="24" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">Zero Core Modification Governance Principle</text>
+          
+          <text x="16" y="46" font-family="'Geist', sans-serif" font-size="9.5" fill="#657080">Moodle core code remains strictly pristine. Upstream point releases, security patches,</text>
+          <text x="16" y="60" font-family="'Geist', sans-serif" font-size="9.5" fill="#657080">and minor version updates apply cleanly via git with zero custom regression testing.</text>
+
+          <g transform="translate(16, 75)">
+            <rect width="205" height="65" rx="2" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.1)"/>
+            <text x="10" y="20" font-family="'Geist Mono', monospace" font-size="8" font-weight="600" fill="#252B36">NO CODE PATCHES</text>
+            <text x="10" y="36" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080">/lib, /course, /user, /enrol</text>
+            <text x="10" y="50" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080">files remain untouched</text>
+
+            <rect x="215" y="0" width="205" height="65" rx="2" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.1)"/>
+            <text x="225" y="20" font-family="'Geist Mono', monospace" font-size="8" font-weight="600" fill="#252B36">OFFICIAL API HOOKS</text>
+            <text x="225" y="36" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080">Uses supported events, tasks,</text>
+            <text x="225" y="50" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080">and XMLDB abstractions</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           ZONE B: ACUITEY CUSTOM EXTENSION (Right Half)
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(610, 75)">
+        <rect width="490" height="520" rx="4" fill="rgba(239,106,58,0.03)" stroke="#EF6A3A" stroke-width="1.2"/>
+        
+        <!-- Header badge -->
+        <rect x="18" y="14" width="135" height="18" rx="2" fill="#EF6A3A"/>
+        <text x="85" y="27" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">ACUITEY EXTENSION</text>
+
+        <text x="165" y="28" font-family="'Geist', sans-serif" font-size="13" font-weight="700" fill="#252B36">local_acuitey Custom Subsystem</text>
+        <text x="472" y="27" font-family="'Geist Mono', monospace" font-size="8" fill="#EF6A3A" text-anchor="end">Isolated Logic</text>
+
+        <!-- Acuitey Services Grid (8 Custom Modules) -->
+        <g transform="translate(18, 48)">
+          <!-- 1. Faculty Matcher -->
+          <g transform="translate(0, 0)">
+            <rect width="220" height="66" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#EF6A3A">FACULTY MATCHER</text>
+            <text x="10" y="32" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">\local_acuitey\service\matcher</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Multi-factor scoring algorithm</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">and candidate selection</text>
+          </g>
+
+          <!-- 2. Availability Service -->
+          <g transform="translate(232, 0)">
+            <rect width="220" height="66" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#EF6A3A">AVAILABILITY SERVICE</text>
+            <text x="10" y="32" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">\local_acuitey\service\calendar</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Real-time calendar checking &amp;</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">office hour availability status</text>
+          </g>
+
+          <!-- 3. Workload Service -->
+          <g transform="translate(0, 76)">
+            <rect width="220" height="66" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#EF6A3A">WORKLOAD SERVICE</text>
+            <text x="10" y="32" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">\local_acuitey\service\workload</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Active student counter &amp;</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">capacity threshold evaluator</text>
+          </g>
+
+          <!-- 4. Routing Service -->
+          <g transform="translate(232, 76)">
+            <rect width="220" height="66" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#EF6A3A">ROUTING ORCHESTRATOR</text>
+            <text x="10" y="32" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">\local_acuitey\service\router</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Coordinates pipeline, db writes,</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">and dispatch triggers</text>
+          </g>
+
+          <!-- 5. Metrics & Telemetry -->
+          <g transform="translate(0, 152)">
+            <rect width="220" height="66" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#EF6A3A">METRICS &amp; TELEMETRY</text>
+            <text x="10" y="32" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">\local_acuitey\service\metrics</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Match latency, queue size,</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">and faculty distribution stats</text>
+          </g>
+
+          <!-- 6. Assignment History -->
+          <g transform="translate(232, 152)">
+            <rect width="220" height="66" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#EF6A3A">ASSIGNMENT HISTORY</text>
+            <text x="10" y="32" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">mdl_local_acuitey_alloc</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Immutable historical ledger</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">with score breakdowns</text>
+          </g>
+
+          <!-- 7. Notification Coordinator -->
+          <g transform="translate(0, 228)">
+            <rect width="220" height="66" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#EF6A3A">NOTIFICATION BRIDGE</text>
+            <text x="10" y="32" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">\local_acuitey\service\notify</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Formats &amp; dispatches dual</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">alerts via core_message</text>
+          </g>
+
+          <!-- 8. Pending Queue Task -->
+          <g transform="translate(232, 228)">
+            <rect width="220" height="66" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <text x="10" y="18" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#EF6A3A">PENDING RETRY TASK</text>
+            <text x="10" y="32" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">\local_acuitey\task\retry_pending</text>
+            <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Scheduled polling task to</text>
+            <text x="10" y="58" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">re-evaluate queued requests</text>
+          </g>
+        </g>
+
+        <!-- Custom XMLDB Database Schema Card -->
+        <g transform="translate(18, 365)">
+          <rect width="452" height="80" rx="3" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+          <text x="14" y="22" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#EF6A3A">XMLDB CUSTOM SCHEMA (db/install.xml)</text>
+          
+          <g transform="translate(14, 34)">
+            <text x="0" y="12" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36">• mdl_local_acuitey_allocation</text>
+            <text x="220" y="12" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36">• mdl_local_acuitey_queue</text>
+            <text x="0" y="28" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36">• mdl_local_acuitey_availability</text>
+            <text x="220" y="28" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36">• mdl_local_acuitey_history</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           MIDDLE INTEGRATION BRIDGE (Connecting Arrows)
+           ════════════════════════════════════════════════ -->
+      <!-- Event Dispatcher → Event Observer -->
+      <path d="M 530,155 H 570 Q 575,155 575,155 H 610" fill="none" stroke="#EF6A3A" stroke-width="1.5" marker-end="url(#arr-accent)"/>
+      <rect x="545" y="146" width="50" height="15" rx="2" fill="#252B36"/>
+      <text x="570" y="157" font-family="'Geist Mono', monospace" font-size="6.5" font-weight="600" fill="#F7F7F5" text-anchor="middle">EVENT</text>
+
+      <!-- Capability Check -->
+      <path d="M 610,230 H 575 Q 570,230 570,230 H 530" fill="none" stroke="#315FA8" stroke-width="1.2" marker-end="url(#arr-blue)"/>
+      <rect x="545" y="221" width="50" height="15" rx="2" fill="#315FA8"/>
+      <text x="570" y="232" font-family="'Geist Mono', monospace" font-size="6.5" font-weight="600" fill="#F7F7F5" text-anchor="middle">AUTH</text>
+
+      <!-- Notification Dispatch -->
+      <path d="M 610,380 H 575 Q 570,380 570,380 H 530" fill="none" stroke="#657080" stroke-width="1.2" marker-end="url(#arr-muted)"/>
+      <rect x="545" y="371" width="50" height="15" rx="2" fill="#252B36"/>
+      <text x="570" y="382" font-family="'Geist Mono', monospace" font-size="6.5" font-weight="600" fill="#F7F7F5" text-anchor="middle">ALERT</text>
+
+      <!-- Scheduled Task Trigger -->
+      <path d="M 530,455 H 570 Q 575,455 575,455 H 610" fill="none" stroke="#657080" stroke-width="1.2" marker-end="url(#arr-muted)"/>
+      <rect x="545" y="446" width="50" height="15" rx="2" fill="#252B36"/>
+      <text x="570" y="457" font-family="'Geist Mono', monospace" font-size="6.5" font-weight="600" fill="#F7F7F5" text-anchor="middle">CRON</text>
+
+      <!-- ════════════════════════════════════════════════
+           BOTTOM LEGEND & FOOTNOTE
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(40, 615)">
+        <rect width="1060" height="42" rx="3" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.12)"/>
+        
+        <text x="20" y="25" font-family="'Geist Mono', monospace" font-size="8" font-weight="600" fill="#657080">PLUGIN GOVERNANCE:</text>
+        <text x="155" y="25" font-family="'Geist', sans-serif" font-size="9" fill="#252B36">Third-party plugins avoided to eliminate supply chain vulnerabilities; custom capabilities are fully self-contained in local_acuitey.</text>
+        
+        <text x="1040" y="25" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080" text-anchor="end">CONFIDENTIAL · ACUITEY SOLUTIONS</text>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>

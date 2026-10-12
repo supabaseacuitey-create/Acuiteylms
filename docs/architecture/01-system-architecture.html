@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acuitey Solutions LMS - System Architecture</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    .header {
+      max-width: 1200px;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #2563eb;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+    p.subtitle {
+      font-size: 14px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+    .diagram-container {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      max-width: 1200px;
+      width: 100%;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .caption-box {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      max-width: 1200px;
+      width: 100%;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-size: 13px;
+    }
+    .card-title {
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+    .card-desc {
+      color: #64748b;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="badge">Architecture Schematic · 01</div>
+    <h1>Acuitey Solutions LMS — High-Level System Architecture</h1>
+    <p class="subtitle">End-to-end component topology distinguishing vanilla Moodle Core from Acuitey custom extension services.</p>
+  </div>
+
+  <div class="diagram-container">
+    <svg viewBox="0 0 1150 780" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#64748b"/>
+        </marker>
+        <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#2563eb"/>
+        </marker>
+        <marker id="arrow-coral" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#ea580c"/>
+        </marker>
+      </defs>
+
+      <!-- ACTORS TIER -->
+      <g id="actors">
+        <rect x="50" y="30" width="1050" height="70" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="70" y="55" font-size="11" font-weight="700" fill="#64748b" letter-spacing="0.06em">USER LAYER / CLIENT ACTORS</text>
+        
+        <rect x="220" y="45" width="200" height="42" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+        <text x="320" y="70" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">Students (Web & Mobile)</text>
+
+        <rect x="475" y="45" width="200" height="42" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+        <text x="575" y="70" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">Faculty / Instructors</text>
+
+        <rect x="730" y="45" width="200" height="42" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+        <text x="830" y="70" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">Admins (Academic / Finance / Super)</text>
+      </g>
+
+      <!-- INGRESS / EDGE TIER -->
+      <line x1="575" y1="100" x2="575" y2="135" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <g id="edge">
+        <rect x="350" y="135" width="450" height="46" rx="4" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="575" y="157" font-size="13" font-weight="700" fill="#1e3a8a" text-anchor="middle">Cloudflare CDN / WAF / Edge SSL / DDoS Protection</text>
+        <text x="575" y="172" font-size="11" fill="#3b82f6" text-anchor="middle">Strict HTTPS Termination · Geo-DNS · Rate Limiting</text>
+      </g>
+
+      <!-- HOSTINGER KVM HOST BOUNDARY -->
+      <line x1="575" y1="181" x2="575" y2="215" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <g id="host">
+        <rect x="50" y="215" width="1050" height="420" rx="8" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+        <rect x="50" y="215" width="1050" height="32" rx="8" fill="#0f172a"/>
+        <text x="70" y="236" font-size="12" font-weight="700" fill="#ffffff" letter-spacing="0.05em">HOSTINGER KVM VIRTUAL MACHINE (UBUNTU LTS / DEDICATED RESOURCES)</text>
+        <text x="1080" y="236" font-size="11" font-weight="500" fill="#94a3b8" text-anchor="end">Production Host</text>
+
+        <!-- WEB SERVER & RUNTIME -->
+        <g id="web-runtime">
+          <rect x="80" y="265" width="310" height="60" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
+          <text x="235" y="292" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">Nginx Web Server</text>
+          <text x="235" y="310" font-size="11" fill="#64748b" text-anchor="middle">Static Asset Cache · Brotli · SSL Strict Ciphers</text>
+
+          <line x1="390" y1="295" x2="430" y2="295" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+          <rect x="430" y="265" width="280" height="60" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
+          <text x="570" y="292" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">PHP-FPM 8.2+ Engine</text>
+          <text x="570" y="310" font-size="11" fill="#64748b" text-anchor="middle">OPcache Enabled · Optimized Process Pool</text>
+
+          <line x1="710" y1="295" x2="750" y2="295" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+          <rect x="750" y="265" width="320" height="60" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
+          <text x="910" y="292" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">CLI Task Runner / Cron Worker</text>
+          <text x="910" y="310" font-size="11" fill="#64748b" text-anchor="middle">admin/cli/cron.php (Every 1 min) · Ad-hoc queues</text>
+        </g>
+
+        <!-- MOODLE APPLICATION LAYER -->
+        <g id="moodle-app">
+          <rect x="80" y="345" width="990" height="180" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+          <text x="100" y="370" font-size="11" font-weight="700" fill="#475569" letter-spacing="0.06em">APPLICATION CONTAINER: MOODLE 5.2+</text>
+
+          <!-- CORE SUB-CONTAINER -->
+          <rect x="100" y="385" width="460" height="125" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+          <rect x="100" y="385" width="460" height="26" rx="4" fill="#e2e8f0"/>
+          <text x="115" y="402" font-size="11" font-weight="700" fill="#1e293b">MOODLE CORE (UNTOUCHED & UPGRADEABLE)</text>
+          
+          <rect x="115" y="420" width="130" height="36" rx="3" fill="#f8fafc" stroke="#cbd5e1"/>
+          <text x="180" y="442" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">Auth & Users</text>
+
+          <rect x="255" y="420" width="140" height="36" rx="3" fill="#f8fafc" stroke="#cbd5e1"/>
+          <text x="325" y="442" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">Course & Enrolment</text>
+
+          <rect x="405" y="420" width="140" height="36" rx="3" fill="#f8fafc" stroke="#cbd5e1"/>
+          <text x="475" y="442" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">Assessments & Quiz</text>
+
+          <rect x="115" y="464" width="130" height="36" rx="3" fill="#f8fafc" stroke="#cbd5e1"/>
+          <text x="180" y="486" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">core_event Subsystem</text>
+
+          <rect x="255" y="464" width="140" height="36" rx="3" fill="#f8fafc" stroke="#cbd5e1"/>
+          <text x="325" y="486" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">core\task Manager</text>
+
+          <rect x="405" y="464" width="140" height="36" rx="3" fill="#f8fafc" stroke="#cbd5e1"/>
+          <text x="475" y="486" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">core_payment API</text>
+
+          <!-- ACUITEY CUSTOM EXTENSION LAYER (HIGHLIGHTED) -->
+          <rect x="580" y="385" width="470" height="125" rx="4" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+          <rect x="580" y="385" width="470" height="26" rx="4" fill="#fef3c7"/>
+          <text x="595" y="402" font-size="11" font-weight="700" fill="#b45309">ACUITEY EXTENSION LAYER (local_acuitey & Plugins)</text>
+
+          <!-- FOCAL ROUTING ENGINE (CORAL) -->
+          <rect x="595" y="420" width="220" height="36" rx="3" fill="#ea580c" stroke="#c2410c"/>
+          <text x="705" y="442" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">Ola/Uber Faculty Routing Engine</text>
+
+          <rect x="825" y="420" width="210" height="36" rx="3" fill="#ffffff" stroke="#f59e0b"/>
+          <text x="930" y="442" font-size="11" font-weight="600" fill="#92400e" text-anchor="middle">Workload & Availability Calc</text>
+          <rect x="595" y="464" width="140" height="36" rx="3" fill="#ffffff" stroke="#f59e0b"/>
+          <text x="665" y="486" font-size="11" font-weight="600" fill="#92400e" text-anchor="middle">Pending Queue Task</text>
+
+          <rect x="745" y="464" width="150" height="36" rx="3" fill="#ffffff" stroke="#f59e0b"/>
+          <text x="820" y="486" font-size="11" font-weight="600" fill="#92400e" text-anchor="middle">Acuitey Event Observers</text>
+
+          <rect x="905" y="464" width="130" height="36" rx="3" fill="#ffffff" stroke="#f59e0b"/>
+          <text x="970" y="486" font-size="11" font-weight="600" fill="#92400e" text-anchor="middle">Custom Analytics</text>
+        </g>
+
+        <!-- LOCAL SERVICES -->
+        <g id="local-infra">
+          <rect x="80" y="540" width="310" height="75" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+          <text x="95" y="562" font-size="12" font-weight="700" fill="#1e293b">Redis (Deployment to be finalized)</text>
+          <text x="95" y="580" font-size="11" fill="#64748b">MUC (Moodle Universal Cache) · Application Cache</text>
+          <text x="95" y="596" font-size="11" fill="#64748b">Session Lock Handler (Low-latency concurrent users)</text>
+
+          <rect x="420" y="540" width="310" height="75" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+          <text x="435" y="562" font-size="12" font-weight="700" fill="#1e293b">Hostinger /mnt/moodledata</text>
+          <text x="435" y="580" font-size="11" fill="#64748b">Content-addressed filedir (Course docs, uploads)</text>
+          <text x="435" y="596" font-size="11" fill="#64748b">Private directory · Incremental backup storage</text>
+
+          <rect x="760" y="540" width="310" height="75" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+          <text x="775" y="562" font-size="12" font-weight="700" fill="#1e293b">Proposed Monitoring & Operations</text>
+          <text x="775" y="580" font-size="11" fill="#64748b">Proposed Prometheus / Grafana · PHP Error Logs</text>
+          <text x="775" y="596" font-size="11" fill="#64748b">Proposed Off-Site Backup to Cloud Storage</text>
+        </g>
+      </g>
+
+      <!-- EXTERNAL CONNECTORS TIER -->
+      <g id="external">
+        <!-- PostgreSQL / Supabase -->
+        <rect x="50" y="665" width="280" height="75" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+        <text x="190" y="692" font-size="13" font-weight="700" fill="#15803d" text-anchor="middle">PostgreSQL / Supabase (To be confirmed)</text>
+        <text x="190" y="710" font-size="11" fill="#166534" text-anchor="middle">Moodle relational tables + local_acuitey audit logs</text>
+        <text x="190" y="726" font-size="11" fill="#166534" text-anchor="middle">Encrypted connections (SSL) · Point-in-time recovery</text>
+        <line x1="190" y1="635" x2="190" y2="665" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <!-- Zoom LTI Integration -->
+        <rect x="360" y="665" width="230" height="75" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+        <text x="475" y="692" font-size="13" font-weight="700" fill="#1e40af" text-anchor="middle">Zoom LTI Pro (Live Class)</text>
+        <text x="475" y="710" font-size="11" fill="#1e40af" text-anchor="middle">LTI 1.3 Advantage standard</text>
+        <text x="475" y="726" font-size="11" fill="#1e40af" text-anchor="middle">Optional grade / attendance sync</text>
+        <line x1="475" y1="635" x2="475" y2="665" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <!-- Razorpay Payment Gateway -->
+        <rect x="620" y="665" width="230" height="75" rx="6" fill="#eff6ff" stroke="#0284c7" stroke-width="1.5"/>
+        <text x="735" y="692" font-size="13" font-weight="700" fill="#0369a1" text-anchor="middle">Razorpay Payment Gateway</text>
+        <text x="735" y="710" font-size="11" fill="#0369a1" text-anchor="middle">UPI, Netbanking, cards</text>
+        <text x="735" y="726" font-size="11" fill="#0369a1" text-anchor="middle">Server-side gateway verification</text>
+        <line x1="735" y1="635" x2="735" y2="665" stroke="#0284c7" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <!-- PhonePe Payment Gateway -->
+        <rect x="880" y="665" width="220" height="75" rx="6" fill="#eff6ff" stroke="#7c3aed" stroke-width="1.5"/>
+        <text x="990" y="692" font-size="13" font-weight="700" fill="#6d28d9" text-anchor="middle">PhonePe PG Gateway</text>
+        <text x="990" y="710" font-size="11" fill="#6d28d9" text-anchor="middle">Direct UPI intent & webhooks</text>
+        <text x="990" y="726" font-size="11" fill="#6d28d9" text-anchor="middle">Seamless INR transactions</text>
+        <line x1="990" y1="635" x2="990" y2="665" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow)"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="caption-box">
+    <div class="card">
+      <div class="card-title">Clean Boundary Separation</div>
+      <div class="card-desc">Zero core file modifications. Upgrades to future Moodle LTS versions remain strictly plug-and-play without regression risks.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">High-Throughput Routing</div>
+      <div class="card-desc">The routing engine executes within PHP-FPM for instant assignments, delegating batch retries to Moodle's native CLI task runner.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Security & Isolation</div>
+      <div class="card-desc">Database transactions are handled over TLS, payment signatures verify server-side, and live sessions authenticate via OAuth 2.0 LTI tokens.</div>
+    </div>
+  </div>
+
+</body>
+</html>

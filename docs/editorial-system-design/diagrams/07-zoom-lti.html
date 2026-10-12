@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zoom LTI 1.3 Integration - Acuitey Solutions LMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #F7F7F5;
+      --color-ink:     #252B36;
+      --color-muted:   #657080;
+      --color-accent:  #EF6A3A;
+      --color-link:    #315FA8;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+    .frame { width: 100%; max-width: 1140px; }
+    svg { width: 100%; height: auto; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <svg viewBox="0 0 1140 680" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="zoom-title zoom-desc">
+      <title id="zoom-title">Acuitey Solutions LMS - Zoom LTI 1.3 Advantage Integration Architecture</title>
+      <desc id="zoom-desc">Technical sequence and data flow diagram of Moodle LMS and Zoom LTI Pro integration using LTI 1.3 Advantage, OIDC authentication, NRPS roster provisioning, and optional attendance sync.</desc>
+      <defs>
+        <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="0.9" fill="rgba(37,43,54,0.08)"/>
+        </pattern>
+        <marker id="arr-muted" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#657080"/>
+        </marker>
+        <marker id="arr-accent" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#EF6A3A"/>
+        </marker>
+        <marker id="arr-blue" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#315FA8"/>
+        </marker>
+      </defs>
+
+      <!-- Background -->
+      <rect width="100%" height="100%" fill="#F7F7F5"/>
+      <rect width="100%" height="100%" fill="url(#dots)"/>
+
+      <!-- Large Faded Section Number -->
+      <text x="1100" y="70" font-family="'Geist Mono', monospace" font-size="76" font-weight="700" fill="rgba(37,43,54,0.05)" text-anchor="end">07</text>
+
+      <!-- Phase Banner / Top Flow Label -->
+      <g transform="translate(40, 20)">
+        <polygon points="0,0 300,0 312,14 300,28 0,28" fill="#252B36"/>
+        <polygon points="312,0 740,0 752,14 740,28 312,28 324,14" fill="#315FA8"/>
+        <polygon points="752,0 1060,0 1060,28 752,28 764,14" fill="#252B36"/>
+
+        <text x="150" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em" text-anchor="middle">1. PARTICIPANT INITIATION</text>
+        <text x="526" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="700" letter-spacing="0.14em" text-anchor="middle">2. LTI 1.3 ADVANTAGE OIDC PROTOCOL</text>
+        <text x="906" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em" text-anchor="middle">3. ZOOM MEETING ROOM</text>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           LEFT: PARTICIPANTS & MOODLE CONTEXT
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(40, 75)">
+        <rect width="250" height="490" rx="4" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.18)" stroke-width="1"/>
+        <text x="125" y="28" font-family="'Geist Mono', monospace" font-size="8.5" font-weight="600" fill="#657080" letter-spacing="0.12em" text-anchor="middle">MOODLE PLATFORM BOUNDARY</text>
+
+        <!-- Student / Faculty Persona -->
+        <g transform="translate(15, 45)">
+          <rect width="220" height="85" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="10" y="10" width="135" height="15" rx="2" fill="#252B36"/>
+          <text x="77" y="21" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#ffffff" text-anchor="middle">STUDENT &amp; FACULTY</text>
+          
+          <text x="10" y="44" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">Authenticated User</text>
+          <text x="10" y="58" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Active authenticated session</text>
+          <text x="10" y="72" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">Browser context / Mobile app</text>
+        </g>
+
+        <!-- Course Activity Box -->
+        <g transform="translate(15, 145)">
+          <rect width="220" height="110" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="10" y="10" width="125" height="15" rx="2" fill="#315FA8"/>
+          <text x="72" y="21" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#ffffff" text-anchor="middle">COURSE ACTIVITY</text>
+          
+          <text x="10" y="44" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">Zoom LTI 1.3 Activity</text>
+          <text x="10" y="58" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Moodle native mod_lti module</text>
+          <line x1="10" y1="70" x2="210" y2="70" stroke="rgba(37,43,54,0.1)"/>
+          
+          <text x="10" y="86" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">• Click 'Join Virtual Class'</text>
+          <text x="10" y="100" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">• Context: course_id, user_id</text>
+        </g>
+
+        <!-- Moodle Security Subsystem -->
+        <g transform="translate(15, 270)">
+          <rect width="220" height="195" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="10" y="10" width="115" height="15" rx="2" fill="#252B36"/>
+          <text x="67" y="21" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#ffffff" text-anchor="middle">SECURITY ENGINE</text>
+          
+          <text x="10" y="44" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">LTI 1.3 Key Management</text>
+          <text x="10" y="58" font-family="'Geist', sans-serif" font-size="9" fill="#657080">RSA-256 asymmetric keypair</text>
+          <line x1="10" y1="70" x2="210" y2="70" stroke="rgba(37,43,54,0.1)"/>
+          
+          <text x="10" y="88" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">• Private Key in mdl_lti_types</text>
+          <text x="10" y="102" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">• Public JWKS endpoint exposed</text>
+          <text x="10" y="116" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">• Signs JWT token payload</text>
+          <text x="10" y="130" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">• Transmits nonce &amp; state</text>
+
+          <rect x="10" y="145" width="200" height="38" rx="2" fill="rgba(49,95,168,0.06)" stroke="#315FA8" stroke-width="0.8"/>
+          <text x="110" y="160" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#315FA8" text-anchor="middle">STANDARDS COMPLIANCE</text>
+          <text x="110" y="174" font-family="'Geist', sans-serif" font-size="8" fill="#252B36" text-anchor="middle">1EdTech LTI 1.3 Advantage Certified</text>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           CENTER: LTI 1.3 ADVANTAGE SEQUENCE
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(325, 75)">
+        <rect width="470" height="490" rx="4" fill="#ffffff" stroke="rgba(37,43,54,0.22)" stroke-width="1"/>
+        <text x="235" y="28" font-family="'Geist Mono', monospace" font-size="8.5" font-weight="600" fill="#657080" letter-spacing="0.12em" text-anchor="middle">CRYPTOGRAPHIC HANDSHAKE &amp; LAUNCH SEQUENCE</text>
+
+        <!-- Lifeline 1: Moodle -->
+        <line x1="85" y1="50" x2="85" y2="465" stroke="rgba(37,43,54,0.2)" stroke-width="1" stroke-dasharray="4,4"/>
+        <rect x="40" y="45" width="90" height="24" rx="2" fill="#252B36"/>
+        <text x="85" y="61" font-family="'Geist Mono', monospace" font-size="8" font-weight="600" fill="#ffffff" text-anchor="middle">MOODLE LMS</text>
+
+        <!-- Lifeline 2: Browser -->
+        <line x1="235" y1="50" x2="235" y2="465" stroke="rgba(37,43,54,0.2)" stroke-width="1" stroke-dasharray="4,4"/>
+        <rect x="190" y="45" width="90" height="24" rx="2" fill="rgba(37,43,54,0.06)"/>
+        <text x="235" y="61" font-family="'Geist Mono', monospace" font-size="8" font-weight="600" fill="#252B36" text-anchor="middle">USER CLIENT</text>
+
+        <!-- Lifeline 3: Zoom Cloud -->
+        <line x1="385" y1="50" x2="385" y2="465" stroke="rgba(37,43,54,0.2)" stroke-width="1" stroke-dasharray="4,4"/>
+        <rect x="340" y="45" width="90" height="24" rx="2" fill="#315FA8"/>
+        <text x="385" y="61" font-family="'Geist Mono', monospace" font-size="8" font-weight="600" fill="#ffffff" text-anchor="middle">ZOOM LTI PRO</text>
+
+        <!-- Sequence Step 1 -->
+        <g transform="translate(0, 95)">
+          <line x1="235" y1="15" x2="380" y2="15" stroke="#315FA8" stroke-width="1.2" marker-end="url(#arr-blue)"/>
+          <rect x="250" y="4" width="110" height="15" rx="2" fill="rgba(49,95,168,0.1)"/>
+          <text x="305" y="15" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#315FA8" text-anchor="middle">1. OIDC Launch Req</text>
+        </g>
+
+        <!-- Sequence Step 2 -->
+        <g transform="translate(0, 140)">
+          <line x1="385" y1="15" x2="90" y2="15" stroke="#657080" stroke-width="1.2" marker-end="url(#arr-muted)"/>
+          <rect x="175" y="4" width="120" height="15" rx="2" fill="rgba(37,43,54,0.06)"/>
+          <text x="235" y="15" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#252B36" text-anchor="middle">2. Auth Request (login_hint)</text>
+        </g>
+
+        <!-- Sequence Step 3 -->
+        <g transform="translate(0, 185)">
+          <line x1="85" y1="15" x2="230" y2="15" stroke="#315FA8" stroke-width="1.2" marker-end="url(#arr-blue)"/>
+          <rect x="105" y="4" width="110" height="15" rx="2" fill="rgba(49,95,168,0.1)"/>
+          <text x="160" y="15" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#315FA8" text-anchor="middle">3. Signed id_token (JWT)</text>
+        </g>
+
+        <!-- Sequence Step 4 -->
+        <g transform="translate(0, 230)">
+          <line x1="235" y1="15" x2="380" y2="15" stroke="#315FA8" stroke-width="1.2" marker-end="url(#arr-blue)"/>
+          <rect x="255" y="4" width="105" height="15" rx="2" fill="rgba(49,95,168,0.1)"/>
+          <text x="307" y="15" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#315FA8" text-anchor="middle">4. POST id_token to Zoom</text>
+        </g>
+
+        <!-- Sequence Step 5 (Keyset verification) -->
+        <g transform="translate(0, 275)">
+          <path d="M 385,15 H 410 V 35 H 90" fill="none" stroke="#657080" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arr-muted)"/>
+          <rect x="195" y="27" width="130" height="15" rx="2" fill="rgba(37,43,54,0.06)"/>
+          <text x="260" y="38" font-family="'Geist Mono', monospace" font-size="7" fill="#657080" text-anchor="middle">5. Fetch JWKS Public Key</text>
+        </g>
+
+        <!-- Sequence Step 6 (NRPS Provisioning) -->
+        <g transform="translate(0, 335)">
+          <line x1="385" y1="15" x2="90" y2="15" stroke="#315FA8" stroke-width="1.2" marker-end="url(#arr-blue)"/>
+          <rect x="155" y="4" width="160" height="15" rx="2" fill="rgba(49,95,168,0.1)"/>
+          <text x="235" y="15" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#315FA8" text-anchor="middle">6. Names &amp; Role Service (NRPS)</text>
+        </g>
+
+        <!-- Sequence Step 7 (Meeting Launch) -->
+        <g transform="translate(0, 385)">
+          <line x1="385" y1="15" x2="240" y2="15" stroke="#166534" stroke-width="1.5" marker-end="url(#arr-accent)"/>
+          <rect x="255" y="4" width="105" height="15" rx="2" fill="rgba(22,101,52,0.1)" stroke="#166534" stroke-width="0.8"/>
+          <text x="307" y="15" font-family="'Geist Mono', monospace" font-size="7" font-weight="700" fill="#166534" text-anchor="middle">7. Launch Live Room</text>
+        </g>
+
+        <!-- Optional Step 8: Attendance sync (Dashed Accent) -->
+        <g transform="translate(0, 430)">
+          <line x1="385" y1="15" x2="90" y2="15" stroke="#EF6A3A" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arr-accent)"/>
+          <rect x="135" y="4" width="200" height="15" rx="2" fill="rgba(239,106,58,0.1)" stroke="#EF6A3A" stroke-width="0.8"/>
+          <text x="235" y="15" font-family="'Geist Mono', monospace" font-size="7" font-weight="700" fill="#EF6A3A" text-anchor="middle">8. Optional grade / attendance sync</text>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           RIGHT: ZOOM CLOUD & ATTENDANCE POLICY
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(830, 75)">
+        <rect width="270" height="490" rx="4" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.18)" stroke-width="1"/>
+        <text x="135" y="28" font-family="'Geist Mono', monospace" font-size="8.5" font-weight="600" fill="#657080" letter-spacing="0.12em" text-anchor="middle">ZOOM CLOUD INFRASTRUCTURE</text>
+
+        <!-- Virtual Classroom Box -->
+        <g transform="translate(15, 45)">
+          <rect width="240" height="100" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="10" y="10" width="80" height="15" rx="2" fill="#315FA8"/>
+          <text x="50" y="21" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#ffffff" text-anchor="middle">LIVE CLASS</text>
+          
+          <text x="10" y="44" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">Zoom Meeting Session</text>
+          <text x="10" y="58" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Host role mapped to assigned faculty</text>
+          <line x1="10" y1="70" x2="230" y2="70" stroke="rgba(37,43,54,0.1)"/>
+          
+          <text x="10" y="86" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">• Audio / Video / Screen sharing</text>
+        </g>
+
+        <!-- Role Resolution Card -->
+        <g transform="translate(15, 160)">
+          <rect width="240" height="100" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="10" y="10" width="95" height="15" rx="2" fill="#252B36"/>
+          <text x="57" y="21" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#ffffff" text-anchor="middle">ROSTER ROLES</text>
+          
+          <text x="10" y="44" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">NRPS Role Mapping</text>
+          <text x="10" y="58" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Automatic role determination</text>
+          <line x1="10" y1="70" x2="230" y2="70" stroke="rgba(37,43,54,0.1)"/>
+          
+          <text x="10" y="86" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">• Faculty = Meeting Host / Moderator</text>
+          <text x="10" y="98" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">• Student = Attendee / Participant</text>
+        </g>
+
+        <!-- Attendance Policy (Crucial Correction Card) -->
+        <g transform="translate(15, 275)">
+          <rect width="240" height="190" rx="3" fill="rgba(239,106,58,0.04)" stroke="#EF6A3A" stroke-width="1.2"/>
+          <rect x="10" y="10" width="130" height="16" rx="2" fill="#EF6A3A"/>
+          <text x="75" y="22" font-family="'Geist Mono', monospace" font-size="7" font-weight="700" fill="#ffffff" text-anchor="middle">ATTENDANCE POLICY</text>
+
+          <text x="10" y="46" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">Conditional Sync Policy</text>
+          
+          <text x="10" y="66" font-family="'Geist', sans-serif" font-size="9" line-height="1.4" fill="#252B36">Grade and attendance synchronization may be enabled where supported by the selected Zoom LTI configuration and Acuitey’s Zoom account/licensing.</text>
+          <line x1="10" y1="108" x2="230" y2="108" stroke="rgba(239,106,58,0.25)"/>
+
+          <text x="10" y="126" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">• Subject to Zoom plan type</text>
+          <text x="10" y="140" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">• Pro vs Business account limits</text>
+          <text x="10" y="154" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">• Webhook configuration required</text>
+          <text x="10" y="168" font-family="'Geist Mono', monospace" font-size="7.5" fill="#EF6A3A">• Not guaranteed prior to setup</text>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           BOTTOM LEGEND & FOOTNOTE
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(40, 615)">
+        <rect width="1060" height="42" rx="3" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.12)"/>
+        
+        <text x="20" y="25" font-family="'Geist Mono', monospace" font-size="8" font-weight="600" fill="#657080">ZOOM CONFIGURATION:</text>
+        <text x="165" y="25" font-family="'Geist', sans-serif" font-size="9" fill="#252B36">Confirm Acuitey's Zoom account/licensing and the LTI Pro functions enabled for the account prior to production configuration.</text>
+        
+        <text x="1040" y="25" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080" text-anchor="end">CONFIDENTIAL · ACUITEY SOLUTIONS</text>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>

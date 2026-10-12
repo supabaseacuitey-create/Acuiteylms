@@ -1,0 +1,153 @@
+---
+title: Theming
+description: Configure PDF themes, colors, typography, and spacing for Forme.
+---
+
+import { ThemePreview } from "@/components/theme-preview";
+import { ThemePreviewGrid } from "@/components/theme-preview-grid";
+
+<ThemePreview base="forme" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/forme/theme-provider
+```
+
+</TabsContent>
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/forme/components/theme-provider.tsx"
+  title="components/pdf/theme-provider.tsx"
+/>
+
+<ComponentSource
+  src="registry/themes/professional.ts"
+  base="forme"
+  title="lib/pdf-themes/professional.ts"
+/>
+
+<ComponentSource
+  src="registry/themes/primitives.ts"
+  base="forme"
+  title="lib/pdf-themes/primitives.ts"
+/>
+
+<ComponentSource
+  src="registry/types/pdf-themes.ts"
+  base="forme"
+  title="types/pdf-themes.ts"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { PdfcnThemeProvider } from "@/components/pdf/theme-provider";
+import { professionalTheme } from "@/lib/pdf-themes/professional";
+
+export function Invoice() {
+  return (
+    <PdfcnThemeProvider theme={professionalTheme}>
+      {/* Your PDF content */}
+    </PdfcnThemeProvider>
+  );
+}
+```
+
+## Color Tokens
+
+All color values must be hex strings (e.g., `#1a1a1a`). React PDF supports hex, `rgb()`, and `hsl()` — but NOT `oklch`.
+
+| Token               | Purpose                     |
+| ------------------- | --------------------------- |
+| `foreground`        | Primary text color          |
+| `background`        | Page background             |
+| `muted`             | Secondary backgrounds       |
+| `mutedForeground`   | Captions, footnotes         |
+| `primary`           | Brand/accent color          |
+| `primaryForeground` | Text on primary backgrounds |
+| `border`            | Table borders, dividers     |
+| `accent`            | Call-to-action elements     |
+| `destructive`       | Error states                |
+| `success`           | Success states              |
+| `warning`           | Warning states              |
+| `info`              | Informational states        |
+
+## Primitive Tokens
+
+Primitives define the raw design scales available to themes:
+
+- **Typography Scale** — Major Third (1.25) ratio with 12pt base
+- **Spacing Scale** — 4pt grid system
+- **Font Weights** — 400–700
+- **Line Heights** — 1.2–1.6
+- **Border Radius** — 0–8pt
+
+## Custom Themes
+
+Use the `PdfcnTheme` interface to create custom themes while preserving the complete theme shape.
+
+```tsx
+import type { PdfcnTheme } from "@/registry/themes";
+import { defaultPrimitives } from "@/registry/themes";
+
+export const oceanTheme: PdfcnTheme = {
+  name: "ocean",
+  primitives: defaultPrimitives,
+  colors: {
+    foreground: "#0f172a",
+    background: "#ffffff",
+    primary: "#0369a1",
+    accent: "#0ea5e9",
+    muted: "#f1f5f9",
+    border: "#e2e8f0",
+    mutedForeground: "#64748b",
+    primaryForeground: "#ffffff",
+    destructive: "#dc2626",
+    success: "#16a34a",
+    warning: "#d97706",
+    info: "#0ea5e9",
+  },
+  typography: {
+    body: { fontFamily: "Helvetica", fontSize: 11, lineHeight: 1.6 },
+    heading: {
+      fontFamily: "Times-Roman",
+      fontWeight: 700,
+      lineHeight: 1.25,
+      fontSize: { h1: 32, h2: 24, h3: 20, h4: 16, h5: 14, h6: 12 },
+    },
+  },
+  spacing: {
+    page: { marginTop: 56, marginRight: 48, marginBottom: 56, marginLeft: 48 },
+    sectionGap: 28,
+    paragraphGap: 10,
+    componentGap: 14,
+  },
+  page: { size: "A4", orientation: "portrait" },
+};
+```
+
+## Available Themes
+
+<ThemePreviewGrid />

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment &amp; Enrolment Architecture - Acuitey Solutions LMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #F7F7F5;
+      --color-ink:     #252B36;
+      --color-muted:   #657080;
+      --color-accent:  #EF6A3A;
+      --color-link:    #315FA8;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+    .frame { width: 100%; max-width: 1140px; }
+    svg { width: 100%; height: auto; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <svg viewBox="0 0 1140 680" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pay-title pay-desc">
+      <title id="pay-title">Acuitey Solutions LMS - Payment &amp; Enrolment Flow Architecture</title>
+      <desc id="pay-desc">Architectural diagram detailing the dual gateway integration with Razorpay and PhonePe, Moodle core_payment abstraction, server-side gateway-specific verification, and atomic enrolment dispatches.</desc>
+      <defs>
+        <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="0.9" fill="rgba(37,43,54,0.08)"/>
+        </pattern>
+        <marker id="arr-muted" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#657080"/>
+        </marker>
+        <marker id="arr-accent" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#EF6A3A"/>
+        </marker>
+        <marker id="arr-blue" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#315FA8"/>
+        </marker>
+        <marker id="arr-red" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#DC2626"/>
+        </marker>
+      </defs>
+
+      <!-- Background -->
+      <rect width="100%" height="100%" fill="#F7F7F5"/>
+      <rect width="100%" height="100%" fill="url(#dots)"/>
+
+      <!-- Large Faded Section Number -->
+      <text x="1100" y="70" font-family="'Geist Mono', monospace" font-size="76" font-weight="700" fill="rgba(37,43,54,0.05)" text-anchor="end">06</text>
+
+      <!-- Phase Banner / Top Flow Label -->
+      <g transform="translate(40, 20)">
+        <polygon points="0,0 260,0 272,14 260,28 0,28" fill="#252B36"/>
+        <polygon points="272,0 560,0 572,14 560,28 272,28 284,14" fill="#3A4354"/>
+        <polygon points="572,0 840,0 852,14 840,28 572,28 584,14" fill="#EF6A3A"/>
+        <polygon points="852,0 1060,0 1060,28 852,28 864,14" fill="#252B36"/>
+
+        <text x="130" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em" text-anchor="middle">1. COURSE INGESTION</text>
+        <text x="416" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em" text-anchor="middle">2. GATEWAY ORCHESTRATION</text>
+        <text x="706" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="700" letter-spacing="0.14em" text-anchor="middle">3. SERVER-SIDE VERIFICATION</text>
+        <text x="956" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em" text-anchor="middle">4. ENROLMENT DISPATCH</text>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           STEP 1: STUDENT & COURSE SELECTION
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(40, 75)">
+        <rect width="210" height="235" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.22)"/>
+        <rect x="12" y="12" width="70" height="18" rx="2" fill="#252B36"/>
+        <text x="47" y="25" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#ffffff" text-anchor="middle">STUDENT</text>
+
+        <text x="12" y="52" font-family="'Geist', sans-serif" font-size="13" font-weight="700" fill="#252B36">Course Enrolment</text>
+        <text x="12" y="68" font-family="'Geist', sans-serif" font-size="9.5" fill="#657080">Student selects course offering</text>
+        <line x1="12" y1="80" x2="198" y2="80" stroke="rgba(37,43,54,0.1)"/>
+
+        <!-- Decision Box -->
+        <g transform="translate(12, 92)">
+          <rect width="186" height="58" rx="2" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.15)"/>
+          <text x="93" y="22" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#252B36" text-anchor="middle">FEE REQUIREMENT?</text>
+          <text x="93" y="38" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080" text-anchor="middle">Inspect course enrolment plugin</text>
+          <text x="93" y="50" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8" text-anchor="middle">enrol_fee vs enrol_self</text>
+        </g>
+
+        <!-- Free Path -->
+        <g transform="translate(12, 160)">
+          <rect width="186" height="60" rx="2" fill="rgba(22,101,52,0.05)" stroke="#166534" stroke-width="0.8"/>
+          <text x="10" y="20" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#166534">BRANCH A: FREE COURSE</text>
+          <text x="10" y="34" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">Instant enrolment via enrol_self</text>
+          <text x="10" y="48" font-family="'Geist Mono', monospace" font-size="7.5" fill="#166534">Direct access granted immediately</text>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           STEP 2: MOODLE CORE_PAYMENT & GATEWAY SELECTION
+           ════════════════════════════════════════════════ -->
+      <!-- Arrow: Paid Path → core_payment -->
+      <path d="M 250,190 H 280" fill="none" stroke="#EF6A3A" stroke-width="1.5" marker-end="url(#arr-accent)"/>
+
+      <g transform="translate(280, 75)">
+        <rect width="240" height="235" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.22)"/>
+        <rect x="12" y="12" width="100" height="18" rx="2" fill="#252B36"/>
+        <text x="62" y="25" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#ffffff" text-anchor="middle">CORE PAYMENT</text>
+
+        <text x="12" y="52" font-family="'Geist', sans-serif" font-size="13" font-weight="700" fill="#252B36">Moodle Payment API</text>
+        <text x="12" y="68" font-family="'Geist', sans-serif" font-size="9.5" fill="#657080">Unified core_payment gateway broker</text>
+        <line x1="12" y1="80" x2="228" y2="80" stroke="rgba(37,43,54,0.1)"/>
+
+        <!-- Dual Gateway Cards -->
+        <g transform="translate(12, 92)">
+          <!-- Razorpay -->
+          <rect width="216" height="60" rx="2" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.15)"/>
+          <rect x="8" y="8" width="60" height="14" rx="2" fill="#0284c7"/>
+          <text x="38" y="18" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#ffffff" text-anchor="middle">RAZORPAY</text>
+          <text x="75" y="19" font-family="'Geist', sans-serif" font-size="10.5" font-weight="600" fill="#252B36">Razorpay Checkout</text>
+          <text x="8" y="36" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080">UPI Intent, Netbanking, Cards, Wallets</text>
+          <text x="8" y="48" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">payment/gateway/razorpay</text>
+
+          <!-- PhonePe -->
+          <g transform="translate(0, 68)">
+            <rect width="216" height="60" rx="2" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.15)"/>
+            <rect x="8" y="8" width="55" height="14" rx="2" fill="#7c3aed"/>
+            <text x="35" y="18" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#ffffff" text-anchor="middle">PHONEPE</text>
+            <text x="70" y="19" font-family="'Geist', sans-serif" font-size="10.5" font-weight="600" fill="#252B36">PhonePe PG API</text>
+            <text x="8" y="36" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080">Direct UPI app switch &amp; merchant QR</text>
+            <text x="8" y="48" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">payment/gateway/phonepe</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           STEP 3: SERVER-SIDE GATEWAY-SPECIFIC VERIFICATION (Focal Block)
+           ════════════════════════════════════════════════ -->
+      <!-- Arrow: Gateways → Verification -->
+      <path d="M 520,190 H 555" fill="none" stroke="#EF6A3A" stroke-width="1.5" marker-end="url(#arr-accent)"/>
+
+      <g transform="translate(555, 75)">
+        <rect width="305" height="490" rx="4" fill="rgba(239,106,58,0.04)" stroke="#EF6A3A" stroke-width="1.5"/>
+        
+        <!-- Header -->
+        <rect x="14" y="12" width="160" height="18" rx="2" fill="#EF6A3A"/>
+        <text x="94" y="25" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">MANDATORY SERVER CHECK</text>
+
+        <text x="14" y="52" font-family="'Geist', sans-serif" font-size="13" font-weight="700" fill="#252B36">Server-Side Gateway Verification</text>
+        <text x="14" y="68" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Strict multi-stage cryptographic and status validation pipeline</text>
+
+        <!-- 4 Verification Stages (The Preferred Flow) -->
+        <g transform="translate(14, 85)">
+          <!-- Stage 1: Signature/Authenticity -->
+          <g transform="translate(0, 0)">
+            <rect width="277" height="74" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <rect x="8" y="8" width="20" height="20" rx="2" fill="#252B36"/>
+            <text x="18" y="22" font-family="'Geist Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+            <text x="35" y="22" font-family="'Geist', sans-serif" font-size="11" font-weight="700" fill="#252B36">Signature &amp; Authenticity Validation</text>
+            <text x="8" y="42" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080">Gateway-specific cryptographic signature verification.</text>
+            <text x="8" y="56" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">Secrets reside on server; never exposed to browser.</text>
+          </g>
+
+          <!-- Stage 2: Payment-Status -->
+          <g transform="translate(0, 84)">
+            <rect width="277" height="74" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <rect x="8" y="8" width="20" height="20" rx="2" fill="#252B36"/>
+            <text x="18" y="22" font-family="'Geist Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+            <text x="35" y="22" font-family="'Geist', sans-serif" font-size="11" font-weight="700" fill="#252B36">Payment-Status Verification</text>
+            <text x="8" y="42" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080">Independent direct API status query to gateway endpoint.</text>
+            <text x="8" y="56" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">Status must strictly equal 'captured' or 'PAYMENT_SUCCESS'.</text>
+          </g>
+
+          <!-- Stage 3: Amount/Order -->
+          <g transform="translate(0, 168)">
+            <rect width="277" height="74" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <rect x="8" y="8" width="20" height="20" rx="2" fill="#252B36"/>
+            <text x="18" y="22" font-family="'Geist Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+            <text x="35" y="22" font-family="'Geist', sans-serif" font-size="11" font-weight="700" fill="#252B36">Amount &amp; Order Validation</text>
+            <text x="8" y="42" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080">Server validates exact amount, currency (INR), and order_id</text>
+            <text x="8" y="56" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">against mdl_payment_accounts to prevent tampering.</text>
+          </g>
+
+          <!-- Stage 4: Idempotency Protection -->
+          <g transform="translate(0, 252)">
+            <rect width="277" height="74" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <rect x="8" y="8" width="20" height="20" rx="2" fill="#252B36"/>
+            <text x="18" y="22" font-family="'Geist Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+            <text x="35" y="22" font-family="'Geist', sans-serif" font-size="11" font-weight="700" fill="#252B36">Duplicate &amp; Idempotency Protection</text>
+            <text x="8" y="42" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080">Transaction ID checked against mdl_payments ledger.</text>
+            <text x="8" y="56" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">Prevents duplicate allocations from duplicate webhooks.</text>
+          </g>
+
+          <!-- Success summary -->
+          <g transform="translate(0, 336)">
+            <rect width="277" height="48" rx="2" fill="rgba(22,101,52,0.08)" stroke="#166534" stroke-width="0.8"/>
+            <text x="10" y="20" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#166534">OUTCOME: CONFIRMED PAYMENT</text>
+            <text x="10" y="36" font-family="'Geist', sans-serif" font-size="8.5" fill="#252B36">All 4 checks pass → Trigger enrolment dispatch</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           STEP 4: FINAL DISPATCH & FAILURE HANDLING
+           ════════════════════════════════════════════════ -->
+      <!-- Arrow: Confirmed Payment → Enrolment -->
+      <path d="M 860,445 H 895" fill="none" stroke="#166534" stroke-width="1.5" marker-end="url(#arr-accent)"/>
+
+      <!-- Enrolment Success Box -->
+      <g transform="translate(895, 75)">
+        <rect width="205" height="235" rx="3" fill="#ffffff" stroke="rgba(22,101,52,0.3)"/>
+        <rect x="12" y="12" width="115" height="18" rx="2" fill="rgba(22,101,52,0.1)" stroke="#166534" stroke-width="0.8"/>
+        <text x="69" y="25" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#166534" text-anchor="middle">MOODLE ENROLMENT</text>
+
+        <text x="12" y="52" font-family="'Geist', sans-serif" font-size="13" font-weight="700" fill="#166534">Course Access Active</text>
+        <text x="12" y="68" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Instant atomic user enrolment</text>
+        <line x1="12" y1="80" x2="193" y2="80" stroke="rgba(22,101,52,0.15)"/>
+
+        <text x="12" y="98" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36">• mdl_user_enrolments row created</text>
+        <text x="12" y="112" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36">• Course dashboard unlocked</text>
+        <text x="12" y="126" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36">• Dispatches core_message receipt</text>
+        <text x="12" y="140" font-family="'Geist Mono', monospace" font-size="8" fill="#EF6A3A">• Triggers faculty routing event</text>
+
+        <rect x="12" y="160" width="181" height="60" rx="2" fill="rgba(37,43,54,0.03)" stroke="rgba(37,43,54,0.1)"/>
+        <text x="90" y="180" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#252B36" text-anchor="middle">EVENT DISPATCH</text>
+        <text x="90" y="196" font-family="'Geist Mono', monospace" font-size="7" fill="#657080" text-anchor="middle">\core\event\user_enrolment_created</text>
+      </g>
+
+      <!-- Failure / Exception Box (Below Success) -->
+      <g transform="translate(895, 330)">
+        <rect width="205" height="235" rx="3" fill="#ffffff" stroke="#DC2626" stroke-width="1.2" stroke-dasharray="4,3"/>
+        <rect x="12" y="12" width="115" height="18" rx="2" fill="rgba(220,38,38,0.1)" stroke="#DC2626" stroke-width="0.8"/>
+        <text x="69" y="25" font-family="'Geist Mono', monospace" font-size="7" font-weight="700" fill="#DC2626" text-anchor="middle">FAILURE / TAMPERING</text>
+
+        <text x="12" y="52" font-family="'Geist', sans-serif" font-size="13" font-weight="700" fill="#DC2626">No Enrolment</text>
+        <text x="12" y="68" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Strict fail-safe isolation</text>
+        <line x1="12" y1="80" x2="193" y2="80" stroke="rgba(220,38,38,0.2)"/>
+
+        <text x="12" y="98" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36">• Invalid signature: REJECT</text>
+        <text x="12" y="112" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36">• Amount mismatch: ALERT</text>
+        <text x="12" y="126" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36">• Duplicate order_id: IGNORE</text>
+        <text x="12" y="140" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36">• Status pending: RETRY POLL</text>
+
+        <rect x="12" y="160" width="181" height="60" rx="2" fill="rgba(220,38,38,0.04)" stroke="rgba(220,38,38,0.2)"/>
+        <text x="90" y="180" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#DC2626" text-anchor="middle">SECURITY AUDIT LOG</text>
+        <text x="90" y="196" font-family="'Geist Mono', monospace" font-size="7" fill="#657080" text-anchor="middle">Logged to mdl_logstore_standard</text>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           BOTTOM LEGEND & FOOTNOTE
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(40, 615)">
+        <rect width="1060" height="42" rx="3" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.12)"/>
+        
+        <text x="20" y="25" font-family="'Geist Mono', monospace" font-size="8" font-weight="600" fill="#657080">COMMERCE GOVERNANCE:</text>
+        <text x="165" y="25" font-family="'Geist', sans-serif" font-size="9" fill="#252B36">Confirm whether Razorpay and PhonePe will both be offered simultaneously and obtain required production merchant/API credentials.</text>
+        
+        <text x="1040" y="25" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080" text-anchor="end">CONFIDENTIAL · ACUITEY SOLUTIONS</text>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>

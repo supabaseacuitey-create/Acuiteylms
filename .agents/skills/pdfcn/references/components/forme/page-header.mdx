@@ -1,0 +1,116 @@
+---
+title: "Page Header"
+description: "Repeating page header."
+---
+
+<ComponentPreview base="forme" name="page-header" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/forme/page-header
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @formepdf/react @formepdf/core
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/forme/components/page-header/page-header.tsx"
+  base="forme"
+  title="components/pdf/page-header/page-header.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/components/theme-provider.tsx"
+  base="forme"
+  title="components/pdf/theme-provider.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/resolve-color.ts"
+  base="forme"
+  title="lib/resolve-color.ts"
+/>
+
+<ComponentSource
+  src="registry/themes/professional.ts"
+  base="forme"
+  title="lib/pdf-themes/professional.ts"
+/>
+
+<ComponentSource
+  src="registry/themes/primitives.ts"
+  base="forme"
+  title="lib/pdf-themes/primitives.ts"
+/>
+
+<ComponentSource
+  src="registry/types/pdf-themes.ts"
+  base="forme"
+  title="types/pdf-themes.ts"
+/>
+
+<ComponentSource
+  src="registry/types/pdf-components.ts"
+  base="forme"
+  title="types/pdf-components.ts"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { PageHeader } from "@/components/pdf/page-header";
+```
+
+```tsx
+<PageHeader title="Company" subtitle="Invoice" />
+```
+
+## API Reference
+
+### PageHeader
+
+| Prop           | Type                                                                                              | Default  |
+| -------------- | ------------------------------------------------------------------------------------------------- | -------- |
+| `title`        | `string`                                                                                          | -        |
+| `subtitle`     | `string`                                                                                          | -        |
+| `rightText`    | `string`                                                                                          | -        |
+| `rightSubText` | `string`                                                                                          | -        |
+| `variant`      | `'simple' \| 'centered' \| 'minimal' \| 'branded' \| 'logo-left' \| 'logo-right' \| 'two-column'` | 'simple' |
+| `background`   | `string`                                                                                          | -        |
+| `titleColor`   | `string`                                                                                          | -        |
+| `marginBottom` | `number`                                                                                          | -        |
+| `address`      | `string`                                                                                          | -        |
+| `phone`        | `string`                                                                                          | -        |
+| `email`        | `string`                                                                                          | -        |
+| `logo`         | `ReactNode`                                                                                       | -        |
+| `fixed`        | `boolean`                                                                                         | false    |
+| `noWrap`       | `boolean`                                                                                         | true     |

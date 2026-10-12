@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard — Acuitey Solutions Enterprise LMS</title>
+  <meta name="description" content="Acuitey Solutions Enterprise LMS Student Dashboard. Focused learner workspace for active courses, upcoming assignments, live Zoom sessions, and faculty support.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Acuitey Design Tokens (ACUITEY-DESIGN.md) */
+      --acuitey-bg-canvas: #F9FAFB;
+      --acuitey-bg-surface: #FFFFFF;
+      --acuitey-bg-subtle: #F3F4F6;
+      --acuitey-bg-muted: #E5E7EB;
+
+      --acuitey-border-hairline: #E5E7EB;
+      --acuitey-border-subtle: #D1D5DB;
+      --acuitey-border-strong: #9CA3AF;
+
+      --acuitey-text-primary: #0F172A;
+      --acuitey-text-secondary: #334155;
+      --acuitey-text-muted: #64748B;
+      --acuitey-text-disabled: #94A3B8;
+
+      --acuitey-navy-900: #0C192C;
+      --acuitey-navy-800: #13243D;
+      --acuitey-cobalt-700: #1D4ED8;
+      --acuitey-cobalt-800: #1E40AF;
+      --acuitey-cobalt-50: #EFF6FF;
+
+      --acuitey-status-success-fg: #065F46;
+      --acuitey-status-success-bg: #ECFDF5;
+      --acuitey-status-success-border: #A7F3D0;
+
+      --acuitey-status-warning-fg: #92400E;
+      --acuitey-status-warning-bg: #FFFBEB;
+      --acuitey-status-warning-border: #FDE68A;
+
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+      --radius-badge: 3px;
+      --radius-control: 5px;
+      --radius-card: 6px;
+      --radius-modal: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--acuitey-bg-canvas);
+      color: var(--acuitey-text-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Top Moodle Navbar (theme_acuitey/navbar) */
+    .moodle-navbar {
+      background: var(--acuitey-bg-surface);
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .drawer-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--acuitey-border-hairline);
+      background: var(--acuitey-bg-surface);
+      color: var(--acuitey-text-secondary);
+      cursor: pointer;
+    }
+
+    .drawer-toggle-btn:hover {
+      background: var(--acuitey-bg-subtle);
+      color: var(--acuitey-text-primary);
+    }
+
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      background: var(--acuitey-navy-900);
+      border-radius: var(--radius-control);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .brand-subtitle {
+      font-size: 10px;
+      color: var(--acuitey-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--acuitey-text-secondary);
+      padding: 6px 0;
+      transition: color 0.15s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--acuitey-cobalt-700);
+    }
+
+    .nav-link.active {
+      color: var(--acuitey-cobalt-700);
+      font-weight: 600;
+      border-bottom: 2px solid var(--acuitey-cobalt-700);
+    }
+
+    .nav-user-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .notif-bell-btn {
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--acuitey-text-secondary);
+      padding: 6px;
+      border-radius: var(--radius-control);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notif-bell-btn:hover {
+      background: var(--acuitey-bg-subtle);
+      color: var(--acuitey-text-primary);
+    }
+
+    .notif-badge-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 7px;
+      height: 7px;
+      background: var(--acuitey-cobalt-700);
+      border: 1px solid var(--acuitey-bg-surface);
+      border-radius: 50%;
+    }
+
+    .user-profile-menu {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 8px;
+      border-radius: var(--radius-control);
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .user-profile-menu:hover {
+      background: var(--acuitey-bg-subtle);
+      border-color: var(--acuitey-border-hairline);
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--acuitey-navy-900);
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .user-info-text {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .user-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+    }
+
+    .user-role-badge {
+      font-size: 10px;
+      color: var(--acuitey-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    /* Restrained Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: var(--radius-control);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--acuitey-cobalt-700);
+      outline-offset: 1px;
+    }
+
+    .btn-primary {
+      background: var(--acuitey-navy-900);
+      color: #FFFFFF;
+      border-color: var(--acuitey-navy-900);
+    }
+
+    .btn-primary:hover {
+      background: var(--acuitey-navy-800);
+      border-color: var(--acuitey-navy-800);
+    }
+
+    .btn-action {
+      background: var(--acuitey-cobalt-700);
+      color: #FFFFFF;
+      border-color: var(--acuitey-cobalt-700);
+    }
+
+    .btn-action:hover {
+      background: var(--acuitey-cobalt-800);
+      border-color: var(--acuitey-cobalt-800);
+    }
+
+    .btn-secondary {
+      background: var(--acuitey-bg-surface);
+      color: var(--acuitey-text-primary);
+      border-color: var(--acuitey-border-subtle);
+    }
+
+    .btn-secondary:hover {
+      background: var(--acuitey-bg-subtle);
+      border-color: var(--acuitey-border-strong);
+    }
+
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+
+    .sample-pill {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--acuitey-status-warning-fg);
+      background: var(--acuitey-status-warning-bg);
+      border: 1px solid var(--acuitey-status-warning-border);
+      padding: 1px 5px;
+      border-radius: var(--radius-badge);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Prototype State Controller (Top Banner) */
+    .prototype-controller-bar {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .controller-label-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--acuitey-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .state-switch-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--acuitey-bg-canvas);
+      padding: 2px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--acuitey-border-hairline);
+    }
+
+    .state-btn {
+      padding: 3px 8px;
+      border: none;
+      background: transparent;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--acuitey-text-secondary);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .state-btn.active {
+      background: var(--acuitey-bg-surface);
+      color: var(--acuitey-text-primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    /* Main Dashboard Layout Container (3 Columns: Drawer + Main Workspace + Block Region) */
+    .dashboard-layout-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 240px 1fr 340px;
+      gap: 24px;
+      padding: 24px;
+      align-items: start;
+    }
+
+    /* Left Navigation Drawer (Moodle theme_boost_drawer) */
+    .moodle-drawer {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: sticky;
+      top: 84px;
+    }
+
+    .drawer-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--acuitey-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 8px 10px 4px;
+    }
+
+    .drawer-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: var(--radius-control);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--acuitey-text-secondary);
+      transition: all 0.15s ease;
+    }
+
+    .drawer-item:hover {
+      background: var(--acuitey-bg-subtle);
+      color: var(--acuitey-text-primary);
+    }
+
+    .drawer-item.active {
+      background: var(--acuitey-cobalt-50);
+      color: var(--acuitey-cobalt-700);
+      font-weight: 600;
+    }
+
+    .drawer-item svg {
+      width: 16px;
+      height: 16px;
+      color: currentColor;
+    }
+
+    .drawer-badge {
+      margin-left: auto;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: var(--radius-badge);
+      background: var(--acuitey-bg-subtle);
+      color: var(--acuitey-text-muted);
+    }
+
+    /* Middle Learning Workspace */
+    .learning-workspace {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      min-width: 0; /* Prevents flex/grid blowouts */
+    }
+
+    /* Student Context Welcome Area */
+    .student-context-card {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 24px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .welcome-heading-group {
+      max-width: 600px;
+    }
+
+    .welcome-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .context-line {
+      font-size: 13px;
+      color: var(--acuitey-text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Restrained Institutional Announcement Banner */
+    .announcement-banner {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-left: 3px solid var(--acuitey-cobalt-700);
+      border-radius: var(--radius-card);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--acuitey-text-secondary);
+    }
+
+    .announcement-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Section Headings */
+    .section-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Active Enrolled Courses Grid */
+    .active-courses-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .course-progress-card {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: border-color 0.15s ease;
+    }
+
+    .course-progress-card:hover {
+      border-color: var(--acuitey-border-subtle);
+    }
+
+    .course-card-top-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .course-tag-code {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .discipline-tag {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--acuitey-cobalt-700);
+      background: var(--acuitey-cobalt-50);
+      border: 1px solid rgba(29, 78, 216, 0.2);
+      padding: 1px 6px;
+      border-radius: var(--radius-badge);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .code-mono {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--acuitey-text-muted);
+      font-weight: 500;
+    }
+
+    .course-card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+      line-height: 1.35;
+    }
+
+    /* Restrained Progress Bar Structure */
+    .progress-section {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .progress-labels {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+
+    .progress-status-text {
+      color: var(--acuitey-text-secondary);
+      font-weight: 500;
+    }
+
+    .progress-percent-mono {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      background: var(--acuitey-bg-subtle);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--acuitey-cobalt-700);
+      border-radius: 3px;
+    }
+
+    .next-activity-panel {
+      background: var(--acuitey-bg-canvas);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-control);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .activity-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .activity-type-label {
+      font-size: 10px;
+      color: var(--acuitey-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .activity-name-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+    }
+
+    .activity-due-text {
+      font-size: 11px;
+      color: var(--acuitey-text-secondary);
+      margin-top: 2px;
+    }
+
+    /* Upcoming Work List Card */
+    .upcoming-work-card {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+    }
+
+    .work-items-list {
+      display: flex;
+      flex-direction: column;
+      divide-y: 1px solid var(--acuitey-border-hairline);
+    }
+
+    .work-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      gap: 12px;
+    }
+
+    .work-item-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .work-item-left {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .work-type-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-control);
+      background: var(--acuitey-bg-subtle);
+      border: 1px solid var(--acuitey-border-hairline);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--acuitey-navy-900);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .work-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .work-title-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+    }
+
+    .work-subtext {
+      font-size: 11px;
+      color: var(--acuitey-text-muted);
+    }
+
+    /* Recent Feedback Block */
+    .feedback-card {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .feedback-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .feedback-grade-pill {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--acuitey-status-success-fg);
+      background: var(--acuitey-status-success-bg);
+      border: 1px solid var(--acuitey-status-success-border);
+      padding: 2px 8px;
+      border-radius: var(--radius-badge);
+    }
+
+    .feedback-quote {
+      font-size: 13px;
+      color: var(--acuitey-text-secondary);
+      line-height: 1.5;
+      padding: 10px 14px;
+      background: var(--acuitey-bg-canvas);
+      border-left: 2px solid var(--acuitey-cobalt-700);
+      border-radius: 0 var(--radius-control) var(--radius-control) 0;
+    }
+
+    /* Right Contextual Block Region (Moodle Block Region) */
+    .contextual-block-region {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Next Live Session Widget */
+    .live-session-widget {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-top: 3px solid var(--acuitey-cobalt-700);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .session-timing-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--acuitey-cobalt-700);
+      background: var(--acuitey-cobalt-50);
+      padding: 2px 8px;
+      border-radius: var(--radius-badge);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      width: fit-content;
+    }
+
+    .session-title-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      line-height: 1.35;
+    }
+
+    .session-meta-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--acuitey-text-secondary);
+    }
+
+    /* Faculty / Learning Support Panel (Supports 4 Optional States) */
+    .faculty-support-widget {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .support-state-tabs {
+      display: flex;
+      background: var(--acuitey-bg-canvas);
+      padding: 2px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--acuitey-border-hairline);
+      gap: 2px;
+    }
+
+    .support-tab-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 4px 6px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--acuitey-text-muted);
+      border-radius: 3px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    .support-tab-btn.active {
+      background: var(--acuitey-bg-surface);
+      color: var(--acuitey-text-primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .faculty-profile-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mentor-avatar-lg {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--acuitey-navy-900);
+      color: #FFFFFF;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .mentor-meta-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mentor-name-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+    }
+
+    .mentor-specialization {
+      font-size: 11px;
+      color: var(--acuitey-text-muted);
+    }
+
+    .support-state-view {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .support-state-view.active {
+      display: flex;
+    }
+
+    /* Certificates Widget */
+    .certificates-widget {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cert-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--acuitey-border-hairline);
+    }
+
+    /* Support Access Hub */
+    .support-hub-widget {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .support-hub-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--acuitey-text-secondary);
+      padding: 8px 10px;
+      border-radius: var(--radius-control);
+      background: var(--acuitey-bg-canvas);
+      border: 1px solid var(--acuitey-border-hairline);
+    }
+
+    .support-hub-link:hover {
+      background: var(--acuitey-bg-subtle);
+      color: var(--acuitey-text-primary);
+      border-color: var(--acuitey-border-subtle);
+    }
+
+    /* Prototype Demonstration Skeleton State */
+    .skeleton-workspace {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .skeleton-box {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .skeleton-line {
+      height: 14px;
+      background: var(--acuitey-bg-subtle);
+      border-radius: 3px;
+      animation: pulse 1.6s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+
+    /* Empty Course State */
+    .empty-courses-panel {
+      display: none;
+      background: var(--acuitey-bg-surface);
+      border: 1px dashed var(--acuitey-border-subtle);
+      border-radius: var(--radius-card);
+      padding: 40px 24px;
+      text-align: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* Moodle Architectural Technical Mapping Notice */
+    .moodle-arch-notice {
+      grid-column: 1 / -1;
+      margin-top: 16px;
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-left: 3px solid var(--acuitey-cobalt-700);
+      border-radius: var(--radius-card);
+      padding: 20px 24px;
+    }
+
+    .arch-notice-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .arch-notice-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .arch-notice-text {
+      font-size: 13px;
+      color: var(--acuitey-text-secondary);
+      line-height: 1.6;
+    }
+
+    .arch-tier-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .arch-tier-card {
+      background: var(--acuitey-bg-canvas);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-control);
+      padding: 10px 12px;
+    }
+
+    .arch-tier-name {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--acuitey-cobalt-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .arch-tier-desc {
+      font-size: 11px;
+      color: var(--acuitey-text-secondary);
+      line-height: 1.4;
+    }
+
+    /* Moodle Footer */
+    .moodle-footer {
+      background: var(--acuitey-bg-surface);
+      border-top: 1px solid var(--acuitey-border-hairline);
+      padding: 32px 24px 24px;
+      margin-top: 48px;
+    }
+
+    .footer-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-left {
+      font-size: 12px;
+      color: var(--acuitey-text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .footer-link {
+      font-size: 12px;
+      color: var(--acuitey-text-secondary);
+    }
+
+    .footer-link:hover {
+      color: var(--acuitey-text-primary);
+    }
+
+    /* Responsive Governance */
+    @media (max-width: 1024px) {
+      .dashboard-layout-container {
+        grid-template-columns: 1fr 320px;
+        padding: 20px;
+        gap: 20px;
+      }
+      .moodle-drawer {
+        display: none; /* Collapses into mobile off-canvas drawer */
+      }
+      .nav-links {
+        display: none;
+      }
+      .arch-tier-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-layout-container {
+        grid-template-columns: 1fr;
+        padding: 16px;
+        gap: 16px;
+      }
+      .navbar-container {
+        padding: 0 16px;
+      }
+      .prototype-controller-bar {
+        padding: 8px 16px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .state-switch-btn-group {
+        display: flex;
+        width: 100%;
+        overflow-x: auto;
+      }
+      .state-btn {
+        flex: 1;
+        padding: 5px 6px;
+        font-size: 10px;
+        text-align: center;
+        white-space: nowrap;
+      }
+      .student-context-card {
+        padding: 16px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .student-context-card > div:last-child {
+        width: 100%;
+        display: flex;
+        gap: 8px;
+      }
+      .student-context-card > div:last-child .btn {
+        flex: 1;
+      }
+      .welcome-title {
+        font-size: 18px;
+      }
+      .course-card-top-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      .course-card-top-row .btn {
+        width: 100%;
+      }
+      .next-activity-panel {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      .next-activity-panel .btn {
+        width: 100%;
+      }
+      .user-info-text {
+        display: none;
+      }
+      .arch-tier-grid {
+        grid-template-columns: 1fr;
+      }
+      .moodle-footer {
+        padding: 24px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Moodle Boost Child Theme Navbar (theme_acuitey/navbar) -->
+  <header class="moodle-navbar">
+    <div class="navbar-container">
+      <div class="brand-group">
+        <button type="button" class="drawer-toggle-btn" aria-label="Toggle Navigation Drawer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <a href="homepage.html" style="display: flex; align-items: center; gap: 10px;">
+          <div class="brand-mark">AS</div>
+          <div class="brand-text">
+            <span class="brand-title">Acuitey Solutions</span>
+            <span class="brand-subtitle">Enterprise LMS</span>
+          </div>
+        </a>
+      </div>
+
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="homepage.html" class="nav-link">Home</a></li>
+          <li><a href="course-catalogue.html" class="nav-link">Curriculums</a></li>
+          <li><a href="student-dashboard.html" class="nav-link active">Dashboard</a></li>
+          <li><a href="#calendar" class="nav-link">Calendar</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-user-actions">
+        <button type="button" class="notif-bell-btn" aria-label="View notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span class="notif-badge-dot"></span>
+        </button>
+
+        <div class="user-profile-menu" tabindex="0" role="button" aria-label="User profile menu for Priya Sharma">
+          <span class="user-avatar">PS</span>
+          <div class="user-info-text">
+            <span class="user-name">Priya Sharma <span class="sample-pill">[SAMPLE DATA]</span></span>
+            <span class="user-role-badge">Learner / Student</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Prototype Reviewer State Controller -->
+  <aside class="prototype-controller-bar" aria-label="Prototype state controls">
+    <div class="controller-label-group">
+      <span>Prototype Reviewer Mode:</span>
+      <span class="sample-pill">[DEMO ONLY]</span>
+    </div>
+    <div class="state-switch-btn-group">
+      <button type="button" class="state-btn active" id="btn-state-normal">Active Dashboard</button>
+      <button type="button" class="state-btn" id="btn-state-empty">No Active Courses</button>
+      <button type="button" class="state-btn" id="btn-state-skeleton">Skeleton Loading</button>
+    </div>
+  </aside>
+
+  <!-- Main 3-Column Learning Dashboard Structure -->
+  <main class="dashboard-layout-container">
+
+    <!-- 1. Left Navigation Drawer (Moodle Boost Drawer Component) -->
+    <aside class="moodle-drawer" aria-label="Workspace Navigation">
+      <div class="drawer-section-title">Academic Workspace</div>
+      <a href="student-dashboard.html" class="drawer-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="course-catalogue.html" class="drawer-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <span>My Courses</span>
+        <span class="drawer-badge">2</span>
+      </a>
+      <a href="#calendar" class="drawer-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        <span>Calendar</span>
+      </a>
+      <a href="#assignments" class="drawer-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        <span>Assignments</span>
+        <span class="drawer-badge">1 Due</span>
+      </a>
+      <a href="#live-sessions" class="drawer-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+        <span>Live Sessions</span>
+        <span class="drawer-badge" style="color: var(--acuitey-cobalt-700);">Today</span>
+      </a>
+      <a href="#messages" class="drawer-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span>Messages</span>
+      </a>
+
+      <div class="drawer-section-title" style="margin-top: 12px;">Credentials &amp; Help</div>
+      <a href="#certificates" class="drawer-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+        <span>Certificates</span>
+      </a>
+      <a href="#support" class="drawer-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        <span>Academic Support</span>
+      </a>
+    </aside>
+
+    <!-- 2. Middle Learning Workspace (Primary Workflow) -->
+    <section class="learning-workspace" id="normal-workspace-view" data-od-id="student-workspace">
+
+      <!-- Student Welcome & Context Header -->
+      <div class="student-context-card">
+        <div class="welcome-heading-group">
+          <h1 class="welcome-title">Welcome back, Priya</h1>
+          <p class="context-line">Postgraduate Engineering Track &bull; Term 1 &bull; 2 Active Curriculums <span class="sample-pill">[SAMPLE DATA]</span></p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <a href="course-catalogue.html" class="btn btn-secondary btn-sm">Explore Curriculums</a>
+          <a href="#upcoming-work" class="btn btn-action btn-sm">Jump to Deadlines</a>
+        </div>
+      </div>
+
+      <!-- Restrained Institutional Notice Banner -->
+      <div class="announcement-banner">
+        <div class="announcement-content">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <span>Scheduled maintenance: Sunday 02:00 – 04:00 IST. Live session infrastructure will remain unaffected.</span>
+        </div>
+        <span class="sample-pill">[PROTOTYPE SAMPLE DATA]</span>
+      </div>
+
+      <!-- Active Courses Overview (Moodle block_myoverview mapping) -->
+      <div>
+        <div class="section-header-row">
+          <h2 class="section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Active Courses &amp; Progress
+          </h2>
+          <span style="font-size: 12px; color: var(--acuitey-text-muted);">2 Enrolled</span>
+        </div>
+
+        <div class="active-courses-grid">
+          <!-- Active Course 1 -->
+          <article class="course-progress-card">
+            <div class="course-card-top-row">
+              <div>
+                <div class="course-tag-code">
+                  <span class="discipline-tag">Cloud Architecture</span>
+                  <span class="code-mono">ACU-CS502</span>
+                </div>
+                <h3 class="course-card-title">High-Concurrency Distributed Systems</h3>
+              </div>
+              <a href="#" class="btn btn-action btn-sm">Continue Learning</a>
+            </div>
+
+            <!-- Restrained Moodle Completion Progress -->
+            <div class="progress-section">
+              <div class="progress-labels">
+                <span class="progress-status-text">Milestone 8 of 12 &bull; Consensus Protocols</span>
+                <span class="progress-percent-mono">68% Complete</span>
+              </div>
+              <div class="progress-track" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" aria-label="Course completion progress 68%">
+                <div class="progress-fill" style="width: 68%;"></div>
+              </div>
+            </div>
+
+            <!-- Next Recommended Activity -->
+            <div class="next-activity-panel">
+              <div class="activity-info">
+                <span class="activity-type-label">Next Deliverable &bull; Assignment</span>
+                <span class="activity-name-text">Lab 4: Raft Consensus State Machine Implementation</span>
+                <span class="activity-due-text">Due: Thursday, 26 Sep &bull; 23:59 IST (In 3 Days) <span class="sample-pill">[SAMPLE DATA]</span></span>
+              </div>
+              <a href="#" class="btn btn-secondary btn-sm">Inspect Rubric</a>
+            </div>
+          </article>
+
+          <!-- Active Course 2 -->
+          <article class="course-progress-card">
+            <div class="course-card-top-row">
+              <div>
+                <div class="course-tag-code">
+                  <span class="discipline-tag">Software Engineering</span>
+                  <span class="code-mono">ACU-SE301</span>
+                </div>
+                <h3 class="course-card-title">Advanced Event-Driven Microservices</h3>
+              </div>
+              <a href="#" class="btn btn-action btn-sm">Continue Learning</a>
+            </div>
+
+            <!-- Restrained Moodle Completion Progress -->
+            <div class="progress-section">
+              <div class="progress-labels">
+                <span class="progress-status-text">Milestone 4 of 12 &bull; Outbox Governance</span>
+                <span class="progress-percent-mono">35% Complete</span>
+              </div>
+              <div class="progress-track" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" aria-label="Course completion progress 35%">
+                <div class="progress-fill" style="width: 35%;"></div>
+              </div>
+            </div>
+
+            <!-- Next Recommended Activity -->
+            <div class="next-activity-panel">
+              <div class="activity-info">
+                <span class="activity-type-label">Next Deliverable &bull; Knowledge Check</span>
+                <span class="activity-name-text">Quiz 2: Idempotent Event Handlers &amp; De-duplication</span>
+                <span class="activity-due-text">Due: Sunday, 29 Sep &bull; 23:59 IST <span class="sample-pill">[SAMPLE DATA]</span></span>
+              </div>
+              <a href="#" class="btn btn-secondary btn-sm">Start Quiz</a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Upcoming Work List (Moodle Calendar / Events API) -->
+      <section class="upcoming-work-card" id="upcoming-work" data-od-id="upcoming-work-list">
+        <div class="section-header-row" style="margin-bottom: 8px;">
+          <h2 class="section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            Upcoming Work &amp; Deadlines
+          </h2>
+          <span style="font-size: 11px; color: var(--acuitey-text-muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;">Calendar Synchronized</span>
+        </div>
+
+        <div class="work-items-list">
+          <div class="work-item-row">
+            <div class="work-item-left">
+              <div class="work-type-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              </div>
+              <div class="work-meta">
+                <span class="work-title-text">Lab 4: Raft Consensus Machine Implementation</span>
+                <span class="work-subtext">ACU-CS502 &bull; Due 26 Sep, 23:59 IST</span>
+              </div>
+            </div>
+            <a href="#" class="btn btn-secondary btn-sm">Submit Work</a>
+          </div>
+
+          <div class="work-item-row">
+            <div class="work-item-left">
+              <div class="work-type-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+              </div>
+              <div class="work-meta">
+                <span class="work-title-text">Distributed Consensus Interactive Lab Session</span>
+                <span class="work-subtext">ACU-CS502 &bull; Tomorrow at 18:00 IST</span>
+              </div>
+            </div>
+            <a href="#" class="btn btn-action btn-sm">View Schedule</a>
+          </div>
+
+          <div class="work-item-row">
+            <div class="work-item-left">
+              <div class="work-type-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+              </div>
+              <div class="work-meta">
+                <span class="work-title-text">Quiz 2: Idempotent Event Handlers</span>
+                <span class="work-subtext">ACU-SE301 &bull; Due 29 Sep, 23:59 IST</span>
+              </div>
+            </div>
+            <a href="#" class="btn btn-secondary btn-sm">Review Syllabus</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recent Faculty Feedback -->
+      <section class="feedback-card" data-od-id="recent-feedback-card">
+        <div class="feedback-header-row">
+          <h2 class="section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            Recent Academic Feedback
+          </h2>
+          <span class="feedback-grade-pill">Evaluated &bull; 92/100 <span class="sample-pill">[SAMPLE DATA]</span></span>
+        </div>
+
+        <div style="font-size: 12px; color: var(--acuitey-text-muted);">
+          <span>ACU-CS502 &bull; Lab 3: Partitioned Key-Value Cache Implementation</span>
+        </div>
+
+        <blockquote class="feedback-quote">
+          &ldquo;Thorough implementation of lease revocation under network partitions. Lock-free ring buffer demonstrated negligible allocation overhead. Note recommendations on CAS back-off timing before final term submission.&rdquo;
+        </blockquote>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="user-avatar" style="width: 24px; height: 24px; font-size: 10px;">VR</span>
+            <span style="font-size: 12px; font-weight: 500; color: var(--acuitey-text-secondary);">Dr. V. Ramanathan &bull; Lead Faculty <span class="sample-pill">[SAMPLE DATA]</span></span>
+          </div>
+          <a href="#" class="btn btn-secondary btn-sm">View Feedback &amp; Rubric</a>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- Empty Dashboard State (Demonstrated via Prototype State Switcher) -->
+    <section class="empty-courses-panel" id="empty-workspace-view" data-od-id="empty-workspace-view">
+      <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--acuitey-bg-subtle); display: flex; align-items: center; justify-content: center; color: var(--acuitey-text-muted);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      </div>
+      <h3 style="font-size: 16px; font-weight: 700; color: var(--acuitey-text-primary);">No Active Course Enrolments</h3>
+      <p style="font-size: 13px; color: var(--acuitey-text-secondary); max-width: 420px; line-height: 1.5;">You are currently not enrolled in any academic curricula or corporate tracks for this term. Explore our course catalogue to discover available disciplines.</p>
+      <a href="course-catalogue.html" class="btn btn-action">Explore Course Catalogue</a>
+    </section>
+
+    <!-- Loading Skeleton State (Demonstrated via Prototype State Switcher) -->
+    <section class="skeleton-workspace" id="skeleton-workspace-view" data-od-id="skeleton-workspace-view">
+      <div class="skeleton-box">
+        <div class="skeleton-line" style="width: 35%; height: 20px;"></div>
+        <div class="skeleton-line" style="width: 60%; height: 14px;"></div>
+      </div>
+      <div class="skeleton-box">
+        <div class="skeleton-line" style="width: 40%; height: 16px;"></div>
+        <div class="skeleton-line" style="width: 100%; height: 14px;"></div>
+        <div class="skeleton-line" style="width: 80%; height: 14px;"></div>
+      </div>
+      <div class="skeleton-box">
+        <div class="skeleton-line" style="width: 25%; height: 16px;"></div>
+        <div class="skeleton-line" style="width: 100%; height: 32px;"></div>
+        <div class="skeleton-line" style="width: 100%; height: 32px;"></div>
+      </div>
+    </section>
+
+    <!-- 3. Right Contextual Block Region (Moodle Block Region) -->
+    <aside class="contextual-block-region" aria-label="Contextual Learning Blocks">
+
+      <!-- Live Session Card (mod_lti launch mapping) -->
+      <section class="live-session-widget" data-od-id="next-live-session-widget">
+        <div class="session-timing-badge">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--acuitey-cobalt-700);"></span>
+          Next Live Session
+        </div>
+
+        <div>
+          <h2 class="session-title-text">Distributed Consensus &amp; Partition Tolerances Clinic</h2>
+          <div class="session-meta-row" style="margin-top: 6px;">
+            <span><strong>Course:</strong> ACU-CS502 High-Concurrency Systems</span>
+            <span><strong>Faculty:</strong> Dr. V. Ramanathan <span class="sample-pill">[SAMPLE DATA]</span></span>
+            <span><strong>Schedule:</strong> Thursday, 24 Sep &bull; 18:00 – 19:30 IST</span>
+          </div>
+        </div>
+
+        <!-- Strict Learner Copy Requirement: "Join Live Session" -->
+        <a href="#" class="btn btn-action" style="width: 100%; justify-content: center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+          Join Live Session
+        </a>
+
+        <div style="font-size: 11px; color: var(--acuitey-text-muted); text-align: center;">
+          <span>Single sign-on launch opens directly in native viewer</span>
+        </div>
+      </section>
+
+      <!-- Faculty / Learning Support Panel (Optional Faculty: 4 Demonstrable States) -->
+      <section class="faculty-support-widget" data-od-id="faculty-support-panel">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <h2 class="section-title" style="font-size: 14px;">Faculty Support</h2>
+          <span class="sample-pill">[SAMPLE DATA]</span>
+        </div>
+
+        <!-- Interactive 4-State Tab Switcher for Review -->
+        <div class="support-state-tabs" aria-label="Faculty Support state switcher">
+          <button type="button" class="support-tab-btn active" id="tab-support-assigned">Assigned</button>
+          <button type="button" class="support-tab-btn" id="tab-support-pending">Pending</button>
+          <button type="button" class="support-tab-btn" id="tab-support-self">Self-Paced</button>
+          <button type="button" class="support-tab-btn" id="tab-support-team">Team</button>
+        </div>
+
+        <!-- State A: Assigned Faculty -->
+        <div class="support-state-view active" id="view-support-assigned">
+          <div class="faculty-profile-box">
+            <span class="mentor-avatar-lg">VR</span>
+            <div class="mentor-meta-info">
+              <span class="mentor-name-text">Dr. V. Ramanathan</span>
+              <span class="mentor-specialization">Chair, Distributed Systems &bull; Assigned Mentor</span>
+            </div>
+          </div>
+          <p style="font-size: 12px; color: var(--acuitey-text-secondary); line-height: 1.4;">
+            Assigned for Term 1 thesis supervision and rubric milestones in High-Concurrency Distributed Systems.
+          </p>
+          <div style="display: flex; gap: 8px;">
+            <a href="#messages" class="btn btn-secondary btn-sm" style="flex: 1;">Message Mentor</a>
+            <a href="#office-hours" class="btn btn-secondary btn-sm" style="flex: 1;">Office Hours</a>
+          </div>
+        </div>
+
+        <!-- State B: Assignment Pending (No invented SLA/ETA) -->
+        <div class="support-state-view" id="view-support-pending">
+          <div style="padding: 12px; background: var(--acuitey-status-warning-bg); border: 1px solid var(--acuitey-status-warning-border); border-radius: var(--radius-control);">
+            <div style="font-size: 12px; font-weight: 600; color: var(--acuitey-status-warning-fg); margin-bottom: 4px;">Faculty Matching in Progress</div>
+            <p style="font-size: 12px; color: var(--acuitey-text-secondary); line-height: 1.4;">
+              Your enrolled specialization is queued for faculty allocation based on active mentor capacity and syllabus track.
+            </p>
+          </div>
+          <div style="font-size: 11px; color: var(--acuitey-text-muted);">
+            <span>You will receive an in-app notification when an instructor is assigned.</span>
+          </div>
+        </div>
+
+        <!-- State C: No Faculty Required (Self-Paced Track) -->
+        <div class="support-state-view" id="view-support-self">
+          <div style="padding: 12px; background: var(--acuitey-bg-canvas); border: 1px solid var(--acuitey-border-hairline); border-radius: var(--radius-control);">
+            <div style="font-size: 12px; font-weight: 600; color: var(--acuitey-text-primary); margin-bottom: 4px;">Autonomous Self-Paced Track</div>
+            <p style="font-size: 12px; color: var(--acuitey-text-secondary); line-height: 1.4;">
+              This curriculum uses automated test harnesses, rubric self-evaluations, and interactive exercises without direct 1:1 faculty assignment.
+            </p>
+          </div>
+          <a href="#forums" class="btn btn-secondary btn-sm" style="width: 100%;">Access Peer Discussion Forum</a>
+        </div>
+
+        <!-- State D: Team-Taught / Shared Academic Support -->
+        <div class="support-state-view" id="view-support-team">
+          <div class="faculty-profile-box">
+            <span class="mentor-avatar-lg" style="background: var(--acuitey-cobalt-700);">CS</span>
+            <div class="mentor-meta-info">
+              <span class="mentor-name-text">Computer Systems Faculty Pool</span>
+              <span class="mentor-specialization">Distributed Systems &bull; Shared Academic Support</span>
+            </div>
+          </div>
+          <p style="font-size: 12px; color: var(--acuitey-text-secondary); line-height: 1.4;">
+            Supervised jointly by 3 faculty members. Laboratory reviews are handled by the active rotation pool.
+          </p>
+          <a href="#consultation" class="btn btn-secondary btn-sm" style="width: 100%;">Request Group Clinic</a>
+        </div>
+      </section>
+
+      <!-- Earned Certificates Module -->
+      <section class="certificates-widget" data-od-id="certificates-widget">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <h2 class="section-title" style="font-size: 14px;">Certificates</h2>
+          <span class="sample-pill">[SAMPLE DATA]</span>
+        </div>
+
+        <div class="cert-item-row">
+          <div style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; font-weight: 600; color: var(--acuitey-text-primary);">Systems Foundations &amp; Linux</span>
+            <span style="font-size: 10px; color: var(--acuitey-status-success-fg); font-weight: 600;">COMPLETED &bull; CERTIFICATE AVAILABLE</span>
+          </div>
+          <a href="#" class="btn btn-secondary btn-sm">View Certificate</a>
+        </div>
+
+        <div style="font-size: 11px; color: var(--acuitey-text-muted);">
+          <span>Certificate issued upon verified completion of all syllabus requirements.</span>
+        </div>
+      </section>
+
+      <!-- Support Access Hub -->
+      <section class="support-hub-widget" data-od-id="support-hub-widget">
+        <h2 class="section-title" style="font-size: 14px;">Support Access</h2>
+        <a href="#academic-advising" class="support-hub-link">
+          <span>Academic Advising</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+        <a href="#technical-desk" class="support-hub-link">
+          <span>Technical Support Desk</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+        <a href="#peer-discussions" class="support-hub-link">
+          <span>Student Discussion Forums</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+      </section>
+
+    </aside>
+
+    <!-- Moodle Technical Architecture Mapping Notice -->
+    <section class="moodle-arch-notice" data-od-id="student-dashboard-arch-notice">
+      <div class="arch-notice-header">
+        <span class="arch-notice-title">Moodle Technical Architecture Mapping</span>
+        <span class="sample-pill">[GOVERNANCE &bull; ZERO CORE EDITS]</span>
+      </div>
+      <p class="arch-notice-text">The Student Dashboard realistically maps to Moodle LMS 5.2.3+ Boost architecture without SPA replacements. Each dashboard widget links cleanly to native Moodle APIs and proposed custom presentation templates:</p>
+      <div class="arch-tier-grid">
+        <div class="arch-tier-card">
+          <div class="arch-tier-name">1. Existing Core/Boost</div>
+          <div class="arch-tier-desc"><code>theme_boost/navbar</code>, <code>theme_boost_drawer</code>, <code>block_myoverview</code>, <code>core_calendar</code>, <code>mod_assign</code>, <code>mod_quiz</code>, and core completion APIs.</div>
+        </div>
+        <div class="arch-tier-card">
+          <div class="arch-tier-name">2. Proposed Theme Overrides</div>
+          <div class="arch-tier-desc"><code>theme_acuitey/templates/student_dashboard.mustache</code>, <code>student_course_progress.mustache</code>, <code>live_session_card.mustache</code>, and <code>student_support_panel.mustache</code>.</div>
+        </div>
+        <div class="arch-tier-card">
+          <div class="arch-tier-name">3. Proposed local_acuitey UI</div>
+          <div class="arch-tier-desc"><code>local_acuitey/templates/faculty_support.mustache</code> (Dynamic mentorship status queries and 4-tier optional allocation handling).</div>
+        </div>
+        <div class="arch-tier-card">
+          <div class="arch-tier-name">4. Standard APIs &amp; Modules</div>
+          <div class="arch-tier-desc"><code>mod_lti</code> (authenticated Zoom session launch via single sign-on); Moodle messaging and notification subsystems.</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Moodle Boost Theme Footer -->
+  <footer class="moodle-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <span>&copy; 2026 Acuitey Solutions. Operating on Moodle LMS 5.2.3+ (Build: 20260916). Strict core separation preserved.</span>
+      </div>
+      <ul class="footer-links">
+        <li><a href="homepage.html" class="footer-link">Home</a></li>
+        <li><a href="course-catalogue.html" class="footer-link">Curriculums</a></li>
+        <li><a href="student-dashboard.html" class="footer-link">Dashboard</a></li>
+        <li><a href="#support" class="footer-link">Academic Support</a></li>
+        <li><span class="sample-pill">[SAMPLE DATA DISCLOSED]</span></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript for Reviewer State Switcher & Faculty Support Tabs -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 1. Prototype Reviewer State Switcher (Normal / Empty / Skeleton)
+      const btnNormal = document.getElementById('btn-state-normal');
+      const btnEmpty = document.getElementById('btn-state-empty');
+      const btnSkeleton = document.getElementById('btn-state-skeleton');
+
+      const normalView = document.getElementById('normal-workspace-view');
+      const emptyView = document.getElementById('empty-workspace-view');
+      const skeletonView = document.getElementById('skeleton-workspace-view');
+
+      function setWorkspaceState(state) {
+        [btnNormal, btnEmpty, btnSkeleton].forEach(b => b.classList.remove('active'));
+
+        if (state === 'normal') {
+          btnNormal.classList.add('active');
+          normalView.style.display = 'flex';
+          emptyView.style.display = 'none';
+          skeletonView.style.display = 'none';
+        } else if (state === 'empty') {
+          btnEmpty.classList.add('active');
+          normalView.style.display = 'none';
+          emptyView.style.display = 'flex';
+          skeletonView.style.display = 'none';
+        } else if (state === 'skeleton') {
+          btnSkeleton.classList.add('active');
+          normalView.style.display = 'none';
+          emptyView.style.display = 'none';
+          skeletonView.style.display = 'flex';
+        }
+      }
+
+      if (btnNormal) btnNormal.addEventListener('click', () => setWorkspaceState('normal'));
+      if (btnEmpty) btnEmpty.addEventListener('click', () => setWorkspaceState('empty'));
+      if (btnSkeleton) btnSkeleton.addEventListener('click', () => setWorkspaceState('skeleton'));
+
+      // 2. Faculty Support 4-State Tab Switcher
+      const tabAssigned = document.getElementById('tab-support-assigned');
+      const tabPending = document.getElementById('tab-support-pending');
+      const tabSelf = document.getElementById('tab-support-self');
+      const tabTeam = document.getElementById('tab-support-team');
+
+      const viewAssigned = document.getElementById('view-support-assigned');
+      const viewPending = document.getElementById('view-support-pending');
+      const viewSelf = document.getElementById('view-support-self');
+      const viewTeam = document.getElementById('view-support-team');
+
+      const tabs = [
+        { btn: tabAssigned, view: viewAssigned },
+        { btn: tabPending, view: viewPending },
+        { btn: tabSelf, view: viewSelf },
+        { btn: tabTeam, view: viewTeam }
+      ];
+
+      tabs.forEach(t => {
+        if (t.btn && t.view) {
+          t.btn.addEventListener('click', function() {
+            tabs.forEach(item => {
+              item.btn.classList.remove('active');
+              item.view.classList.remove('active');
+            });
+            t.btn.classList.add('active');
+            t.view.classList.add('active');
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

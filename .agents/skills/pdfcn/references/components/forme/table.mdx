@@ -1,0 +1,149 @@
+---
+title: "Table"
+description: "Low-level table primitives."
+---
+
+<ComponentPreview base="forme" name="table" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/forme/table
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @formepdf/react @formepdf/core
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/forme/components/table/table.tsx"
+  base="forme"
+  title="components/pdf/table/table.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/components/theme-provider.tsx"
+  base="forme"
+  title="components/pdf/theme-provider.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/resolve-color.ts"
+  base="forme"
+  title="lib/resolve-color.ts"
+/>
+
+<ComponentSource
+  src="registry/themes/professional.ts"
+  base="forme"
+  title="lib/pdf-themes/professional.ts"
+/>
+
+<ComponentSource
+  src="registry/themes/primitives.ts"
+  base="forme"
+  title="lib/pdf-themes/primitives.ts"
+/>
+
+<ComponentSource
+  src="registry/types/pdf-themes.ts"
+  base="forme"
+  title="types/pdf-themes.ts"
+/>
+
+<ComponentSource
+  src="registry/types/pdf-components.ts"
+  base="forme"
+  title="types/pdf-components.ts"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableRow,
+  Text,
+} from "@/components/pdf/table";
+```
+
+```tsx
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableCell>
+        <Text>Item</Text>
+      </TableCell>
+    </TableRow>
+  </TableHeader>
+</Table>
+```
+
+### Variants
+
+```tsx
+<Table variant="striped" zebraStripe>
+  {/* header, body, rows, and cells */}
+</Table>
+```
+
+## API Reference
+
+### Table
+
+| Prop          | Type                                                                                        | Default  |
+| ------------- | ------------------------------------------------------------------------------------------- | -------- |
+| `variant`     | `'line' \| 'grid' \| 'minimal' \| 'striped' \| 'compact' \| 'bordered' \| 'primary-header'` | `'line'` |
+| `zebraStripe` | `boolean`                                                                                   | `false`  |
+| `noWrap`      | `boolean`                                                                                   | `false`  |
+| `children`    | `ReactNode`                                                                                 | -        |
+| `style`       | `Style`                                                                                     | -        |
+
+### TableRow
+
+| Prop      | Type                                                                                        | Default   |
+| --------- | ------------------------------------------------------------------------------------------- | --------- |
+| `header`  | `boolean`                                                                                   | `false`   |
+| `footer`  | `boolean`                                                                                   | `false`   |
+| `stripe`  | `boolean`                                                                                   | `false`   |
+| `variant` | `'line' \| 'grid' \| 'minimal' \| 'striped' \| 'compact' \| 'bordered' \| 'primary-header'` | inherited |
+
+### TableCell
+
+| Prop      | Type                                                                                        | Default   |
+| --------- | ------------------------------------------------------------------------------------------- | --------- |
+| `header`  | `boolean`                                                                                   | `false`   |
+| `footer`  | `boolean`                                                                                   | `false`   |
+| `align`   | `'left' \| 'center' \| 'right'`                                                             | `'left'`  |
+| `width`   | `string \| number`                                                                          | -         |
+| `variant` | `'line' \| 'grid' \| 'minimal' \| 'striped' \| 'compact' \| 'bordered' \| 'primary-header'` | inherited |

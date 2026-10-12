@@ -1,0 +1,1993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Catalogue — Acuitey Solutions Enterprise LMS</title>
+  <meta name="description" content="Acuitey Solutions Enterprise LMS Course Catalogue. Professional engineering and academic curriculums with faculty mentorship, interactive live sessions, and structured academic assessments.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Acuitey Design Tokens (ACUITEY-DESIGN.md) */
+      --acuitey-bg-canvas: #F9FAFB;
+      --acuitey-bg-surface: #FFFFFF;
+      --acuitey-bg-subtle: #F3F4F6;
+      --acuitey-bg-muted: #E5E7EB;
+
+      --acuitey-border-hairline: #E5E7EB;
+      --acuitey-border-subtle: #D1D5DB;
+      --acuitey-border-strong: #9CA3AF;
+
+      --acuitey-text-primary: #0F172A;
+      --acuitey-text-secondary: #334155;
+      --acuitey-text-muted: #64748B;
+      --acuitey-text-disabled: #94A3B8;
+
+      --acuitey-navy-900: #0C192C;
+      --acuitey-navy-800: #13243D;
+      --acuitey-cobalt-700: #1D4ED8;
+      --acuitey-cobalt-800: #1E40AF;
+      --acuitey-cobalt-50: #EFF6FF;
+
+      --acuitey-status-success-fg: #065F46;
+      --acuitey-status-success-bg: #ECFDF5;
+      --acuitey-status-success-border: #A7F3D0;
+
+      --acuitey-status-warning-fg: #92400E;
+      --acuitey-status-warning-bg: #FFFBEB;
+      --acuitey-status-warning-border: #FDE68A;
+
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+      --radius-badge: 3px;
+      --radius-control: 5px;
+      --radius-card: 6px;
+      --radius-modal: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--acuitey-bg-canvas);
+      color: var(--acuitey-text-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Moodle Boost Child Theme Navbar (theme_acuitey/navbar) */
+    .moodle-navbar {
+      background: var(--acuitey-bg-surface);
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--acuitey-navy-900);
+      border-radius: var(--radius-control);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      color: var(--acuitey-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--acuitey-text-secondary);
+      transition: color 0.15s ease;
+      padding: 6px 0;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--acuitey-cobalt-700);
+    }
+
+    .nav-link.active {
+      color: var(--acuitey-cobalt-700);
+      font-weight: 600;
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -14px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--acuitey-cobalt-700);
+      border-radius: 2px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Restrained Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: var(--radius-control);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--acuitey-cobalt-700);
+      outline-offset: 1px;
+    }
+
+    .btn-primary {
+      background: var(--acuitey-navy-900);
+      color: #FFFFFF;
+      border-color: var(--acuitey-navy-900);
+    }
+
+    .btn-primary:hover {
+      background: var(--acuitey-navy-800);
+      border-color: var(--acuitey-navy-800);
+    }
+
+    .btn-action {
+      background: var(--acuitey-cobalt-700);
+      color: #FFFFFF;
+      border-color: var(--acuitey-cobalt-700);
+    }
+
+    .btn-action:hover {
+      background: var(--acuitey-cobalt-800);
+      border-color: var(--acuitey-cobalt-800);
+    }
+
+    .btn-secondary {
+      background: var(--acuitey-bg-surface);
+      color: var(--acuitey-text-primary);
+      border-color: var(--acuitey-border-subtle);
+    }
+
+    .btn-secondary:hover {
+      background: var(--acuitey-bg-subtle);
+      border-color: var(--acuitey-border-strong);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--acuitey-text-secondary);
+      border-color: transparent;
+      padding: 6px 10px;
+    }
+
+    .btn-ghost:hover {
+      background: var(--acuitey-bg-subtle);
+      color: var(--acuitey-text-primary);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    /* Page Header Section */
+    .catalogue-header-section {
+      background: var(--acuitey-bg-surface);
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      padding: 32px 32px 28px;
+    }
+
+    .header-container {
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .breadcrumb-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--acuitey-text-muted);
+      margin-bottom: 12px;
+    }
+
+    .breadcrumb-row a:hover {
+      color: var(--acuitey-cobalt-700);
+      text-decoration: underline;
+    }
+
+    .breadcrumb-sep {
+      color: var(--acuitey-text-disabled);
+    }
+
+    .header-content-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .header-title-group {
+      max-width: 820px;
+    }
+
+    .page-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .page-desc {
+      font-size: 14px;
+      color: var(--acuitey-text-secondary);
+      line-height: 1.5;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-badge);
+      background: var(--acuitey-bg-subtle);
+      border: 1px solid var(--acuitey-border-subtle);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--acuitey-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--acuitey-cobalt-700);
+    }
+
+    .sample-pill {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--acuitey-status-warning-fg);
+      background: var(--acuitey-status-warning-bg);
+      border: 1px solid var(--acuitey-status-warning-border);
+      padding: 1px 6px;
+      border-radius: var(--radius-badge);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Search & Filter Bar Section */
+    .search-filter-section {
+      background: var(--acuitey-bg-surface);
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      padding: 16px 32px;
+    }
+
+    .search-filter-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .search-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-input-wrap {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      color: var(--acuitey-text-muted);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 42px;
+      padding: 0 16px 0 42px;
+      background: var(--acuitey-bg-canvas);
+      border: 1px solid var(--acuitey-border-subtle);
+      border-radius: var(--radius-control);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--acuitey-text-primary);
+      transition: all 0.15s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      background: var(--acuitey-bg-surface);
+      border-color: var(--acuitey-cobalt-700);
+      box-shadow: 0 0 0 1px var(--acuitey-cobalt-700);
+    }
+
+    .search-suggestions-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--acuitey-text-muted);
+      flex-wrap: wrap;
+    }
+
+    .suggestion-chip {
+      background: var(--acuitey-bg-canvas);
+      border: 1px solid var(--acuitey-border-hairline);
+      color: var(--acuitey-text-secondary);
+      padding: 3px 8px;
+      border-radius: var(--radius-badge);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 500;
+      transition: all 0.15s ease;
+    }
+
+    .suggestion-chip:hover {
+      background: var(--acuitey-cobalt-50);
+      color: var(--acuitey-cobalt-700);
+      border-color: var(--acuitey-cobalt-700);
+    }
+
+    /* Main Catalogue Workspace Layout (2 Columns) */
+    .catalogue-main-section {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 32px 32px 64px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* Left Filter Sidebar (Desktop) */
+    .filter-panel {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .filter-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+    }
+
+    .filter-panel-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .reset-filters-btn {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--acuitey-cobalt-700);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .reset-filters-btn:hover {
+      text-decoration: underline;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .filter-group-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .filter-options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .filter-option-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--acuitey-text-secondary);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .filter-option-label:hover {
+      color: var(--acuitey-text-primary);
+    }
+
+    .filter-checkbox {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      border: 1px solid var(--acuitey-border-subtle);
+      accent-color: var(--acuitey-cobalt-700);
+      cursor: pointer;
+    }
+
+    .filter-option-text {
+      flex: 1;
+    }
+
+    .filter-tier-tag {
+      font-size: 10px;
+      color: var(--acuitey-text-muted);
+      font-family: var(--font-mono);
+      background: var(--acuitey-bg-subtle);
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+
+    /* Right Main Content Area */
+    .catalogue-content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Results Toolbar */
+    .results-toolbar {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .results-count-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .results-count-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mobile-filter-trigger {
+      display: none; /* Desktop default */
+    }
+
+    .sort-control-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sort-label {
+      font-size: 12px;
+      color: var(--acuitey-text-muted);
+      font-weight: 500;
+    }
+
+    .sort-select {
+      height: 34px;
+      padding: 0 12px;
+      background: var(--acuitey-bg-canvas);
+      border: 1px solid var(--acuitey-border-subtle);
+      border-radius: var(--radius-control);
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--acuitey-text-primary);
+      cursor: pointer;
+    }
+
+    .sort-select:focus {
+      outline: 2px solid var(--acuitey-cobalt-700);
+      outline-offset: 1px;
+    }
+
+    .view-state-toggle-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--acuitey-bg-canvas);
+      padding: 2px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--acuitey-border-hairline);
+    }
+
+    .view-btn {
+      padding: 4px 8px;
+      border: none;
+      background: transparent;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--acuitey-text-muted);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .view-btn.active {
+      background: var(--acuitey-bg-surface);
+      color: var(--acuitey-text-primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    /* Active Filter Summary Bar */
+    .active-filters-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .active-filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-subtle);
+      border-radius: var(--radius-badge);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--acuitey-text-secondary);
+    }
+
+    .chip-close {
+      cursor: pointer;
+      color: var(--acuitey-text-muted);
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .chip-close:hover {
+      color: var(--acuitey-text-primary);
+    }
+
+    /* Course Cards Grid */
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .course-card {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .course-card:hover {
+      border-color: var(--acuitey-border-subtle);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    }
+
+    .card-header-bar {
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--acuitey-bg-surface);
+      border-radius: var(--radius-card) var(--radius-card) 0 0;
+    }
+
+    .category-chip-mono {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--acuitey-cobalt-700);
+      background: var(--acuitey-cobalt-50);
+      border: 1px solid rgba(29, 78, 216, 0.2);
+      padding: 2px 6px;
+      border-radius: var(--radius-badge);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .level-badge-mono {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--acuitey-text-muted);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .card-body {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-code-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .course-code {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--acuitey-text-muted);
+      letter-spacing: 0.02em;
+    }
+
+    .course-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+
+    .course-synopsis {
+      font-size: 13px;
+      color: var(--acuitey-text-secondary);
+      line-height: 1.5;
+      margin-bottom: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 58px;
+    }
+
+    /* Faculty Supervision Row */
+    .faculty-lead-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-top: 12px;
+      border-top: 1px solid var(--acuitey-border-hairline);
+      margin-bottom: 14px;
+    }
+
+    .faculty-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--acuitey-navy-900);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .faculty-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .faculty-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+    }
+
+    .faculty-title-text {
+      font-size: 11px;
+      color: var(--acuitey-text-muted);
+    }
+
+    /* Curriculum Specs & Delivery Mode */
+    .curriculum-specs {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--acuitey-border-hairline);
+      font-size: 12px;
+    }
+
+    .spec-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .spec-title {
+      font-size: 10px;
+      color: var(--acuitey-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 2px;
+    }
+
+    .spec-val {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--acuitey-text-primary);
+    }
+
+    .track-val {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+    }
+
+    .track-free {
+      color: var(--acuitey-status-success-fg);
+    }
+
+    /* Enrolled Progress Bar Variant */
+    .enrolled-progress-box {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--acuitey-border-hairline);
+    }
+
+    .progress-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .progress-bar-bg {
+      height: 5px;
+      background: var(--acuitey-bg-subtle);
+      border-radius: 3px;
+      overflow: hidden;
+      border: 1px solid var(--acuitey-border-hairline);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--acuitey-cobalt-700);
+      border-radius: 3px;
+    }
+
+    .card-footer-actions {
+      padding: 12px 18px;
+      background: var(--acuitey-bg-canvas);
+      border-top: 1px solid var(--acuitey-border-hairline);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 0 0 var(--radius-card) var(--radius-card);
+    }
+
+    .card-footer-actions .btn {
+      flex: 1;
+      padding: 6px 12px;
+      font-size: 12px;
+      min-height: 34px;
+    }
+
+    /* Skeleton Loading State Preview */
+    .skeleton-grid {
+      display: none; /* Toggled by demo controls */
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .skeleton-card {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .skeleton-line {
+      height: 14px;
+      background: var(--acuitey-bg-subtle);
+      border-radius: 3px;
+      animation: pulse 1.6s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+
+    /* Empty State View */
+    .empty-state-panel {
+      display: none; /* Toggled by demo controls */
+      background: var(--acuitey-bg-surface);
+      border: 1px dashed var(--acuitey-border-subtle);
+      border-radius: var(--radius-card);
+      padding: 48px 32px;
+      text-align: center;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .empty-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--acuitey-bg-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--acuitey-text-muted);
+    }
+
+    .empty-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+    }
+
+    .empty-desc {
+      font-size: 13px;
+      color: var(--acuitey-text-secondary);
+      max-width: 440px;
+      line-height: 1.5;
+    }
+
+    /* Pagination Section */
+    .pagination-bar {
+      margin-top: 24px;
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .pagination-info {
+      font-size: 12px;
+      color: var(--acuitey-text-muted);
+    }
+
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .page-num-btn {
+      min-width: 32px;
+      height: 32px;
+      padding: 0 8px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--acuitey-border-hairline);
+      background: var(--acuitey-bg-surface);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--acuitey-text-secondary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page-num-btn:hover {
+      background: var(--acuitey-bg-subtle);
+      color: var(--acuitey-text-primary);
+    }
+
+    .page-num-btn.active {
+      background: var(--acuitey-navy-900);
+      color: #FFFFFF;
+      border-color: var(--acuitey-navy-900);
+    }
+
+    /* Moodle Architectural Implementation Drawer (Interactive Inspector) */
+    .moodle-arch-notice {
+      margin-top: 40px;
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-left: 3px solid var(--acuitey-cobalt-700);
+      border-radius: var(--radius-card);
+      padding: 20px 24px;
+    }
+
+    .arch-notice-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .arch-notice-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .arch-notice-text {
+      font-size: 13px;
+      color: var(--acuitey-text-secondary);
+      line-height: 1.6;
+    }
+
+    .arch-tier-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .arch-tier-card {
+      background: var(--acuitey-bg-canvas);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-control);
+      padding: 10px 12px;
+    }
+
+    .arch-tier-name {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--acuitey-cobalt-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .arch-tier-desc {
+      font-size: 11px;
+      color: var(--acuitey-text-secondary);
+      line-height: 1.4;
+    }
+
+    /* Mobile / Tablet Filter Modal Drawer */
+    .mobile-filter-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.4);
+      z-index: 200;
+      backdrop-filter: blur(2px);
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .mobile-filter-modal.open {
+      display: flex;
+    }
+
+    .mobile-filter-sheet {
+      background: var(--acuitey-bg-surface);
+      width: 100%;
+      max-height: 85vh;
+      border-radius: 12px 12px 0 0;
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
+    }
+
+    .mobile-sheet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      padding-bottom: 12px;
+    }
+
+    /* Moodle Footer */
+    .moodle-footer {
+      background: var(--acuitey-bg-surface);
+      border-top: 1px solid var(--acuitey-border-hairline);
+      padding: 40px 32px 32px;
+      margin-top: 48px;
+    }
+
+    .footer-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-left {
+      font-size: 12px;
+      color: var(--acuitey-text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-link {
+      font-size: 12px;
+      color: var(--acuitey-text-secondary);
+      text-decoration: none;
+    }
+
+    .footer-link:hover {
+      color: var(--acuitey-text-primary);
+    }
+
+    /* Responsive Breakpoint Governance */
+    @media (max-width: 1024px) {
+      .catalogue-main-section {
+        grid-template-columns: 1fr;
+        padding: 24px 24px 48px;
+      }
+      .filter-panel {
+        display: none; /* Collapses into mobile/tablet drawer on <= 1024px */
+      }
+      .mobile-filter-trigger {
+        display: inline-flex;
+      }
+      .course-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .skeleton-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .arch-tier-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .navbar-container {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .navbar-container .btn-secondary {
+        display: none;
+      }
+      .catalogue-header-section, .search-filter-section, .catalogue-main-section, .moodle-footer {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .page-title {
+        font-size: 20px;
+        line-height: 1.3;
+        word-break: break-word;
+      }
+      .page-desc {
+        font-size: 13px;
+      }
+      .header-content-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .header-content-row > div:last-child {
+        align-items: flex-start !important;
+      }
+      .course-grid {
+        grid-template-columns: 1fr;
+      }
+      .skeleton-grid {
+        grid-template-columns: 1fr;
+      }
+      .arch-tier-grid {
+        grid-template-columns: 1fr;
+      }
+      .results-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        padding: 12px 14px;
+      }
+      .results-count-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      .toolbar-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      .sort-control-wrap {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .sort-select {
+        flex: 1;
+      }
+      .view-state-toggle-group {
+        width: 100%;
+        justify-content: space-around;
+      }
+      .view-btn {
+        flex: 1;
+        text-align: center;
+      }
+      .search-bar-row {
+        flex-direction: column;
+        gap: 8px;
+      }
+      .search-bar-row .btn {
+        width: 100%;
+      }
+      .search-input {
+        height: 40px;
+      }
+      .pagination-bar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Moodle Navbar (Boost Child Theme: theme_acuitey/navbar) -->
+  <header class="moodle-navbar">
+    <div class="navbar-container">
+      <a href="homepage.html" class="brand-group">
+        <div class="brand-mark">AS</div>
+        <div class="brand-text">
+          <span class="brand-title">Acuitey Solutions</span>
+          <span class="brand-subtitle">Enterprise LMS</span>
+        </div>
+      </a>
+
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="homepage.html" class="nav-link">Home</a></li>
+          <li><a href="course-catalogue.html" class="nav-link active">Curriculums</a></li>
+          <li><a href="homepage.html#mentorship" class="nav-link">Mentorship Architecture</a></li>
+          <li><a href="homepage.html#enterprise" class="nav-link">Enterprise Governance</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="homepage.html" class="btn btn-secondary">Platform Overview</a>
+        <a href="homepage.html#enrol" class="btn btn-primary">Sign In</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Heading & Breadcrumb Area -->
+  <section class="catalogue-header-section" data-od-id="catalogue-header-area">
+    <div class="header-container">
+      <div class="breadcrumb-row">
+        <a href="homepage.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="course-catalogue.html">Curriculums</a>
+        <span class="breadcrumb-sep">/</span>
+        <span style="color: var(--acuitey-text-primary); font-weight: 500;">Academic Catalogue</span>
+      </div>
+
+      <div class="header-content-row">
+        <div class="header-title-group">
+          <h1 class="page-title">Enterprise Academic Course Catalogue</h1>
+          <p class="page-desc">Explore advanced technical disciplines, distributed systems specializations, and foundational curricula structured with dedicated faculty mentorship, interactive live sessions, and structured academic assessments.</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+          <div class="badge-pill">
+            <span class="badge-dot"></span>
+            <span>Enterprise Course Catalogue</span>
+          </div>
+          <span class="sample-pill">[SAMPLE DATA DISCLOSED]</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search & Suggestions Section -->
+  <section class="search-filter-section" data-od-id="catalogue-search-bar">
+    <div class="search-filter-container">
+      <div class="search-bar-row">
+        <div class="search-input-wrap">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="course-search-input" class="search-input" placeholder="Search curriculums by course title, syllabus topic, course code, or faculty name..." aria-label="Search courses">
+        </div>
+        <button class="btn btn-action" type="button" id="search-action-btn">Search Catalogue</button>
+      </div>
+
+      <div class="search-suggestions-row">
+        <span>Suggested searches:</span>
+        <button class="suggestion-chip" type="button">Distributed Systems</button>
+        <button class="suggestion-chip" type="button">Event-Driven Architecture</button>
+        <button class="suggestion-chip" type="button">Enterprise AI Ethics</button>
+        <button class="suggestion-chip" type="button">Linux Foundations</button>
+        <button class="suggestion-chip" type="button">Cloud Observability</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Catalogue Content Region (2 Columns) -->
+  <main class="catalogue-main-section" data-od-id="catalogue-main-workspace">
+
+    <!-- Desktop Filter Region (theme_acuitey left drawer mapping) -->
+    <aside class="filter-panel" aria-label="Catalogue Filters">
+      <div class="filter-panel-header">
+        <span class="filter-panel-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+          Filter Curriculums
+        </span>
+        <button type="button" class="reset-filters-btn" id="reset-filters-desktop">Reset All</button>
+      </div>
+
+      <!-- Filter Group: Discipline Category -->
+      <div class="filter-group">
+        <span class="filter-group-title">Discipline Category</span>
+        <div class="filter-options-list">
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">Cloud Architecture</span>
+            <span class="filter-tier-tag">core_course</span>
+          </label>
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">Software Engineering</span>
+            <span class="filter-tier-tag">core_course</span>
+          </label>
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">Governance &amp; AI Ethics</span>
+            <span class="filter-tier-tag">core_course</span>
+          </label>
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">Systems Foundations</span>
+            <span class="filter-tier-tag">core_course</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Filter Group: Academic Level -->
+      <div class="filter-group">
+        <span class="filter-group-title">Academic Level</span>
+        <div class="filter-options-list">
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">Foundational</span>
+          </label>
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">Postgraduate</span>
+          </label>
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">Executive Leadership</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Filter Group: Enrolment Fee Schedule -->
+      <div class="filter-group">
+        <span class="filter-group-title">Enrolment Fee Schedule</span>
+        <div class="filter-options-list">
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">Standard Fee Track</span>
+          </label>
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">Executive Fee Track</span>
+          </label>
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">Free / Open Access</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Filter Group: Term Duration -->
+      <div class="filter-group">
+        <span class="filter-group-title">Term Duration</span>
+        <div class="filter-options-list">
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">6-Week Focused Term</span>
+          </label>
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">10-Week Modular Term</span>
+          </label>
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">14-Week Comprehensive</span>
+          </label>
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">Self-Paced Term</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Filter Group: Delivery Mode -->
+      <div class="filter-group">
+        <span class="filter-group-title">Delivery Mode</span>
+        <div class="filter-options-list">
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">Interactive Live Sessions</span>
+          </label>
+          <label class="filter-option-label">
+            <input type="checkbox" class="filter-checkbox" checked>
+            <span class="filter-option-text">Self-Paced Guided Study</span>
+          </label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Catalogue Main Content Area -->
+    <div class="catalogue-content">
+
+      <!-- Results Toolbar -->
+      <div class="results-toolbar">
+        <div class="results-count-group">
+          <button type="button" class="btn btn-secondary btn-sm mobile-filter-trigger" id="open-mobile-filter-btn" aria-label="Open filter panel">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+            Filters (Active)
+          </button>
+          <span class="results-count-text">Showing 6 Available Curriculums</span>
+          <span class="sample-pill">[SAMPLE DATA]</span>
+        </div>
+
+        <div class="toolbar-actions">
+          <div class="sort-control-wrap">
+            <label for="catalogue-sort" class="sort-label">Sort by:</label>
+            <select id="catalogue-sort" class="sort-select" aria-label="Sort Curriculums">
+              <option value="recommended">Recommended Academic Sequence</option>
+              <option value="duration-asc">Duration: Shortest to Longest</option>
+              <option value="level-asc">Academic Level: Foundational First</option>
+              <option value="level-desc">Academic Level: Advanced First</option>
+              <option value="title-asc">Curriculum Title: A to Z</option>
+            </select>
+          </div>
+
+          <!-- Prototype Demonstration State Switcher -->
+          <div class="view-state-toggle-group" aria-label="Prototype state switcher">
+            <button type="button" class="view-btn active" id="btn-state-grid" title="Display Normal Grid View">Grid</button>
+            <button type="button" class="view-btn" id="btn-state-skeleton" title="Display Loading Skeleton State">Skeleton</button>
+            <button type="button" class="view-btn" id="btn-state-empty" title="Display Empty State">Empty</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Filter Chips Bar -->
+      <div class="active-filters-bar">
+        <span style="font-size: 11px; color: var(--acuitey-text-muted); font-weight: 500;">Active Filters:</span>
+        <span class="active-filter-chip">
+          All Disciplines
+          <span class="chip-close" title="Remove filter">&times;</span>
+        </span>
+        <span class="active-filter-chip">
+          Postgraduate &amp; Foundational
+          <span class="chip-close" title="Remove filter">&times;</span>
+        </span>
+        <span class="active-filter-chip">
+          Zoom LTI 1.3 Supported
+          <span class="chip-close" title="Remove filter">&times;</span>
+        </span>
+        <button type="button" class="reset-filters-btn" style="margin-left: auto;" id="clear-all-chips">Clear All</button>
+      </div>
+
+      <!-- Normal Course Cards Grid (State 1: Default) -->
+      <div class="course-grid" id="course-grid-container">
+
+        <!-- Course 1 -->
+        <article class="course-card">
+          <div class="card-header-bar">
+            <span class="category-chip-mono">Cloud Architecture</span>
+            <span class="level-badge-mono">POSTGRADUATE</span>
+          </div>
+          <div class="card-body">
+            <div class="card-code-row">
+              <span class="course-code">ACU-CS502</span>
+              <span class="filter-tier-tag">14 WEEKS</span>
+            </div>
+            <h2 class="course-title">High-Concurrency Distributed Systems</h2>
+            <p class="course-synopsis">Consensus protocols (Raft/Paxos), distributed state machines, partitioned caches, and transactional guarantees under massive throughput.</p>
+            
+            <div class="faculty-lead-row">
+              <span class="faculty-avatar">VR</span>
+              <div class="faculty-meta">
+                <span class="faculty-name">Dr. V. Ramanathan</span>
+                <span class="faculty-title-text">Lead Faculty <span class="sample-pill">[SAMPLE DATA]</span></span>
+              </div>
+            </div>
+
+            <div class="curriculum-specs">
+              <div class="spec-group">
+                <span class="spec-title">Curriculum Structure</span>
+                <span class="spec-val">14-Wk Term &bull; Live Zoom LTI</span>
+              </div>
+              <div class="spec-group" style="text-align: right;">
+                <span class="spec-title">Fee Schedule</span>
+                <span class="track-val">Standard Track <span class="sample-pill">[SAMPLE DATA]</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer-actions">
+            <a href="#" class="btn btn-secondary">Inspect Syllabus</a>
+            <a href="#" class="btn btn-action">Enrol Now</a>
+          </div>
+        </article>
+
+        <!-- Course 2 -->
+        <article class="course-card">
+          <div class="card-header-bar">
+            <span class="category-chip-mono">Software Engineering</span>
+            <span class="level-badge-mono">POSTGRADUATE</span>
+          </div>
+          <div class="card-body">
+            <div class="card-code-row">
+              <span class="course-code">ACU-SE301</span>
+              <span class="filter-tier-tag">10 WEEKS</span>
+            </div>
+            <h2 class="course-title">Advanced Event-Driven Microservices</h2>
+            <p class="course-synopsis">Domain-driven design, transactional outbox patterns, idempotent event consumption, and schema governance with Apache Kafka.</p>
+            
+            <div class="faculty-lead-row">
+              <span class="faculty-avatar">SM</span>
+              <div class="faculty-meta">
+                <span class="faculty-name">Prof. S. Mukherjee</span>
+                <span class="faculty-title-text">Academic Faculty <span class="sample-pill">[SAMPLE DATA]</span></span>
+              </div>
+            </div>
+
+            <div class="curriculum-specs">
+              <div class="spec-group">
+                <span class="spec-title">Curriculum Structure</span>
+                <span class="spec-val">10-Wk Term &bull; Live Zoom LTI</span>
+              </div>
+              <div class="spec-group" style="text-align: right;">
+                <span class="spec-title">Fee Schedule</span>
+                <span class="track-val">Standard Track <span class="sample-pill">[SAMPLE DATA]</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer-actions">
+            <a href="#" class="btn btn-secondary">Inspect Syllabus</a>
+            <a href="#" class="btn btn-action">Enrol Now</a>
+          </div>
+        </article>
+
+        <!-- Course 3 -->
+        <article class="course-card">
+          <div class="card-header-bar">
+            <span class="category-chip-mono">Governance &amp; AI</span>
+            <span class="level-badge-mono">EXECUTIVE</span>
+          </div>
+          <div class="card-body">
+            <div class="card-code-row">
+              <span class="course-code">ACU-GV410</span>
+              <span class="filter-tier-tag">6 WEEKS</span>
+            </div>
+            <h2 class="course-title">Enterprise AI Compliance &amp; Data Ethics</h2>
+            <p class="course-synopsis">Regulatory compliance audits, risk mitigation for LLM deployments, DPDP/GDPR alignment, and institutional governance frameworks.</p>
+            
+            <div class="faculty-lead-row">
+              <span class="faculty-avatar">AK</span>
+              <div class="faculty-meta">
+                <span class="faculty-name">Dr. Ananya Kulkarni</span>
+                <span class="faculty-title-text">Faculty Fellow <span class="sample-pill">[SAMPLE DATA]</span></span>
+              </div>
+            </div>
+
+            <div class="curriculum-specs">
+              <div class="spec-group">
+                <span class="spec-title">Curriculum Structure</span>
+                <span class="spec-val">6-Wk Term &bull; Live Zoom LTI</span>
+              </div>
+              <div class="spec-group" style="text-align: right;">
+                <span class="spec-title">Fee Schedule</span>
+                <span class="track-val">Executive Track <span class="sample-pill">[SAMPLE DATA]</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer-actions">
+            <a href="#" class="btn btn-secondary">Inspect Syllabus</a>
+            <a href="#" class="btn btn-action">Enrol Now</a>
+          </div>
+        </article>
+
+        <!-- Course 4 -->
+        <article class="course-card">
+          <div class="card-header-bar">
+            <span class="category-chip-mono">Foundations</span>
+            <span class="level-badge-mono">FOUNDATIONAL</span>
+          </div>
+          <div class="card-body">
+            <div class="card-code-row">
+              <span class="course-code">ACU-FN100</span>
+              <span class="filter-tier-tag">SELF-PACED</span>
+            </div>
+            <h2 class="course-title">Modern Systems Foundations &amp; Linux</h2>
+            <p class="course-synopsis">Operating system fundamentals, memory hierarchies, virtual file systems, shell scripting, and containerization primitives.</p>
+            
+            <div class="faculty-lead-row">
+              <span class="faculty-avatar" style="background: var(--acuitey-bg-subtle); color: var(--acuitey-text-muted); border: 1px solid var(--acuitey-border-subtle);">SP</span>
+              <div class="faculty-meta">
+                <span class="faculty-name">Self-Paced Track (Optional Faculty)</span>
+                <span class="faculty-title-text">Mentor allocated post-enrolment <span class="sample-pill">[SAMPLE DATA]</span></span>
+              </div>
+            </div>
+
+            <div class="curriculum-specs">
+              <div class="spec-group">
+                <span class="spec-title">Curriculum Structure</span>
+                <span class="spec-val">Self-Paced &bull; Guided Labs</span>
+              </div>
+              <div class="spec-group" style="text-align: right;">
+                <span class="spec-title">Fee Schedule</span>
+                <span class="track-val track-free">Free / Open Access</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer-actions">
+            <a href="#" class="btn btn-secondary">Inspect Syllabus</a>
+            <a href="#" class="btn btn-primary">Start Course</a>
+          </div>
+        </article>
+
+        <!-- Course 5 -->
+        <article class="course-card">
+          <div class="card-header-bar">
+            <span class="category-chip-mono">Cloud Architecture</span>
+            <span class="level-badge-mono">POSTGRADUATE</span>
+          </div>
+          <div class="card-body">
+            <div class="card-code-row">
+              <span class="course-code">ACU-CS508</span>
+              <span class="filter-tier-tag">10 WEEKS</span>
+            </div>
+            <h2 class="course-title">Reliability Engineering &amp; Observability</h2>
+            <p class="course-synopsis">SLO budgeting, OpenTelemetry distributed tracing, kernel eBPF monitoring, and incident mitigation in microservice meshes.</p>
+            
+            <div class="faculty-lead-row">
+              <span class="faculty-avatar">VR</span>
+              <div class="faculty-meta">
+                <span class="faculty-name">Dr. V. Ramanathan</span>
+                <span class="faculty-title-text">Visiting Faculty <span class="sample-pill">[SAMPLE DATA]</span></span>
+              </div>
+            </div>
+
+            <div class="curriculum-specs">
+              <div class="spec-group">
+                <span class="spec-title">Curriculum Structure</span>
+                <span class="spec-val">10-Wk Term &bull; Live Zoom LTI</span>
+              </div>
+              <div class="spec-group" style="text-align: right;">
+                <span class="spec-title">Fee Schedule</span>
+                <span class="track-val">Standard Track <span class="sample-pill">[SAMPLE DATA]</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer-actions">
+            <a href="#" class="btn btn-secondary">Inspect Syllabus</a>
+            <a href="#" class="btn btn-action">Enrol Now</a>
+          </div>
+        </article>
+
+        <!-- Course 6 (Depicting Active Enrolled Course State) -->
+        <article class="course-card" style="border-color: var(--acuitey-border-subtle);">
+          <div class="card-header-bar" style="background: var(--acuitey-cobalt-50);">
+            <span class="category-chip-mono" style="background: #FFFFFF;">Software Engineering</span>
+            <span class="level-badge-mono" style="color: var(--acuitey-cobalt-700); font-weight: 700;">ENROLLED ACTIVE</span>
+          </div>
+          <div class="card-body">
+            <div class="card-code-row">
+              <span class="course-code">ACU-SE402</span>
+              <span class="filter-tier-tag">12 WEEKS</span>
+            </div>
+            <h2 class="course-title">Database Internals &amp; Storage Engines</h2>
+            <p class="course-synopsis">B-Tree indexing, Log-Structured Merge (LSM) engines, Write-Ahead Logging (WAL), and multi-version concurrency control (MVCC).</p>
+            
+            <div class="faculty-lead-row">
+              <span class="faculty-avatar">SM</span>
+              <div class="faculty-meta">
+                <span class="faculty-name">Prof. S. Mukherjee</span>
+                <span class="faculty-title-text">Academic Faculty <span class="sample-pill">[SAMPLE DATA]</span></span>
+              </div>
+            </div>
+
+            <!-- Active Enrolment Progress State -->
+            <div class="enrolled-progress-box">
+              <div class="progress-label-row">
+                <span style="font-size: 11px; color: var(--acuitey-text-muted);">Term Progress</span>
+                <span style="font-size: 11px; font-weight: 600; font-family: var(--font-mono); color: var(--acuitey-cobalt-700);">Milestone 4 of 12 (33%)</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 33%;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer-actions">
+            <a href="#" class="btn btn-secondary">Course Syllabus</a>
+            <a href="#" class="btn btn-action">Resume Learning</a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Skeleton Loading State (State 2: Toggled for Review) -->
+      <div class="skeleton-grid" id="skeleton-grid-container" aria-hidden="true">
+        <div class="skeleton-card">
+          <div class="skeleton-line" style="width: 40%; height: 16px;"></div>
+          <div class="skeleton-line" style="width: 80%; height: 22px; margin-top: 8px;"></div>
+          <div class="skeleton-line" style="width: 100%; height: 14px;"></div>
+          <div class="skeleton-line" style="width: 90%; height: 14px;"></div>
+          <div class="skeleton-line" style="width: 50%; height: 28px; border-radius: 50%; margin-top: 14px;"></div>
+          <div class="skeleton-line" style="width: 100%; height: 34px; margin-top: 18px;"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-line" style="width: 40%; height: 16px;"></div>
+          <div class="skeleton-line" style="width: 80%; height: 22px; margin-top: 8px;"></div>
+          <div class="skeleton-line" style="width: 100%; height: 14px;"></div>
+          <div class="skeleton-line" style="width: 90%; height: 14px;"></div>
+          <div class="skeleton-line" style="width: 50%; height: 28px; border-radius: 50%; margin-top: 14px;"></div>
+          <div class="skeleton-line" style="width: 100%; height: 34px; margin-top: 18px;"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-line" style="width: 40%; height: 16px;"></div>
+          <div class="skeleton-line" style="width: 80%; height: 22px; margin-top: 8px;"></div>
+          <div class="skeleton-line" style="width: 100%; height: 14px;"></div>
+          <div class="skeleton-line" style="width: 90%; height: 14px;"></div>
+          <div class="skeleton-line" style="width: 50%; height: 28px; border-radius: 50%; margin-top: 14px;"></div>
+          <div class="skeleton-line" style="width: 100%; height: 34px; margin-top: 18px;"></div>
+        </div>
+      </div>
+
+      <!-- Empty State Panel (State 3: Toggled for Review) -->
+      <div class="empty-state-panel" id="empty-state-container" aria-hidden="true">
+        <div class="empty-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+        </div>
+        <h3 class="empty-title">No Matching Curriculums Found</h3>
+        <p class="empty-desc">We couldn't find any courses matching your selected combination of discipline categories, duration, and fee tracks. Try resetting active filters or broadening your search terms.</p>
+        <button type="button" class="btn btn-secondary" id="empty-reset-btn">Reset All Filter Constraints</button>
+      </div>
+
+      <!-- Pagination Toolbar -->
+      <div class="pagination-bar">
+        <span class="pagination-info">Page 1 of 3 (Representative Pagination Controls <span class="sample-pill">[SAMPLE DATA]</span>)</span>
+        <div class="pagination-controls" aria-label="Pagination">
+          <button type="button" class="page-num-btn" disabled style="opacity: 0.5; cursor: not-allowed;">&lsaquo; Prev</button>
+          <button type="button" class="page-num-btn active">1</button>
+          <button type="button" class="page-num-btn">2</button>
+          <button type="button" class="page-num-btn">3</button>
+          <button type="button" class="page-num-btn">Next &rsaquo;</button>
+        </div>
+      </div>
+
+      <!-- Moodle Architecture Mapping Note -->
+      <div class="moodle-arch-notice">
+        <div class="arch-notice-header">
+          <span class="arch-notice-title">Moodle Technical Architecture Mapping</span>
+          <span class="filter-tier-tag">GOVERNANCE &bull; ZERO CORE EDITS</span>
+        </div>
+        <p class="arch-notice-text">This catalogue prototype realistically maps to Moodle LMS 5.2.3+ without SPA frameworks or architectural rework. UI components correspond directly to Moodle course subsystem layers:</p>
+        <div class="arch-tier-grid">
+          <div class="arch-tier-card">
+            <div class="arch-tier-name">Existing Core/Boost</div>
+            <div class="arch-tier-desc"><code>core_course/category_view</code> hierarchy, <code>course/search.php</code> queries, and native <code>enrol_self</code>/<code>enrol_fee</code> drivers.</div>
+          </div>
+          <div class="arch-tier-card">
+            <div class="arch-tier-name">Proposed Theme</div>
+            <div class="arch-tier-desc"><code>theme_acuitey/templates/course_card.mustache</code> (optional faculty row for self-paced, team-taught, cohort-based, or post-enrolment assignment) &amp; <code>course_catalogue.mustache</code>.</div>
+          </div>
+          <div class="arch-tier-card">
+            <div class="arch-tier-name">Proposed Custom Fields</div>
+            <div class="arch-tier-desc">Proposed <code>core_customfield</code> definitions: <code>discipline_category</code>, <code>academic_level</code>, and <code>term_duration</code> (subject to final schema sign-off).</div>
+          </div>
+          <div class="arch-tier-card">
+            <div class="arch-tier-name">Standard APIs</div>
+            <div class="arch-tier-desc"><code>core_payment</code> gateway modal for Razorpay checkout; <code>mod_lti</code> for Zoom 1.3 launch.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Mobile / Tablet Filter Bottom Sheet Modal -->
+  <div class="mobile-filter-modal" id="mobile-filter-modal" aria-hidden="true" role="dialog" aria-label="Filter Curriculums">
+    <div class="mobile-filter-sheet">
+      <div class="mobile-sheet-header">
+        <span class="filter-panel-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+          Filter Curriculums
+        </span>
+        <button type="button" class="btn btn-ghost btn-sm" id="close-mobile-filter-btn" aria-label="Close filters">&times; Close</button>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-group-title">Discipline Category</span>
+        <div class="filter-options-list">
+          <label class="filter-option-label"><input type="checkbox" class="filter-checkbox" checked> Cloud Architecture</label>
+          <label class="filter-option-label"><input type="checkbox" class="filter-checkbox" checked> Software Engineering</label>
+          <label class="filter-option-label"><input type="checkbox" class="filter-checkbox" checked> Governance &amp; AI Ethics</label>
+          <label class="filter-option-label"><input type="checkbox" class="filter-checkbox" checked> Systems Foundations</label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-group-title">Academic Level</span>
+        <div class="filter-options-list">
+          <label class="filter-option-label"><input type="checkbox" class="filter-checkbox" checked> Foundational</label>
+          <label class="filter-option-label"><input type="checkbox" class="filter-checkbox" checked> Postgraduate</label>
+          <label class="filter-option-label"><input type="checkbox" class="filter-checkbox" checked> Executive Leadership</label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-group-title">Fee Schedule</span>
+        <div class="filter-options-list">
+          <label class="filter-option-label"><input type="checkbox" class="filter-checkbox" checked> Standard Track</label>
+          <label class="filter-option-label"><input type="checkbox" class="filter-checkbox" checked> Executive Track</label>
+          <label class="filter-option-label"><input type="checkbox" class="filter-checkbox" checked> Free / Open Access</label>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: 10px;">
+        <button type="button" class="btn btn-secondary" style="flex: 1;" id="mobile-reset-btn">Reset All</button>
+        <button type="button" class="btn btn-action" style="flex: 1;" id="mobile-apply-btn">Apply Filters</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Moodle Boost Theme Footer (theme_acuitey/footer) -->
+  <footer class="moodle-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <span>&copy; 2026 Acuitey Solutions. Operating on Moodle LMS 5.2.3+ (Build: 20260916). Strict core separation preserved.</span>
+      </div>
+      <ul class="footer-links">
+        <li><a href="homepage.html" class="footer-link">Home</a></li>
+        <li><a href="course-catalogue.html" class="footer-link">Curriculums</a></li>
+        <li><a href="homepage.html#mentorship" class="footer-link">Mentorship Architecture</a></li>
+        <li><a href="homepage.html#enterprise" class="footer-link">Enterprise Governance</a></li>
+        <li><span class="sample-pill">[SAMPLE DATA DISCLOSED]</span></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Interactive Prototype Script for State Switching & Mobile Drawer -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile Drawer Elements
+      const openMobileBtn = document.getElementById('open-mobile-filter-btn');
+      const closeMobileBtn = document.getElementById('close-mobile-filter-btn');
+      const mobileModal = document.getElementById('mobile-filter-modal');
+      const mobileApplyBtn = document.getElementById('mobile-apply-btn');
+      const mobileResetBtn = document.getElementById('mobile-reset-btn');
+
+      if (openMobileBtn && mobileModal) {
+        openMobileBtn.addEventListener('click', function() {
+          mobileModal.classList.add('open');
+          mobileModal.setAttribute('aria-hidden', 'false');
+        });
+      }
+
+      function closeDrawer() {
+        if (mobileModal) {
+          mobileModal.classList.remove('open');
+          mobileModal.setAttribute('aria-hidden', 'true');
+        }
+      }
+
+      if (closeMobileBtn) closeMobileBtn.addEventListener('click', closeDrawer);
+      if (mobileApplyBtn) mobileApplyBtn.addEventListener('click', closeDrawer);
+      if (mobileModal) {
+        mobileModal.addEventListener('click', function(e) {
+          if (e.target === mobileModal) closeDrawer();
+        });
+      }
+
+      // State Demonstration Toggle (Normal Grid / Skeleton / Empty)
+      const btnGrid = document.getElementById('btn-state-grid');
+      const btnSkeleton = document.getElementById('btn-state-skeleton');
+      const btnEmpty = document.getElementById('btn-state-empty');
+
+      const gridContainer = document.getElementById('course-grid-container');
+      const skeletonContainer = document.getElementById('skeleton-grid-container');
+      const emptyContainer = document.getElementById('empty-state-container');
+
+      function switchState(state) {
+        [btnGrid, btnSkeleton, btnEmpty].forEach(b => b.classList.remove('active'));
+        
+        if (state === 'grid') {
+          btnGrid.classList.add('active');
+          gridContainer.style.display = 'grid';
+          gridContainer.setAttribute('aria-hidden', 'false');
+          skeletonContainer.style.display = 'none';
+          skeletonContainer.setAttribute('aria-hidden', 'true');
+          emptyContainer.style.display = 'none';
+          emptyContainer.setAttribute('aria-hidden', 'true');
+        } else if (state === 'skeleton') {
+          btnSkeleton.classList.add('active');
+          gridContainer.style.display = 'none';
+          gridContainer.setAttribute('aria-hidden', 'true');
+          skeletonContainer.style.display = 'grid';
+          skeletonContainer.setAttribute('aria-hidden', 'false');
+          emptyContainer.style.display = 'none';
+          emptyContainer.setAttribute('aria-hidden', 'true');
+        } else if (state === 'empty') {
+          btnEmpty.classList.add('active');
+          gridContainer.style.display = 'none';
+          gridContainer.setAttribute('aria-hidden', 'true');
+          skeletonContainer.style.display = 'none';
+          skeletonContainer.setAttribute('aria-hidden', 'true');
+          emptyContainer.style.display = 'flex';
+          emptyContainer.setAttribute('aria-hidden', 'false');
+        }
+      }
+
+      if (btnGrid) btnGrid.addEventListener('click', () => switchState('grid'));
+      if (btnSkeleton) btnSkeleton.addEventListener('click', () => switchState('skeleton'));
+      if (btnEmpty) btnEmpty.addEventListener('click', () => switchState('empty'));
+
+      const emptyReset = document.getElementById('empty-reset-btn');
+      if (emptyReset) emptyReset.addEventListener('click', () => switchState('grid'));
+
+      // Suggestion chips populate search input
+      const searchInput = document.getElementById('course-search-input');
+      document.querySelectorAll('.suggestion-chip').forEach(chip => {
+        chip.addEventListener('click', function() {
+          if (searchInput) {
+            searchInput.value = this.textContent.trim();
+            searchInput.focus();
+          }
+        });
+      });
+
+      // Active filter chip dismiss
+      document.querySelectorAll('.chip-close').forEach(closeBtn => {
+        closeBtn.addEventListener('click', function() {
+          const chip = this.closest('.active-filter-chip');
+          if (chip) chip.remove();
+        });
+      });
+
+      const clearAllChips = document.getElementById('clear-all-chips');
+      if (clearAllChips) {
+        clearAllChips.addEventListener('click', function() {
+          document.querySelectorAll('.active-filter-chip').forEach(c => c.remove());
+        });
+      }
+    });
+  </script>
+</body>
+</html>

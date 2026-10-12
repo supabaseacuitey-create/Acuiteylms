@@ -1,0 +1,117 @@
+---
+title: "Page Footer"
+description: "Repeating page footer."
+---
+
+<ComponentPreview base="forme" name="page-footer" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/forme/page-footer
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @formepdf/react @formepdf/core
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/forme/components/page-footer/page-footer.tsx"
+  base="forme"
+  title="components/pdf/page-footer/page-footer.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/components/theme-provider.tsx"
+  base="forme"
+  title="components/pdf/theme-provider.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/resolve-color.ts"
+  base="forme"
+  title="lib/resolve-color.ts"
+/>
+
+<ComponentSource
+  src="registry/themes/professional.ts"
+  base="forme"
+  title="lib/pdf-themes/professional.ts"
+/>
+
+<ComponentSource
+  src="registry/themes/primitives.ts"
+  base="forme"
+  title="lib/pdf-themes/primitives.ts"
+/>
+
+<ComponentSource
+  src="registry/types/pdf-themes.ts"
+  base="forme"
+  title="types/pdf-themes.ts"
+/>
+
+<ComponentSource
+  src="registry/types/pdf-components.ts"
+  base="forme"
+  title="types/pdf-components.ts"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { PageFooter } from "@/components/pdf/page-footer";
+```
+
+```tsx
+<PageFooter leftText="pdfcn" rightText="Confidential" />
+```
+
+## API Reference
+
+### PageFooter
+
+| Prop          | Type                                                                               | Default  |
+| ------------- | ---------------------------------------------------------------------------------- | -------- |
+| `leftText`    | `string`                                                                           | -        |
+| `rightText`   | `string`                                                                           | -        |
+| `centerText`  | `string`                                                                           | -        |
+| `variant`     | `'simple' \| 'centered' \| 'branded' \| 'minimal' \| 'three-column' \| 'detailed'` | 'simple' |
+| `background`  | `string`                                                                           | -        |
+| `textColor`   | `string`                                                                           | -        |
+| `marginTop`   | `number`                                                                           | -        |
+| `address`     | `string`                                                                           | -        |
+| `phone`       | `string`                                                                           | -        |
+| `email`       | `string`                                                                           | -        |
+| `website`     | `string`                                                                           | -        |
+| `fixed`       | `boolean`                                                                          | false    |
+| `sticky`      | `boolean`                                                                          | false    |
+| `pagePadding` | `number`                                                                           | 0        |
+| `noWrap`      | `boolean`                                                                          | true     |

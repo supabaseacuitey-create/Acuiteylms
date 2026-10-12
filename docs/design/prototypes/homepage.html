@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acuitey Solutions — Enterprise Learning Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Acuitey Design Tokens */
+      --acuitey-bg-canvas: #F9FAFB;
+      --acuitey-bg-surface: #FFFFFF;
+      --acuitey-bg-subtle: #F3F4F6;
+      --acuitey-bg-muted: #E5E7EB;
+
+      --acuitey-border-hairline: #E5E7EB;
+      --acuitey-border-subtle: #D1D5DB;
+      --acuitey-border-strong: #9CA3AF;
+
+      --acuitey-text-primary: #0F172A;
+      --acuitey-text-secondary: #334155;
+      --acuitey-text-muted: #64748B;
+      --acuitey-text-disabled: #94A3B8;
+
+      --acuitey-navy-900: #0C192C;
+      --acuitey-navy-800: #13243D;
+      --acuitey-cobalt-700: #1D4ED8;
+      --acuitey-cobalt-800: #1E40AF;
+      --acuitey-cobalt-50: #EFF6FF;
+
+      --acuitey-status-success-fg: #065F46;
+      --acuitey-status-success-bg: #ECFDF5;
+      --acuitey-status-success-border: #A7F3D0;
+
+      --acuitey-status-warning-fg: #92400E;
+      --acuitey-status-warning-bg: #FFFBEB;
+      --acuitey-status-warning-border: #FDE68A;
+
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+      --radius-badge: 3px;
+      --radius-control: 5px;
+      --radius-card: 6px;
+      --radius-modal: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--acuitey-bg-canvas);
+      color: var(--acuitey-text-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Moodle Boost Child Theme Navbar (theme_acuitey/navbar) */
+    .moodle-navbar {
+      background: var(--acuitey-bg-surface);
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--acuitey-navy-900);
+      border-radius: var(--radius-control);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      color: var(--acuitey-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: var(--acuitey-text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--acuitey-navy-900);
+      font-weight: 600;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: var(--radius-control);
+      text-decoration: none;
+      cursor: pointer;
+      line-height: 1;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      min-height: 38px;
+    }
+
+    .btn-secondary {
+      background: var(--acuitey-bg-surface);
+      color: var(--acuitey-text-primary);
+      border-color: var(--acuitey-border-subtle);
+    }
+
+    .btn-secondary:hover {
+      background: var(--acuitey-bg-subtle);
+      border-color: var(--acuitey-border-strong);
+    }
+
+    .btn-primary {
+      background: var(--acuitey-navy-900);
+      color: #FFFFFF;
+    }
+
+    .btn-primary:hover {
+      background: var(--acuitey-navy-800);
+    }
+
+    .btn-action {
+      background: var(--acuitey-cobalt-700);
+      color: #FFFFFF;
+    }
+
+    .btn-action:hover {
+      background: var(--acuitey-cobalt-800);
+    }
+
+    /* Hero Section (frontpage_hero.mustache) */
+    .hero-section {
+      background: var(--acuitey-bg-surface);
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      padding: 64px 32px 56px;
+    }
+
+    .hero-container {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: var(--radius-badge);
+      background: var(--acuitey-bg-subtle);
+      color: var(--acuitey-text-secondary);
+      border: 1px solid var(--acuitey-border-hairline);
+      margin-bottom: 16px;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--acuitey-status-success-fg);
+    }
+
+    .hero-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.25;
+      color: var(--acuitey-text-primary);
+      max-width: 880px;
+      margin-bottom: 16px;
+    }
+
+    .hero-subtitle {
+      font-size: 17px;
+      color: var(--acuitey-text-secondary);
+      line-height: 1.6;
+      max-width: 780px;
+      margin-bottom: 32px;
+    }
+
+    /* Search & Filter Bar */
+    .search-panel {
+      background: var(--acuitey-bg-canvas);
+      border: 1px solid var(--acuitey-border-subtle);
+      border-radius: var(--radius-card);
+      padding: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      max-width: 860px;
+    }
+
+    .search-input-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-control);
+      padding: 0 14px;
+      height: 42px;
+    }
+
+    .search-input {
+      border: none;
+      outline: none;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--acuitey-text-primary);
+      width: 100%;
+      background: transparent;
+    }
+
+    .search-category-select {
+      height: 42px;
+      padding: 0 14px;
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 500;
+      color: var(--acuitey-text-secondary);
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-control);
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Educational Architecture Indicators */
+    .hero-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--acuitey-border-hairline);
+    }
+
+    .kpi-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .kpi-num {
+      font-family: var(--font-mono);
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .kpi-label {
+      font-size: 12px;
+      color: var(--acuitey-text-muted);
+      font-weight: 500;
+    }
+
+    .sample-data-pill {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--acuitey-status-warning-fg);
+      background: var(--acuitey-status-warning-bg);
+      border: 1px solid var(--acuitey-status-warning-border);
+      padding: 1px 5px;
+      border-radius: var(--radius-badge);
+      display: inline-block;
+      width: fit-content;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Main Content Region (Moodle #page-content) */
+    .content-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 48px 32px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .section-category-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--acuitey-cobalt-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      letter-spacing: -0.015em;
+    }
+
+    .section-intro {
+      font-size: 14px;
+      color: var(--acuitey-text-secondary);
+      margin-top: 4px;
+      max-width: 720px;
+    }
+
+    /* Category Browsing Chips */
+    .category-chip-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .category-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: var(--radius-control);
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-subtle);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--acuitey-text-secondary);
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .category-chip:hover, .category-chip.active {
+      background: var(--acuitey-navy-900);
+      color: #FFFFFF;
+      border-color: var(--acuitey-navy-900);
+    }
+
+    /* Course Cards Grid */
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .course-card {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.15s ease;
+    }
+
+    .course-card:hover {
+      border-color: var(--acuitey-border-subtle);
+    }
+
+    .card-header-bar {
+      background: var(--acuitey-bg-subtle);
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .course-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--acuitey-text-secondary);
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      padding: 3px 8px;
+      border-radius: var(--radius-badge);
+    }
+
+    .course-code-mono {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--acuitey-text-muted);
+    }
+
+    .card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .course-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+      line-height: 1.4;
+      margin-bottom: 8px;
+      min-height: 44px;
+    }
+
+    .course-synopsis {
+      font-size: 13px;
+      color: var(--acuitey-text-secondary);
+      line-height: 1.5;
+      margin-bottom: 16px;
+      min-height: 58px;
+    }
+
+    .faculty-lead-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      margin-bottom: 14px;
+    }
+
+    .faculty-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--acuitey-bg-muted);
+      color: var(--acuitey-text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .faculty-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .faculty-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+    }
+
+    .faculty-title-text {
+      font-size: 11px;
+      color: var(--acuitey-text-muted);
+    }
+
+    .curriculum-specs {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      font-size: 12px;
+    }
+
+    .spec-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .spec-title {
+      font-size: 10px;
+      color: var(--acuitey-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .spec-val {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--acuitey-text-primary);
+    }
+
+    .price-val {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+    }
+
+    .price-free {
+      color: var(--acuitey-status-success-fg);
+    }
+
+    .card-footer-actions {
+      padding: 14px 20px;
+      background: var(--acuitey-bg-canvas);
+      border-top: 1px solid var(--acuitey-border-hairline);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-footer-actions .btn {
+      flex: 1;
+      min-height: 34px;
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    /* Guided Mentorship & Value Proposition Section */
+    .proposition-panel {
+      margin-top: 48px;
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 36px 32px;
+    }
+
+    .proposition-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 24px;
+    }
+
+    .proposition-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .proposition-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-control);
+      background: var(--acuitey-bg-subtle);
+      border: 1px solid var(--acuitey-border-hairline);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--acuitey-navy-900);
+      margin-bottom: 14px;
+    }
+
+    .proposition-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+      margin-bottom: 8px;
+    }
+
+    .proposition-text {
+      font-size: 13px;
+      color: var(--acuitey-text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Enrolment Call to Action Banner */
+    .cta-banner {
+      margin-top: 48px;
+      background: var(--acuitey-navy-900);
+      border-radius: var(--radius-card);
+      padding: 40px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .cta-content {
+      max-width: 760px;
+    }
+
+    .cta-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+      letter-spacing: -0.015em;
+    }
+
+    .cta-desc {
+      font-size: 14px;
+      color: #94A3B8;
+      line-height: 1.6;
+    }
+
+    .cta-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Moodle Footer */
+    .moodle-footer {
+      background: var(--acuitey-bg-surface);
+      border-top: 1px solid var(--acuitey-border-hairline);
+      padding: 40px 32px 32px;
+      margin-top: 64px;
+    }
+
+    .footer-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-left {
+      font-size: 12px;
+      color: var(--acuitey-text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-link {
+      font-size: 12px;
+      color: var(--acuitey-text-secondary);
+      text-decoration: none;
+    }
+
+    .footer-link:hover {
+      color: var(--acuitey-text-primary);
+    }
+
+    /* Responsive Breakpoint Governance */
+    @media (max-width: 1024px) {
+      .course-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .proposition-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .hero-kpi-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar-container, .hero-section, .content-container, .moodle-footer {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .navbar-container .btn-secondary {
+        display: none;
+      }
+      .hero-title {
+        font-size: 24px;
+        line-height: 1.3;
+      }
+      .hero-subtitle {
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 24px;
+      }
+      .course-grid {
+        grid-template-columns: 1fr;
+      }
+      .proposition-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-kpi-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        margin-top: 32px;
+        padding-top: 24px;
+      }
+      .search-panel {
+        flex-direction: column;
+        padding: 8px;
+      }
+      .search-category-select, .search-panel .btn {
+        width: 100%;
+      }
+      .cta-banner {
+        padding: 24px 20px;
+      }
+      .cta-actions {
+        width: 100%;
+        flex-direction: column;
+      }
+      .cta-actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Moodle Navbar (Boost Child Theme: theme_acuitey/navbar) -->
+  <header class="moodle-navbar">
+    <div class="navbar-container">
+      <a href="homepage.html" class="brand-group">
+        <div class="brand-mark">AS</div>
+        <div class="brand-text">
+          <span class="brand-title">Acuitey Solutions</span>
+          <span class="brand-subtitle">Enterprise LMS</span>
+        </div>
+      </a>
+
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="homepage.html" class="nav-link active">Home</a></li>
+          <li><a href="#curriculums" class="nav-link">Curriculums</a></li>
+          <li><a href="#mentorship" class="nav-link">Mentorship Architecture</a></li>
+          <li><a href="#enterprise" class="nav-link">Enterprise Governance</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#curriculums" class="btn btn-secondary">Explore Curriculums</a>
+        <a href="#enrol" class="btn btn-primary">Sign In</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Frontpage Marketing Hero Section (theme_acuitey/frontpage_hero) -->
+  <section class="hero-section" data-od-id="hero-banner">
+    <div class="hero-container">
+      <div class="badge-pill">
+        <span class="badge-dot"></span>
+        <span>Enterprise Learning Management Platform</span>
+      </div>
+
+      <h1 class="hero-title">Academic Rigor &amp; High-Impact Enterprise Learning</h1>
+      <p class="hero-subtitle">Comprehensive higher-education and corporate upskilling curricula featuring dedicated faculty mentorship, interactive live sessions, and structured academic assessments.</p>
+
+      <!-- Course Search & Discipline Filter Bar -->
+      <div class="search-panel">
+        <div class="search-input-wrap">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--acuitey-text-muted);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" class="search-input" placeholder="Search curriculums, syllabi, or academic disciplines..." aria-label="Search courses">
+        </div>
+        <select class="search-category-select" aria-label="Discipline Filter">
+          <option value="">All Academic Disciplines</option>
+          <option value="cs">Computer Systems Architecture</option>
+          <option value="se">Distributed Software Engineering</option>
+          <option value="gov">Data Governance &amp; AI Ethics</option>
+          <option value="sec">Cybersecurity &amp; Cloud Reliability</option>
+        </select>
+        <button class="btn btn-primary" type="button">Search</button>
+      </div>
+
+      <!-- Core Educational Value Indicators -->
+      <div class="hero-kpi-row">
+        <div class="kpi-item">
+          <span class="kpi-num">Structured</span>
+          <span class="kpi-label">Learning Paths</span>
+          <span class="kpi-label" style="font-size: 10px; color: var(--acuitey-text-muted); font-weight: 500;">Progressive Modules</span>
+        </div>
+        <div class="kpi-item">
+          <span class="kpi-num">Dedicated</span>
+          <span class="kpi-label">Faculty Mentorship</span>
+          <span class="kpi-label" style="font-size: 10px; color: var(--acuitey-cobalt-700); font-weight: 600;">Expert Guidance</span>
+        </div>
+        <div class="kpi-item">
+          <span class="kpi-num">Interactive</span>
+          <span class="kpi-label">Live Sessions</span>
+          <span class="kpi-label" style="font-size: 10px; color: var(--acuitey-status-success-fg); font-weight: 600;">Cohort Clinics</span>
+        </div>
+        <div class="kpi-item">
+          <span class="kpi-num">Rigorous</span>
+          <span class="kpi-label">Academic Assessments</span>
+          <span class="kpi-label" style="font-size: 10px; color: var(--acuitey-cobalt-700); font-weight: 600;">Detailed Rubrics</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Region -->
+  <main class="content-container" id="curriculums">
+    <div class="section-header">
+      <div>
+        <div class="section-category-label">Academic Offerings</div>
+        <h2 class="section-title">Featured Curriculums</h2>
+        <p class="section-intro">Mastery-oriented curricula supervised by assigned faculty members, with structured deliverables and live laboratory sessions.</p>
+      </div>
+    </div>
+
+    <!-- Category Chips -->
+    <div class="category-chip-row">
+      <a href="#curriculums" class="category-chip active">All Disciplines</a>
+      <a href="#curriculums" class="category-chip">Cloud Systems</a>
+      <a href="#curriculums" class="category-chip">Distributed Systems</a>
+      <a href="#curriculums" class="category-chip">Data Governance</a>
+      <a href="#curriculums" class="category-chip">Systems Foundations</a>
+    </div>
+
+    <!-- Course Cards Grid (Moodle course_card.mustache) -->
+    <div class="course-grid">
+      <!-- Course 1 -->
+      <article class="course-card">
+        <div class="card-header-bar">
+          <span class="course-tag">Cloud Architecture</span>
+          <span class="course-code-mono">ACU-CS502</span>
+        </div>
+        <div class="card-body">
+          <h3 class="course-title">High-Concurrency Distributed Systems</h3>
+          <p class="course-synopsis">Consensus protocols (Raft/Paxos), distributed state machines, partitioned caches, and transactional guarantees under massive throughput.</p>
+          <div class="faculty-lead-row">
+            <span class="faculty-avatar">VR</span>
+            <div class="faculty-meta">
+              <span class="faculty-name">Dr. V. Ramanathan</span>
+              <span class="faculty-title-text">Lead Faculty <span class="sample-data-pill">[SAMPLE DATA]</span></span>
+            </div>
+          </div>
+          <div class="curriculum-specs">
+            <div class="spec-group">
+              <span class="spec-title">Curriculum Structure</span>
+              <span class="spec-val">Structured Term &bull; Live Zoom LTI</span>
+            </div>
+            <div class="spec-group" style="text-align: right;">
+              <span class="spec-title">Fee Schedule</span>
+              <span class="price-val" style="font-size: 13px;">Standard Track <span class="sample-data-pill">[SAMPLE DATA]</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer-actions">
+          <a href="#" class="btn btn-secondary">Inspect Syllabus</a>
+          <a href="#" class="btn btn-action">Enrol Now</a>
+        </div>
+      </article>
+
+      <!-- Course 2 -->
+      <article class="course-card">
+        <div class="card-header-bar">
+          <span class="course-tag">Software Engineering</span>
+          <span class="course-code-mono">ACU-SE301</span>
+        </div>
+        <div class="card-body">
+          <h3 class="course-title">Advanced Event-Driven Microservices</h3>
+          <p class="course-synopsis">Domain-driven design, transactional outbox patterns, idempotent event consumption, and schema governance with Apache Kafka.</p>
+          <div class="faculty-lead-row">
+            <span class="faculty-avatar">SM</span>
+            <div class="faculty-meta">
+              <span class="faculty-name">Prof. S. Mukherjee</span>
+              <span class="faculty-title-text">Academic Faculty <span class="sample-data-pill">[SAMPLE DATA]</span></span>
+            </div>
+          </div>
+          <div class="curriculum-specs">
+            <div class="spec-group">
+              <span class="spec-title">Curriculum Structure</span>
+              <span class="spec-val">Modular Term &bull; Live Zoom LTI</span>
+            </div>
+            <div class="spec-group" style="text-align: right;">
+              <span class="spec-title">Fee Schedule</span>
+              <span class="price-val" style="font-size: 13px;">Standard Track <span class="sample-data-pill">[SAMPLE DATA]</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer-actions">
+          <a href="#" class="btn btn-secondary">Inspect Syllabus</a>
+          <a href="#" class="btn btn-action">Enrol Now</a>
+        </div>
+      </article>
+
+      <!-- Course 3 -->
+      <article class="course-card">
+        <div class="card-header-bar">
+          <span class="course-tag">Governance &amp; AI</span>
+          <span class="course-code-mono">ACU-GV410</span>
+        </div>
+        <div class="card-body">
+          <h3 class="course-title">Enterprise AI Compliance &amp; Data Ethics</h3>
+          <p class="course-synopsis">Regulatory compliance audits, risk mitigation for LLM deployments, DPDP/GDPR alignment, and institutional governance frameworks.</p>
+          <div class="faculty-lead-row">
+            <span class="faculty-avatar">AK</span>
+            <div class="faculty-meta">
+              <span class="faculty-name">Dr. Ananya Kulkarni</span>
+              <span class="faculty-title-text">Faculty Fellow <span class="sample-data-pill">[SAMPLE DATA]</span></span>
+            </div>
+          </div>
+          <div class="curriculum-specs">
+            <div class="spec-group">
+              <span class="spec-title">Curriculum Structure</span>
+              <span class="spec-val">Executive Term &bull; Live Zoom LTI</span>
+            </div>
+            <div class="spec-group" style="text-align: right;">
+              <span class="spec-title">Fee Schedule</span>
+              <span class="price-val" style="font-size: 13px;">Executive Track <span class="sample-data-pill">[SAMPLE DATA]</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer-actions">
+          <a href="#" class="btn btn-secondary">Inspect Syllabus</a>
+          <a href="#" class="btn btn-action">Enrol Now</a>
+        </div>
+      </article>
+
+      <!-- Course 4 -->
+      <article class="course-card">
+        <div class="card-header-bar">
+          <span class="course-tag">Foundations</span>
+          <span class="course-code-mono">ACU-FN100</span>
+        </div>
+        <div class="card-body">
+          <h3 class="course-title">Modern Systems Foundations &amp; Linux</h3>
+          <p class="course-synopsis">Operating system fundamentals, memory hierarchies, virtual file systems, shell scripting, and containerization primitives.</p>
+          <div class="faculty-lead-row">
+            <span class="faculty-avatar">FP</span>
+            <div class="faculty-meta">
+              <span class="faculty-name">Academic Faculty Pool</span>
+              <span class="faculty-title-text">Computer Science Department</span>
+            </div>
+          </div>
+          <div class="curriculum-specs">
+            <div class="spec-group">
+              <span class="spec-title">Curriculum Structure</span>
+              <span class="spec-val">Foundational &bull; Self-Paced</span>
+            </div>
+            <div class="spec-group" style="text-align: right;">
+              <span class="spec-title">Fee Schedule</span>
+              <span class="price-val price-free">Free / Open Access</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer-actions">
+          <a href="#" class="btn btn-secondary">Inspect Syllabus</a>
+          <a href="#" class="btn btn-primary">Start Course</a>
+        </div>
+      </article>
+
+      <!-- Course 5 -->
+      <article class="course-card">
+        <div class="card-header-bar">
+          <span class="course-tag">Cloud Architecture</span>
+          <span class="course-code-mono">ACU-CS508</span>
+        </div>
+        <div class="card-body">
+          <h3 class="course-title">Reliability Engineering &amp; Observability</h3>
+          <p class="course-synopsis">SLO budgeting, OpenTelemetry distributed tracing, kernel eBPF monitoring, and incident mitigation in microservice meshes.</p>
+          <div class="faculty-lead-row">
+            <span class="faculty-avatar">VR</span>
+            <div class="faculty-meta">
+              <span class="faculty-name">Dr. V. Ramanathan</span>
+              <span class="faculty-title-text">Visiting Faculty <span class="sample-data-pill">[SAMPLE DATA]</span></span>
+            </div>
+          </div>
+          <div class="curriculum-specs">
+            <div class="spec-group">
+              <span class="spec-title">Curriculum Structure</span>
+              <span class="spec-val">Modular Term &bull; Live Zoom LTI</span>
+            </div>
+            <div class="spec-group" style="text-align: right;">
+              <span class="spec-title">Fee Schedule</span>
+              <span class="price-val" style="font-size: 13px;">Standard Track <span class="sample-data-pill">[SAMPLE DATA]</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer-actions">
+          <a href="#" class="btn btn-secondary">Inspect Syllabus</a>
+          <a href="#" class="btn btn-action">Enrol Now</a>
+        </div>
+      </article>
+
+      <!-- Course 6 -->
+      <article class="course-card">
+        <div class="card-header-bar">
+          <span class="course-tag">Software Engineering</span>
+          <span class="course-code-mono">ACU-SE402</span>
+        </div>
+        <div class="card-body">
+          <h3 class="course-title">Database Internals &amp; Storage Engines</h3>
+          <p class="course-synopsis">B-Tree indexing, Log-Structured Merge (LSM) engines, Write-Ahead Logging (WAL), and multi-version concurrency control (MVCC).</p>
+          <div class="faculty-lead-row">
+            <span class="faculty-avatar">SM</span>
+            <div class="faculty-meta">
+              <span class="faculty-name">Prof. S. Mukherjee</span>
+              <span class="faculty-title-text">Academic Faculty <span class="sample-data-pill">[SAMPLE DATA]</span></span>
+            </div>
+          </div>
+          <div class="curriculum-specs">
+            <div class="spec-group">
+              <span class="spec-title">Curriculum Structure</span>
+              <span class="spec-val">Structured Term &bull; Live Zoom LTI</span>
+            </div>
+            <div class="spec-group" style="text-align: right;">
+              <span class="spec-title">Fee Schedule</span>
+              <span class="price-val" style="font-size: 13px;">Advanced Track <span class="sample-data-pill">[SAMPLE DATA]</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer-actions">
+          <a href="#" class="btn btn-secondary">Inspect Syllabus</a>
+          <a href="#" class="btn btn-action">Enrol Now</a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Guided Mentorship & Architecture Section -->
+    <section class="proposition-panel" data-od-id="guided-mentorship" id="mentorship">
+      <div class="section-category-label">Pedagogical Framework</div>
+      <h2 class="section-title" style="font-size: 20px;">Guided Faculty Supervision Meets Scalable Architecture</h2>
+      <div class="proposition-grid">
+        <div class="proposition-card">
+          <div class="proposition-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="16 11 18 13 22 9"></polyline></svg>
+          </div>
+          <h3 class="proposition-title">Dynamic Mentorship Allocation</h3>
+          <p class="proposition-text">Proprietary matching routes student interactions, live clinics, and project evaluations to qualified faculty based on discipline, active load, and live availability.</p>
+        </div>
+
+        <div class="proposition-card">
+          <div class="proposition-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+          </div>
+          <h3 class="proposition-title">Interactive Live Classrooms</h3>
+          <p class="proposition-text">Authenticated live web conferences launch natively from course milestone activities without external meeting links, passwords, or separate sign-ins.</p>
+        </div>
+
+        <div class="proposition-card">
+          <div class="proposition-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          </div>
+          <h3 class="proposition-title">Seamless Enrolment Checkout</h3>
+          <p class="proposition-text">Integrated payment gateway supporting leading payment methods for seamless, secure fee-based course enrolment.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Enterprise Institutional CTA -->
+    <section class="cta-banner" data-od-id="enterprise-cta" id="enterprise">
+      <div class="cta-content">
+        <h2 class="cta-title">Deploy Scalable Technical Education for Your Enterprise</h2>
+        <p class="cta-desc">Acuitey Solutions empowers institutions with high-concurrency curriculum delivery, strict role isolation, verifiable academic certification, and a resilient, standards-compliant platform.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="#curriculums" class="btn btn-secondary" style="background: transparent; color: #FFFFFF; border-color: #475569;">Explore Curriculums</a>
+        <a href="#curriculums" class="btn btn-action">Request Enterprise Pilot</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Moodle Boost Theme Footer (theme_acuitey/footer) -->
+  <footer class="moodle-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <span>&copy; 2026 Acuitey Solutions. Operating on Moodle LMS 5.2.3+ (Build: 20260916). Strict core separation preserved.</span>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#curriculums" class="footer-link">Curriculums</a></li>
+        <li><a href="#mentorship" class="footer-link">Mentorship Architecture</a></li>
+        <li><a href="#enterprise" class="footer-link">Enterprise Governance</a></li>
+        <li><span class="sample-data-pill">[SAMPLE DATA DISCLOSED]</span></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>

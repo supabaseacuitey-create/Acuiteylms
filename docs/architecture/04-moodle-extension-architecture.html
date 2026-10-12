@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acuitey Solutions LMS - Moodle Extension Architecture</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    .header {
+      max-width: 1200px;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #059669;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+    p.subtitle {
+      font-size: 14px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+    .diagram-container {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      max-width: 1200px;
+      width: 100%;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .caption-box {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      max-width: 1200px;
+      width: 100%;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-size: 13px;
+    }
+    .card-title {
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+    .card-desc {
+      color: #64748b;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="badge">Architecture Schematic · 04</div>
+    <h1>Acuitey Solutions LMS — Moodle Extension Architecture</h1>
+    <p class="subtitle">Structural isolation contract showing strict adherence to Moodle native extension hooks without core modification.</p>
+  </div>
+
+  <div class="diagram-container">
+    <svg viewBox="0 0 1150 760" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#64748b"/>
+        </marker>
+        <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#2563eb"/>
+        </marker>
+        <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#16a34a"/>
+        </marker>
+      </defs>
+
+      <!-- TIER 1: MOODLE 5.2 CORE PLATFORM (UNTOUCHED) -->
+      <g id="moodle-core-tier">
+        <rect x="40" y="30" width="1070" height="270" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+        <rect x="40" y="30" width="1070" height="30" rx="8" fill="#e2e8f0"/>
+        <text x="60" y="50" font-size="12" font-weight="700" fill="#1e293b" letter-spacing="0.05em">MOODLE CORE SUB-SYSTEMS (STRICTLY STANDARD, UNCHANGED & UPGRADEABLE)</text>
+        <text x="1090" y="50" font-size="11" font-weight="600" fill="#64748b" text-anchor="end">Upstream Git Branch 502</text>
+
+        <!-- Core Service 1: Events -->
+        <rect x="60" y="80" width="200" height="85" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="160" y="105" font-size="12" font-weight="700" fill="#0f172a" text-anchor="middle">Events Architecture</text>
+        <text x="160" y="125" font-size="11" fill="#475569" text-anchor="middle">\core\event\base</text>
+        <text x="160" y="143" font-size="10" fill="#64748b" text-anchor="middle">Course, Enrolment, User lifecycle</text>
+
+        <!-- Core Service 2: Access & Capabilities -->
+        <rect x="280" y="80" width="200" height="85" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="380" y="105" font-size="12" font-weight="700" fill="#0f172a" text-anchor="middle">Access & Permissions</text>
+        <text x="380" y="125" font-size="11" fill="#475569" text-anchor="middle">has_capability(), Contexts</text>
+        <text x="380" y="143" font-size="10" fill="#64748b" text-anchor="middle">System, Category, Course, User</text>
+
+        <!-- Core Service 3: Users & Enrolment -->
+        <rect x="500" y="80" width="200" height="85" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="600" y="105" font-size="12" font-weight="700" fill="#0f172a" text-anchor="middle">Users & Enrolments</text>
+        <text x="600" y="125" font-size="11" fill="#475569" text-anchor="middle">enrol_manual, enrol_fee</text>
+        <text x="600" y="143" font-size="10" fill="#64748b" text-anchor="middle">\core_user, enrol_plugin APIs</text>
+
+        <!-- Core Service 4: Messaging & Tasks -->
+        <rect x="720" y="80" width="200" height="85" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="820" y="105" font-size="12" font-weight="700" fill="#0f172a" text-anchor="middle">Messaging & Task Runner</text>
+        <text x="820" y="125" font-size="11" fill="#475569" text-anchor="middle">\core\task\manager, message_send()</text>
+        <text x="820" y="143" font-size="10" fill="#64748b" text-anchor="middle">Scheduled & Ad-hoc background workers</text>
+
+        <!-- Core Service 5: External APIs & LTI -->
+        <rect x="940" y="80" width="150" height="85" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="1015" y="105" font-size="12" font-weight="700" fill="#0f172a" text-anchor="middle">LTI & Web Services</text>
+        <text x="1015" y="125" font-size="11" fill="#475569" text-anchor="middle">mod_lti, external_api</text>
+        <text x="1015" y="143" font-size="10" fill="#64748b" text-anchor="middle">REST / OAuth 2.0</text>
+
+        <!-- Core Data Abstraction -->
+        <rect x="60" y="190" width="1030" height="85" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="575" y="215" font-size="12" font-weight="700" fill="#0f172a" text-anchor="middle">Database Abstraction Layer ($DB / \moodle_database)</text>
+        <text x="575" y="235" font-size="11" fill="#475569" text-anchor="middle">Standard CRUD, Transactions, XMLDB Schema Engine & PostgreSQL PDO Drivers</text>
+        <text x="575" y="253" font-size="10" fill="#64748b" text-anchor="middle">Ensures all custom plugin tables integrate cleanly into database backups, migrations, and transactions.</text>
+      </g>
+
+      <!-- INTEGRATION HOOKS / CONTRACT INTERFACE (THE SEAM) -->
+      <g id="hooks-interface">
+        <line x1="160" y1="165" x2="160" y2="340" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arr-blue)"/>
+        <line x1="380" y1="165" x2="380" y2="340" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arr-blue)"/>
+        <line x1="600" y1="165" x2="600" y2="340" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arr-blue)"/>
+        <line x1="820" y1="165" x2="820" y2="340" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arr-blue)"/>
+        <line x1="1015" y1="165" x2="1015" y2="340" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arr-blue)"/>
+
+        <!-- Banner in the seam -->
+        <rect x="275" y="305" width="600" height="26" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+        <text x="575" y="322" font-size="11" font-weight="700" fill="#1e40af" text-anchor="middle">STANDARD EXTENSION HOOKS: db/events.php · db/access.php · db/tasks.php · db/messages.php</text>
+      </g>
+
+      <!-- TIER 2: ACUITEY CUSTOM EXTENSION LAYER (local_acuitey) -->
+      <g id="acuitey-custom-layer">
+        <rect x="40" y="340" width="1070" height="380" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+        <rect x="40" y="340" width="1070" height="32" rx="8" fill="#fef3c7"/>
+        <text x="60" y="362" font-size="12" font-weight="700" fill="#92400e" letter-spacing="0.05em">ACUITEY EXTENSION SUBSYSTEM (local_acuitey · MOODLE PLUGIN TYPE: LOCAL)</text>
+        <text x="1090" y="362" font-size="11" font-weight="600" fill="#b45309" text-anchor="end">Namespaced under \local_acuitey\*</text>
+
+        <!-- Service 1: Routing Service (Focal) -->
+        <rect x="65" y="390" width="310" height="110" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="2"/>
+        <rect x="75" y="400" width="290" height="24" rx="3" fill="#ea580c"/>
+        <text x="220" y="416" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">routing_service</text>
+        <text x="220" y="445" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Orchestrates student-to-faculty workflow</text>
+        <text x="220" y="465" font-size="10" fill="#64748b" text-anchor="middle">Handles synchronous and deferred requests</text>
+        <text x="220" y="482" font-size="10" fill="#ea580c" text-anchor="middle">Triggered by \local_acuitey\event\request_created</text>
+
+        <!-- Service 2: Faculty Matcher -->
+        <rect x="395" y="390" width="330" height="110" rx="6" fill="#ffffff" stroke="#f59e0b" stroke-width="1.5"/>
+        <rect x="405" y="400" width="310" height="24" rx="3" fill="#fef3c7"/>
+        <text x="560" y="416" font-size="11" font-weight="700" fill="#92400e" text-anchor="middle">faculty_matcher</text>
+        <text x="560" y="445" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Specialization & Domain Indexer</text>
+        <text x="560" y="465" font-size="10" fill="#64748b" text-anchor="middle">Queries subject tags & capabilities in course context</text>
+        <text x="560" y="482" font-size="10" fill="#64748b" text-anchor="middle">Builds initial qualified candidate pool</text>
+
+        <!-- Service 3: Availability & Workload Services -->
+        <rect x="745" y="390" width="345" height="110" rx="6" fill="#ffffff" stroke="#f59e0b" stroke-width="1.5"/>
+        <rect x="755" y="400" width="325" height="24" rx="3" fill="#fef3c7"/>
+        <text x="917" y="416" font-size="11" font-weight="700" fill="#92400e" text-anchor="middle">availability_service & workload_service</text>
+        <text x="917" y="445" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Real-time Load Balancer & Slot Validator</text>
+        <text x="917" y="465" font-size="10" fill="#64748b" text-anchor="middle">Calculates active sessions against max_active_load</text>
+        <text x="917" y="482" font-size="10" fill="#64748b" text-anchor="middle">Verifies working shifts and calendar commitments</text>
+
+        <!-- Service 4: Notification Coordinator -->
+        <rect x="65" y="525" width="310" height="100" rx="6" fill="#ffffff" stroke="#f59e0b" stroke-width="1.5"/>
+        <rect x="75" y="535" width="290" height="24" rx="3" fill="#fef3c7"/>
+        <text x="220" y="551" font-size="11" font-weight="700" fill="#92400e" text-anchor="middle">notification_coordinator</text>
+        <text x="220" y="580" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Moodle Messaging Bridge</text>
+        <text x="220" y="600" font-size="10" fill="#64748b" text-anchor="middle">Formats & dispatches messages via message_send()</text>
+        <text x="220" y="615" font-size="10" fill="#64748b" text-anchor="middle">Dual student / faculty notifications</text>
+
+        <!-- Service 5: Metrics & Analytics Service -->
+        <rect x="395" y="525" width="330" height="100" rx="6" fill="#ffffff" stroke="#f59e0b" stroke-width="1.5"/>
+        <rect x="405" y="535" width="310" height="24" rx="3" fill="#fef3c7"/>
+        <text x="560" y="551" font-size="11" font-weight="700" fill="#92400e" text-anchor="middle">metrics_service</text>
+        <text x="560" y="580" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Executive & Academic Telemetry</text>
+        <text x="560" y="600" font-size="10" fill="#64748b" text-anchor="middle">Tracks routing latency, SLA adherence & match rates</text>
+        <text x="560" y="615" font-size="10" fill="#64748b" text-anchor="middle">Feeds Admin Analytics dashboards</text>
+
+        <!-- Service 6: Routing History & Audit -->
+        <rect x="745" y="525" width="345" height="100" rx="6" fill="#ffffff" stroke="#f59e0b" stroke-width="1.5"/>
+        <rect x="755" y="535" width="325" height="24" rx="3" fill="#fef3c7"/>
+        <text x="917" y="551" font-size="11" font-weight="700" fill="#92400e" text-anchor="middle">routing_history & audit_trail</text>
+        <text x="917" y="580" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Immutable Decision Logging</text>
+        <text x="917" y="600" font-size="10" fill="#64748b" text-anchor="middle">Persists matching scores, candidate ranks & overrides</text>
+        <text x="917" y="615" font-size="10" fill="#64748b" text-anchor="middle">Full compliance and dispute resolution trace</text>
+
+        <!-- Custom Data Tables (XMLDB) -->
+        <rect x="65" y="645" width="1025" height="55" rx="5" fill="#ffffff" stroke="#f59e0b" stroke-width="1"/>
+        <text x="575" y="668" font-size="11" font-weight="700" fill="#b45309" text-anchor="middle">CUSTOM TABLES CREATED BY local_acuitey (VIA db/install.xml):</text>
+        <text x="575" y="686" font-size="11" font-weight="500" fill="#475569" text-anchor="middle">mdl_local_acuitey_requests · mdl_local_acuitey_faculty_prof · mdl_local_acuitey_assignments · mdl_local_acuitey_routing_log · mdl_local_acuitey_config</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="caption-box">
+    <div class="card">
+      <div class="card-title">100% Core Preservation</div>
+      <div class="card-desc">All custom logic resides under <code>/local/acuitey</code>. Moodle core PHP files, lib files, and database schemas remain strictly vanilla.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Native Event Dispatch</div>
+      <div class="card-desc">Custom events extend <code>\core\event\base</code>, allowing core Moodle log readers, reporting tools, and external services to observe routing events natively.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">XMLDB Compliance</div>
+      <div class="card-desc">Custom tables are generated through Moodle's XMLDB schema engine, providing automatic cross-database portability across PostgreSQL and MySQL.</div>
+    </div>
+  </div>
+
+</body>
+</html>

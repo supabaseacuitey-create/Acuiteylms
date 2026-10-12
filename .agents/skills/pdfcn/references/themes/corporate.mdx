@@ -1,0 +1,62 @@
+---
+title: "Corporate"
+description: "Blue-gray palette, Lato sans-serif, structured and dependable."
+---
+
+import { corporateTheme } from "@/registry/themes";
+
+<ComponentPreview
+  base="forme"
+  name="invoice-corporate"
+  theme={corporateTheme}
+  hideCode
+/>
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/theme-corporate
+```
+
+</TabsContent>
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/themes/corporate.ts"
+  title="lib/themes/corporate.ts"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { PdfcnThemeProvider } from "@/components/pdf/theme-provider";
+import { corporateTheme } from "@/lib/pdf-themes/corporate";
+
+export function Invoice() {
+  return (
+    <PdfcnThemeProvider theme={corporateTheme}>
+      {/* Your PDF content */}
+    </PdfcnThemeProvider>
+  );
+}
+```

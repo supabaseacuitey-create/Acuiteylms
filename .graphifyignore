@@ -1,0 +1,19 @@
+# Graphify ignore patterns for Moodle workspace
+.git/
+.venv/
+node_modules/
+vendor/
+cache/
+temp/
+logs/
+moodledata/
+graphify-out/
+.idea/
+.vscode/
+*.log
+*.zip
+*.tar.gz
+*.exe
+*.dll
+*.pyc
+__pycache__/

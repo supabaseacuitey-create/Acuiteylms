@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Architecture - Acuitey Solutions LMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #F7F7F5;
+      --color-ink:     #252B36;
+      --color-muted:   #657080;
+      --color-accent:  #EF6A3A;
+      --color-link:    #315FA8;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+    .frame { width: 100%; max-width: 1140px; }
+    svg { width: 100%; height: auto; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <svg viewBox="0 0 1140 680" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="arch-title arch-desc">
+      <title id="arch-title">Acuitey Solutions LMS - System Architecture</title>
+      <desc id="arch-desc">High-level enterprise architecture diagram showing users, Cloudflare Edge, Hostinger KVM with Moodle core and local_acuitey extension, integrations and data services.</desc>
+      <defs>
+        <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="0.9" fill="rgba(37,43,54,0.08)"/>
+        </pattern>
+        <marker id="arr-muted" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#657080"/>
+        </marker>
+        <marker id="arr-accent" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#EF6A3A"/>
+        </marker>
+        <marker id="arr-blue" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#315FA8"/>
+        </marker>
+      </defs>
+
+      <!-- Background -->
+      <rect width="100%" height="100%" fill="#F7F7F5"/>
+      <rect width="100%" height="100%" fill="url(#dots)"/>
+
+      <!-- Large Faded Section Number -->
+      <text x="1100" y="70" font-family="'Geist Mono', monospace" font-size="76" font-weight="700" fill="rgba(37,43,54,0.05)" text-anchor="end">01</text>
+
+      <!-- Phase Banner / Pipeline Strip -->
+      <g transform="translate(40, 20)">
+        <polygon points="0,0 200,0 212,14 200,28 0,28" fill="#252B36"/>
+        <polygon points="212,0 430,0 442,14 430,28 212,28 224,14" fill="#3A4354"/>
+        <polygon points="442,0 720,0 732,14 720,28 442,28 454,14" fill="#252B36"/>
+        <polygon points="732,0 1060,0 1060,28 732,28 744,14" fill="#3A4354"/>
+
+        <text x="100" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em" text-anchor="middle">CORPORATE &amp; USERS</text>
+        <text x="322" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em" text-anchor="middle">DNS &amp; EDGE PERIMETER</text>
+        <text x="581" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em" text-anchor="middle">APPLICATION RUNTIME (KVM)</text>
+        <text x="896" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em" text-anchor="middle">INTEGRATIONS &amp; SERVICES</text>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           ZONE 1: CORPORATE & CLIENT ACCESS (Left Column)
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(40, 75)">
+        <rect width="180" height="520" rx="4" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.18)" stroke-width="1"/>
+        <text x="90" y="24" font-family="'Geist Mono', monospace" font-size="8" font-weight="600" fill="#657080" letter-spacing="0.12em" text-anchor="middle">CORPORATE &amp; ACCESS DOMAIN</text>
+
+        <!-- Main Website & Portal Login CTA Box -->
+        <g transform="translate(12, 36)">
+          <rect width="156" height="98" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.22)" stroke-width="1"/>
+          <rect x="8" y="8" width="82" height="15" rx="2" fill="#252B36"/>
+          <text x="49" y="19" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#F7F7F5" text-anchor="middle">MAIN WEBSITE</text>
+          
+          <text x="8" y="38" font-family="'Geist', sans-serif" font-size="10.5" font-weight="700" fill="#252B36">www.acuiteysolutions.com</text>
+          <text x="8" y="50" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Corporate web portal</text>
+
+          <!-- Navigation Button CTA -->
+          <g transform="translate(8, 56)">
+            <rect width="140" height="26" rx="3" fill="#EF6A3A"/>
+            <text x="70" y="17" font-family="'Geist', sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="middle">Portal Login →</text>
+          </g>
+          <text x="8" y="92" font-family="'Geist Mono', monospace" font-size="6.8" fill="#315FA8">Standard HTTPS Link (No iframe)</text>
+        </g>
+
+        <!-- Target LMS Subdomain Card -->
+        <g transform="translate(12, 142)">
+          <rect width="156" height="108" rx="3" fill="rgba(49,95,168,0.04)" stroke="#315FA8" stroke-width="1.2"/>
+          <rect x="8" y="8" width="86" height="15" rx="2" fill="#315FA8"/>
+          <text x="51" y="19" font-family="'Geist Mono', monospace" font-size="6.8" font-weight="600" fill="#ffffff" text-anchor="middle">TARGET LMS HOST</text>
+
+          <text x="8" y="38" font-family="'Geist Mono', monospace" font-size="8.5" font-weight="700" fill="#252B36">portal.acuiteysolutions.com</text>
+          <text x="8" y="50" font-family="'Geist Mono', monospace" font-size="8" font-weight="600" fill="#657080">or</text>
+          <text x="8" y="62" font-family="'Geist Mono', monospace" font-size="8.5" font-weight="700" fill="#252B36">academy.acuiteysolutions.com</text>
+
+          <!-- Confirmation Pill -->
+          <g transform="translate(6, 68)">
+            <rect width="144" height="20" rx="2" fill="rgba(239,106,58,0.12)" stroke="#EF6A3A" stroke-width="0.8"/>
+            <text x="72" y="13" font-family="'Geist Mono', monospace" font-size="6.2" font-weight="700" fill="#EF6A3A" text-anchor="middle">Final subdomain to be confirmed by Acuitey</text>
+          </g>
+          <text x="8" y="100" font-family="'Geist Mono', monospace" font-size="6.8" fill="#657080">Client Decision DEC-017</text>
+        </g>
+
+        <!-- Learner Workspace Box -->
+        <g transform="translate(12, 258)">
+          <rect width="156" height="66" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.18)" stroke-width="1"/>
+          <rect x="8" y="8" width="56" height="14" rx="2" fill="#252B36"/>
+          <text x="36" y="18" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#F7F7F5" text-anchor="middle">STUDENT</text>
+          <text x="8" y="36" font-family="'Geist', sans-serif" font-size="11" font-weight="600" fill="#252B36">Learner Workspace</text>
+          <text x="8" y="49" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Catalog, quizzes &amp; sessions</text>
+          <text x="8" y="60" font-family="'Geist Mono', monospace" font-size="7" fill="#315FA8">Host-Scoped Moodle Cookies</text>
+        </g>
+
+        <!-- Faculty Console Box -->
+        <g transform="translate(12, 332)">
+          <rect width="156" height="66" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.18)" stroke-width="1"/>
+          <rect x="8" y="8" width="56" height="14" rx="2" fill="#252B36"/>
+          <text x="36" y="18" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#F7F7F5" text-anchor="middle">FACULTY</text>
+          <text x="8" y="36" font-family="'Geist', sans-serif" font-size="11" font-weight="600" fill="#252B36">Instructor Console</text>
+          <text x="8" y="49" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Grading &amp; live Zoom rooms</text>
+          <text x="8" y="60" font-family="'Geist Mono', monospace" font-size="7" fill="#315FA8">Dynamic Allocation Queue</text>
+        </g>
+
+        <!-- Admin Roles & Security Guard Box -->
+        <g transform="translate(12, 406)">
+          <rect width="156" height="100" rx="3" fill="rgba(37,43,54,0.03)" stroke="rgba(37,43,54,0.15)" stroke-dasharray="3,3"/>
+          <text x="78" y="18" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#657080" text-anchor="middle">ADMIN &amp; PERIMETER RULES</text>
+          <text x="8" y="34" font-family="'Geist', sans-serif" font-size="9" font-weight="600" fill="#252B36">Academic &amp; Finance Admins</text>
+          <text x="8" y="47" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">• Only HTTPS Port 443</text>
+          <text x="8" y="59" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">• No Raw-IP Public Entry</text>
+          <text x="8" y="71" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">• No Auto-SSO / Isolated Session</text>
+          <text x="8" y="83" font-family="'Geist Mono', monospace" font-size="7.2" fill="#EF6A3A">• Host-Scoped Session (SSO TBD)</text>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           ZONE 2: ACUITEY DNS & PROPOSED EDGE PERIMETER
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(240, 75)">
+        <rect width="150" height="520" rx="4" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.20)" stroke-width="1" stroke-dasharray="5,4"/>
+        <rect x="30" y="14" width="90" height="16" rx="2" fill="rgba(239,106,58,0.12)" stroke="#EF6A3A" stroke-width="0.8"/>
+        <text x="75" y="25" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#EF6A3A" letter-spacing="0.1em" text-anchor="middle">PROPOSED</text>
+        <text x="75" y="46" font-family="'Geist', sans-serif" font-size="11" font-weight="700" fill="#252B36" text-anchor="middle">Acuitey DNS &amp; Edge</text>
+        <text x="75" y="59" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080" text-anchor="middle">Proposed Cloudflare Edge</text>
+
+        <!-- Feature item 1: DNS Zone -->
+        <g transform="translate(12, 72)">
+          <rect width="126" height="66" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.15)"/>
+          <text x="10" y="18" font-family="'Geist', sans-serif" font-size="10.5" font-weight="600" fill="#252B36">Acuitey DNS Zone</text>
+          <text x="10" y="32" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080">Subdomain A / CNAME</text>
+          <text x="10" y="45" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">HTTP → HTTPS 301</text>
+          <text x="10" y="57" font-family="'Geist Mono', monospace" font-size="7" fill="#657080">HSTS post-validation</text>
+        </g>
+
+        <!-- Feature item 2: WAF -->
+        <g transform="translate(12, 146)">
+          <rect width="126" height="66" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.15)"/>
+          <text x="10" y="18" font-family="'Geist', sans-serif" font-size="10.5" font-weight="600" fill="#252B36">Proposed WAF &amp; DDoS</text>
+          <text x="10" y="32" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080">Global Anycast mitigation</text>
+          <text x="10" y="45" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">OWASP Core Top-10</text>
+          <text x="10" y="57" font-family="'Geist Mono', monospace" font-size="7" fill="#657080">Layer 3/4/7 flood filter</text>
+        </g>
+
+        <!-- Feature item 3: TLS 1.2/1.3 -->
+        <g transform="translate(12, 220)">
+          <rect width="126" height="66" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.15)"/>
+          <text x="10" y="18" font-family="'Geist', sans-serif" font-size="10" font-weight="600" fill="#252B36">TLS 1.2/1.3 Termination</text>
+          <text x="10" y="32" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080">Strict SSL encryption</text>
+          <text x="10" y="45" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">Zero-Trust Origin Pull</text>
+          <text x="10" y="57" font-family="'Geist Mono', monospace" font-size="7" fill="#657080">Valid Modern TLS Cert</text>
+        </g>
+
+        <!-- Feature item 4: CDN -->
+        <g transform="translate(12, 294)">
+          <rect width="126" height="66" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.15)"/>
+          <text x="10" y="18" font-family="'Geist', sans-serif" font-size="10.5" font-weight="600" fill="#252B36">Proposed CDN Cache</text>
+          <text x="10" y="32" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080">Static assets &amp; themes</text>
+          <text x="10" y="45" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">CSS, JS &amp; font cache</text>
+          <text x="10" y="57" font-family="'Geist Mono', monospace" font-size="7" fill="#657080">Offloads KVM origin</text>
+        </g>
+
+        <!-- Governance Note Pill -->
+        <g transform="translate(12, 375)">
+          <rect width="126" height="110" rx="3" fill="rgba(239,106,58,0.06)" stroke="rgba(239,106,58,0.2)"/>
+          <text x="63" y="20" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#EF6A3A" text-anchor="middle">GOVERNANCE NOTE:</text>
+          <text x="63" y="38" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#252B36" text-anchor="middle">PROPOSED / SUBJECT TO</text>
+          <text x="63" y="50" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#252B36" text-anchor="middle">FINAL DNS CONFIGURATION</text>
+          <text x="63" y="70" font-family="'Geist Mono', monospace" font-size="6.8" fill="#657080" text-anchor="middle">Not yet provisioned</text>
+          <text x="63" y="83" font-family="'Geist Mono', monospace" font-size="6.8" fill="#657080" text-anchor="middle">Client approval req.</text>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           ZONE 3: HOSTINGER KVM HOST (Application Core)
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(410, 75)">
+        <rect width="390" height="520" rx="4" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.22)" stroke-width="1"/>
+        
+        <!-- Header badge -->
+        <rect x="20" y="14" width="70" height="16" rx="2" fill="rgba(239,106,58,0.12)" stroke="#EF6A3A" stroke-width="0.8"/>
+        <text x="55" y="25" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#EF6A3A" letter-spacing="0.1em" text-anchor="middle">PROPOSED</text>
+        <text x="100" y="26" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">Hostinger KVM Host</text>
+        <text x="370" y="26" font-family="'Geist Mono', monospace" font-size="8" fill="#657080" text-anchor="end">Ubuntu 24.04 LTS (Recommended)</text>
+
+        <!-- Web & Runtime layer -->
+        <g transform="translate(15, 42)">
+          <rect width="360" height="50" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.18)"/>
+          <rect x="10" y="10" width="46" height="15" rx="2" fill="#252B36"/>
+          <text x="33" y="21" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#F7F7F5" text-anchor="middle">NGINX</text>
+          <text x="64" y="22" font-family="'Geist', sans-serif" font-size="9.5" font-weight="700" fill="#252B36">server_name portal. / academy. [DEC-017]</text>
+          <text x="64" y="38" font-family="'Geist Mono', monospace" font-size="7" fill="#657080">Deny raw-IP _ (444) · <tspan fill="#EF6A3A">$CFG-&gt;wwwroot = Canonical Subdomain</tspan></text>
+          <rect x="288" y="10" width="62" height="15" rx="2" fill="rgba(49,95,168,0.1)" stroke="#315FA8" stroke-width="0.6"/>
+          <text x="319" y="21" font-family="'Geist Mono', monospace" font-size="7.2" font-weight="600" fill="#315FA8" text-anchor="middle">PHP 8.3 FPM</text>
+        </g>
+
+        <!-- Moodle Core Container -->
+        <g transform="translate(15, 102)">
+          <rect width="360" height="160" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.22)"/>
+          <rect x="12" y="12" width="80" height="16" rx="2" fill="#252B36"/>
+          <text x="52" y="24" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#F7F7F5" text-anchor="middle">MOODLE CORE</text>
+          <text x="98" y="24" font-family="'Geist', sans-serif" font-size="11" font-weight="700" fill="#252B36">Moodle LMS 5.2.3+</text>
+          
+          <rect x="250" y="12" width="98" height="16" rx="2" fill="rgba(22,101,52,0.1)" stroke="#166534" stroke-width="0.8"/>
+          <text x="299" y="24" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#166534" text-anchor="middle">100% UNMODIFIED</text>
+
+          <!-- Core Subsystems grid -->
+          <g transform="translate(12, 38)">
+            <rect width="105" height="32" rx="2" fill="rgba(37,43,54,0.03)" stroke="rgba(37,43,54,0.1)"/>
+            <text x="52" y="20" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36" text-anchor="middle">core_event</text>
+
+            <rect x="115" y="0" width="105" height="32" rx="2" fill="rgba(37,43,54,0.03)" stroke="rgba(37,43,54,0.1)"/>
+            <text x="167" y="20" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36" text-anchor="middle">core_user / auth</text>
+
+            <rect x="230" y="0" width="105" height="32" rx="2" fill="rgba(37,43,54,0.03)" stroke="rgba(37,43,54,0.1)"/>
+            <text x="282" y="20" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36" text-anchor="middle">enrol_manual/self</text>
+
+            <rect x="0" y="38" width="105" height="32" rx="2" fill="rgba(37,43,54,0.03)" stroke="rgba(37,43,54,0.1)"/>
+            <text x="52" y="58" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36" text-anchor="middle">core_message</text>
+
+            <rect x="115" y="38" width="105" height="32" rx="2" fill="rgba(37,43,54,0.03)" stroke="rgba(37,43,54,0.1)"/>
+            <text x="167" y="58" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36" text-anchor="middle">core_payment</text>
+
+            <rect x="230" y="38" width="105" height="32" rx="2" fill="rgba(37,43,54,0.03)" stroke="rgba(37,43,54,0.1)"/>
+            <text x="282" y="58" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36" text-anchor="middle">mod_lti (LTI 1.3)</text>
+
+            <rect x="0" y="76" width="105" height="32" rx="2" fill="rgba(37,43,54,0.03)" stroke="rgba(37,43,54,0.1)"/>
+            <text x="52" y="96" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36" text-anchor="middle">Task API (Cron)</text>
+
+            <rect x="115" y="76" width="105" height="32" rx="2" fill="rgba(37,43,54,0.03)" stroke="rgba(37,43,54,0.1)"/>
+            <text x="167" y="96" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36" text-anchor="middle">MUC Cache API</text>
+
+            <rect x="230" y="76" width="105" height="32" rx="2" fill="rgba(37,43,54,0.03)" stroke="rgba(37,43,54,0.1)"/>
+            <text x="282" y="96" font-family="'Geist Mono', monospace" font-size="8" fill="#252B36" text-anchor="middle">XMLDB DB Layer</text>
+          </g>
+        </g>
+
+        <!-- Acuitey Custom Extension (The Focal Block) -->
+        <g transform="translate(15, 272)">
+          <rect width="360" height="150" rx="4" fill="rgba(239,106,58,0.04)" stroke="#EF6A3A" stroke-width="1.2"/>
+          
+          <rect x="12" y="10" width="110" height="18" rx="2" fill="#EF6A3A"/>
+          <text x="67" y="23" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">ACUITEY EXTENSION</text>
+          
+          <text x="130" y="24" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">local_acuitey</text>
+          <text x="350" y="23" font-family="'Geist Mono', monospace" font-size="7.5" fill="#EF6A3A" text-anchor="end">Custom Routing Engine</text>
+
+          <g transform="translate(12, 36)">
+            <!-- Service 1 -->
+            <rect width="160" height="46" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <text x="10" y="18" font-family="'Geist', sans-serif" font-size="10.5" font-weight="600" fill="#252B36">Faculty Matcher Service</text>
+            <text x="10" y="32" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">\local_acuitey\service\matcher</text>
+
+            <!-- Service 2 -->
+            <rect x="175" y="0" width="160" height="46" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <text x="185" y="18" font-family="'Geist', sans-serif" font-size="10.5" font-weight="600" fill="#252B36">Workload &amp; Capacity</text>
+            <text x="185" y="32" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">\local_acuitey\service\workload</text>
+
+            <!-- Service 3 -->
+            <rect x="0" y="54" width="160" height="46" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <text x="10" y="72" font-family="'Geist', sans-serif" font-size="10.5" font-weight="600" fill="#252B36">Enrolment Observer</text>
+            <text x="10" y="86" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">\local_acuitey\observer</text>
+
+            <!-- Service 4 -->
+            <rect x="175" y="54" width="160" height="46" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.3)"/>
+            <text x="185" y="72" font-family="'Geist', sans-serif" font-size="10.5" font-weight="600" fill="#252B36">Pending Retry Task</text>
+            <text x="185" y="86" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">\local_acuitey\task\retry</text>
+          </g>
+        </g>
+
+        <!-- Local Host Storage -->
+        <g transform="translate(15, 432)">
+          <rect width="170" height="74" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.18)"/>
+          <text x="12" y="20" font-family="'Geist', sans-serif" font-size="11" font-weight="600" fill="#252B36">Hostinger /mnt/moodledata</text>
+          <text x="12" y="36" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Content-addressed filedir store</text>
+          <text x="12" y="50" font-family="'Geist Mono', monospace" font-size="8" fill="#657080">Private assets &amp; course files</text>
+          <text x="12" y="64" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">Automated local incremental</text>
+        </g>
+
+        <!-- Cron Task Runner -->
+        <g transform="translate(200, 432)">
+          <rect width="175" height="74" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.18)"/>
+          <text x="12" y="20" font-family="'Geist', sans-serif" font-size="11" font-weight="600" fill="#252B36">Moodle CLI Task Runner</text>
+          <text x="12" y="36" font-family="'Geist Mono', monospace" font-size="8" fill="#657080">admin/cli/cron.php</text>
+          <text x="12" y="50" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Runs scheduled &amp; adhoc tasks</text>
+          <text x="12" y="64" font-family="'Geist Mono', monospace" font-size="7.5" fill="#EF6A3A">Dispatches pending queues</text>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           ZONE 4: EXTERNAL INTEGRATIONS & DATA (Right)
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(820, 75)">
+        <rect width="280" height="520" rx="4" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.18)" stroke-width="1"/>
+        <text x="140" y="28" font-family="'Geist Mono', monospace" font-size="8.5" font-weight="600" fill="#657080" letter-spacing="0.12em" text-anchor="middle">MANAGED SERVICES &amp; APIS</text>
+
+        <!-- PostgreSQL / Supabase Box -->
+        <g transform="translate(15, 45)">
+          <rect width="250" height="85" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.22)"/>
+          <rect x="10" y="10" width="80" height="15" rx="2" fill="#252B36"/>
+          <text x="50" y="21" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#F7F7F5" text-anchor="middle">DATABASE</text>
+          <rect x="96" y="10" width="144" height="15" rx="2" fill="rgba(37,43,54,0.06)"/>
+          <text x="168" y="21" font-family="'Geist Mono', monospace" font-size="6.5" fill="#657080" text-anchor="middle">TO BE CONFIRMED</text>
+
+          <text x="10" y="44" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">PostgreSQL / Supabase</text>
+          <text x="10" y="60" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Moodle relational schema + local_acuitey audit logs</text>
+          <text x="10" y="74" font-family="'Geist Mono', monospace" font-size="8" fill="#315FA8">TLS encrypted · Managed backups</text>
+        </g>
+
+        <!-- Redis Cache Box -->
+        <g transform="translate(15, 140)">
+          <rect width="250" height="85" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.22)"/>
+          <rect x="10" y="10" width="80" height="15" rx="2" fill="#252B36"/>
+          <text x="50" y="21" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#F7F7F5" text-anchor="middle">IN-MEMORY</text>
+          <rect x="96" y="10" width="144" height="15" rx="2" fill="rgba(37,43,54,0.06)"/>
+          <text x="168" y="21" font-family="'Geist Mono', monospace" font-size="6.5" fill="#657080" text-anchor="middle">TO BE FINALIZED</text>
+
+          <text x="10" y="44" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">Redis 7 In-Memory Store</text>
+          <text x="10" y="60" font-family="'Geist', sans-serif" font-size="9" fill="#657080">MUC Application Cache &amp; session lock handler</text>
+          <text x="10" y="74" font-family="'Geist Mono', monospace" font-size="8" fill="#315FA8">Low-latency concurrent state</text>
+        </g>
+
+        <!-- Zoom LTI Box -->
+        <g transform="translate(15, 235)">
+          <rect width="250" height="85" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.22)"/>
+          <rect x="10" y="10" width="80" height="15" rx="2" fill="#252B36"/>
+          <text x="50" y="21" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#F7F7F5" text-anchor="middle">VIRTUAL CLASS</text>
+          
+          <text x="10" y="44" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">Zoom LTI Pro (LTI 1.3)</text>
+          <text x="10" y="60" font-family="'Geist', sans-serif" font-size="9" fill="#657080">OIDC / JWT cryptographic handshake</text>
+          <text x="10" y="74" font-family="'Geist Mono', monospace" font-size="8" fill="#EF6A3A">Optional grade / attendance sync</text>
+        </g>
+
+        <!-- Payment Gateways Box -->
+        <g transform="translate(15, 330)">
+          <rect width="250" height="90" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.22)"/>
+          <rect x="10" y="10" width="80" height="15" rx="2" fill="#252B36"/>
+          <text x="50" y="21" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#F7F7F5" text-anchor="middle">PAYMENTS</text>
+
+          <text x="10" y="44" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">Razorpay &amp; PhonePe</text>
+          <text x="10" y="60" font-family="'Geist', sans-serif" font-size="9" fill="#657080">UPI, Netbanking, cards via core_payment</text>
+          <text x="10" y="74" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">Server-side gateway-specific verification</text>
+        </g>
+
+        <!-- Proposed Monitoring / Backup -->
+        <g transform="translate(15, 430)">
+          <rect width="250" height="76" rx="3" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.15)" stroke-dasharray="3,3"/>
+          <text x="10" y="18" font-family="'Geist', sans-serif" font-size="11" font-weight="600" fill="#252B36">Proposed Monitoring &amp; Backup</text>
+          <text x="10" y="32" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">HTTPS Check: portal. / academy.acuiteysolutions.com</text>
+          <text x="10" y="46" font-family="'Geist', sans-serif" font-size="8.5" fill="#657080">Target confirmed upon DEC-017 resolution</text>
+          <text x="10" y="60" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080">Prometheus telemetry &amp; off-site cloud backups</text>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           CONNECTORS / FLOW ARROWS
+           ════════════════════════════════════════════════ -->
+      <!-- Users → Cloudflare -->
+      <line x1="220" y1="200" x2="240" y2="200" stroke="#315FA8" stroke-width="1.2" marker-end="url(#arr-blue)"/>
+      <line x1="220" y1="380" x2="240" y2="380" stroke="#315FA8" stroke-width="1.2" marker-end="url(#arr-blue)"/>
+
+      <!-- Cloudflare → Hostinger Nginx -->
+      <line x1="390" y1="200" x2="425" y2="140" stroke="#315FA8" stroke-width="1.2" marker-end="url(#arr-blue)"/>
+      
+      <!-- Nginx → Moodle Core -->
+      <line x1="600" y1="167" x2="600" y2="177" stroke="#657080" stroke-width="1" marker-end="url(#arr-muted)"/>
+
+      <!-- Moodle Core → Acuitey Extension -->
+      <line x1="600" y1="337" x2="600" y2="347" stroke="#EF6A3A" stroke-width="1.5" marker-end="url(#arr-accent)"/>
+
+      <!-- Hostinger → Managed Services -->
+      <!-- DB connection -->
+      <path d="M 800,220 H 815 Q 820,220 820,165 H 835" fill="none" stroke="#657080" stroke-width="1.2" marker-end="url(#arr-muted)"/>
+      <!-- Redis connection -->
+      <path d="M 800,260 H 815 Q 820,260 820,225 H 835" fill="none" stroke="#657080" stroke-width="1.2" marker-end="url(#arr-muted)"/>
+      <!-- Zoom connection -->
+      <path d="M 800,320 H 815 Q 820,320 820,320 H 835" fill="none" stroke="#315FA8" stroke-width="1.2" marker-end="url(#arr-blue)"/>
+      <!-- Payment connection -->
+      <path d="M 800,415 H 815 Q 820,415 820,415 H 835" fill="none" stroke="#315FA8" stroke-width="1.2" marker-end="url(#arr-blue)"/>
+
+      <!-- ════════════════════════════════════════════════
+           BOTTOM LEGEND STRIP
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(40, 615)">
+        <rect width="1060" height="42" rx="3" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.12)"/>
+        
+        <text x="20" y="25" font-family="'Geist Mono', monospace" font-size="8" font-weight="600" fill="#657080">LEGEND:</text>
+        
+        <!-- Primary accent -->
+        <rect x="85" y="16" width="16" height="12" rx="2" fill="rgba(239,106,58,0.12)" stroke="#EF6A3A" stroke-width="1"/>
+        <text x="110" y="25" font-family="'Geist', sans-serif" font-size="9" fill="#252B36">Acuitey Proprietary Logic</text>
+
+        <!-- Moodle Core -->
+        <rect x="260" y="16" width="16" height="12" rx="2" fill="#ffffff" stroke="rgba(37,43,54,0.22)" stroke-width="1"/>
+        <text x="285" y="25" font-family="'Geist', sans-serif" font-size="9" fill="#252B36">Moodle 5.2 Native Subsystems</text>
+
+        <!-- Blue request path -->
+        <line x1="470" y1="22" x2="495" y2="22" stroke="#315FA8" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+        <text x="505" y="25" font-family="'Geist', sans-serif" font-size="9" fill="#252B36">HTTP / API Request Path</text>
+
+        <!-- Dashed proposed -->
+        <line x1="660" y1="22" x2="685" y2="22" stroke="rgba(37,43,54,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="695" y="25" font-family="'Geist', sans-serif" font-size="9" fill="#252B36">Proposed / Unprovisioned Boundary</text>
+
+        <text x="1040" y="25" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080" text-anchor="end">CONFIDENTIAL · ACUITEY SOLUTIONS</text>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>

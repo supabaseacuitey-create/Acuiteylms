@@ -1,0 +1,28 @@
+---
+title: MCP
+description: Learn how to use the shadcn MCP (Model Context Protocol) server with pdfcn.
+---
+
+[MCP](https://modelcontextprotocol.io/) is an open protocol that standardizes how applications provide context to LLMs. The shadcn CLI can register an MCP server so your editor can discover registry components—including items you install from **pdfcn** via the same CLI.
+
+## Configure MCP
+
+Run:
+
+```bash
+npx shadcn@latest mcp init
+```
+
+Choose your MCP client when prompted, then enable the MCP server in that client to finish setup.
+
+## Usage
+
+With MCP enabled, you can ask your IDE to work with **Takumi** and **Forme** patterns and pdfcn registry components. Example prompts:
+
+- Build an invoice layout with **Table**, **Heading**, **Text**, and **KeyValue**.
+- Add a **QRCode** and **Signature** to a PDF document.
+- Create a report with **Graph**, **DataTable**, and **PageHeader**.
+- Lay out a PDF using **Section**, **Stack**, **Divider**, and **KeepTogether**.
+- Implement a multi-page flow with **PageBreak**, **PageNumber**, and **PageFooter**.
+
+Install components from this registry with `npx shadcn@latest add` and the JSON URL from each docs page. Components work with sensible defaults.

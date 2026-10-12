@@ -1,0 +1,111 @@
+
+# ==========================================
+# ACUITEY LMS - GITIGNORE
+# Moodle + OpenCode + Antigravity + Coolify
+# ==========================================
+
+# 1. Environment variables and secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+**/config.php
+**/config-local.php
+**/config.override.php
+**/mcp_config.json
+**/mcp_config.json.bak
+!.env.cgr.example
+
+# 2. Moodle data and temporary files
+moodledata/
+**/moodledata/
+**/cache/
+**/localcache/
+**/temp/
+**/sessions/
+**/trashdir/
+
+# 3. Database backups and exports
+*.sql
+*.sql.gz
+*.dump
+*.backup
+*.bak
+
+# 4. Archives
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.rar
+
+# 5. Logs
+*.log
+*.log.*
+filelog.txt
+logs/
+**/logs/
+
+# 6. Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# 7. AI and graph analysis generated outputs
+graphify-out/
+**/graphify-out/
+cgr-index/
+**/cgr-index/
+.graphify-cache/
+
+# 8. Local IDE settings
+.vscode/
+.idea/
+*.code-workspace
+*.swp
+*.swo
+*~
+
+# 9. Node and frontend generated files
+node_modules/
+.npm/
+.pnpm-store/
+dist/
+coverage/
+.next/
+
+# 10. OS generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# 11. Local deployment overrides
+docker-compose.override.yml
+compose.override.yml
+*.local.yml
+*.local.yaml
+
+# 12. Temporary exports
+tmp/
+temporary/
+*.tmp
+*.temp
+
+# 13. Temporary Markdown files
+*.tmp.md
+*.draft.md
+*.scratch.md
+notes-private/
+scratch/

@@ -1,0 +1,122 @@
+---
+title: "Text"
+description: "Body text with typography variants."
+---
+
+<ComponentPreview base="takumi" name="text" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/takumi/text
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install takumi-pdf @takumi-rs/helpers
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/takumi/components/text/text.tsx"
+  base="takumi"
+  title="components/pdf/text/text.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/components/theme-provider.tsx"
+  base="takumi"
+  title="components/pdf/theme-provider.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/resolve-color.ts"
+  base="takumi"
+  title="lib/resolve-color.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/pdf-primitives.tsx"
+  base="takumi"
+  title="lib/pdf-primitives.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/pdf-svg.tsx"
+  base="takumi"
+  title="lib/pdf-svg.tsx"
+/>
+
+<ComponentSource
+  src="registry/themes/professional.ts"
+  base="takumi"
+  title="lib/pdf-themes/professional.ts"
+/>
+
+<ComponentSource
+  src="registry/themes/primitives.ts"
+  base="takumi"
+  title="lib/pdf-themes/primitives.ts"
+/>
+
+<ComponentSource
+  src="registry/types/pdf-themes.ts"
+  base="takumi"
+  title="types/pdf-themes.ts"
+/>
+
+<ComponentSource
+  src="registry/types/pdf-components.ts"
+  base="takumi"
+  title="types/pdf-components.ts"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { Text } from "@/components/pdf/text";
+```
+
+```tsx
+<Text>Hello from pdfcn</Text>
+```
+
+## API Reference
+
+### Text
+
+| Prop         | Type                                                       | Default    |
+| ------------ | ---------------------------------------------------------- | ---------- |
+| `variant`    | `'xs' \| 'sm' \| 'base' \| 'lg' \| 'xl' \| '2xl' \| '3xl'` | `'base'`   |
+| `align`      | `'left' \| 'center' \| 'right' \| 'justify'`               | `'left'`   |
+| `color`      | `string`                                                   | -          |
+| `weight`     | `'normal' \| 'medium' \| 'semibold' \| 'bold'`             | `'normal'` |
+| `italic`     | `boolean`                                                  | `false`    |
+| `decoration` | `'underline' \| 'line-through' \| 'none'`                  | `'none'`   |
+| `transform`  | `'uppercase' \| 'lowercase' \| 'capitalize'`               | -          |
+| `noMargin`   | `boolean`                                                  | `false`    |

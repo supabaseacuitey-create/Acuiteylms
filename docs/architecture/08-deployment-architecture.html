@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acuitey LMS - Production Deployment & Infrastructure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111726;
+      --card-border: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-cyan: #06b6d4;
+      --accent-blue: #3b82f6;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-purple: #8b5cf6;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      padding: 40px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .header {
+      text-align: center;
+      max-width: 900px;
+      margin-bottom: 36px;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      padding: 4px 14px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .diagram-container {
+      width: 100%;
+      max-width: 1120px;
+      background: #0d1322;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+    }
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .infra-grid {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      width: 100%;
+      max-width: 1120px;
+    }
+    .infra-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .infra-title {
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .infra-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="badge">Architecture Diagram 08</div>
+    <h1>Production Infrastructure & Deployment Topology</h1>
+    <p class="subtitle">Proposed Hostinger KVM enterprise deployment architecture with Cloudflare edge perimeter, Redis caching (configuration to be finalized), managed PostgreSQL / Supabase database tier (final configuration to be confirmed), and operational pipelines.</p>
+  </div>
+
+  <div class="diagram-container">
+    <svg viewBox="0 0 1060 650" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#38bdf8"/>
+        </marker>
+        <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#10b981"/>
+        </marker>
+      </defs>
+
+      <!-- Section 1: Edge & Public Internet (Top) -->
+      <rect x="20" y="20" width="1020" height="95" rx="12" fill="#0b1329" stroke="#1e293b" stroke-width="1.5"/>
+      <text x="40" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#38bdf8">1. PROPOSED CLOUDFLARE EDGE & SECURITY PERIMETER</text>
+
+      <g transform="translate(60, 52)">
+        <rect width="180" height="48" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+        <text x="90" y="22" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#f8fafc" text-anchor="middle">Public Users / DNS</text>
+        <text x="90" y="38" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94a3b8" text-anchor="middle">Students • Faculty • Admins</text>
+      </g>
+
+      <path d="M 240 76 L 310 76" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <g transform="translate(320, 50)">
+        <rect width="210" height="52" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+        <text x="105" y="20" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#c7d2fe" text-anchor="middle">Proposed Cloudflare WAF / DDoS</text>
+        <text x="105" y="36" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" fill="#a5b4fc" text-anchor="middle">Managed Rulesets • Rate Limiting</text>
+        <text x="105" y="46" font-family="'JetBrains Mono', monospace" font-size="8" fill="#818cf8" text-anchor="middle">Bot Fight Mode (Recommended)</text>
+      </g>
+
+      <path d="M 530 76 L 600 76" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <g transform="translate(610, 50)">
+        <rect width="200" height="52" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+        <text x="100" y="20" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#a7f3d0" text-anchor="middle">Proposed TLS 1.3 Strict</text>
+        <text x="100" y="36" font-family="'JetBrains Mono', monospace" font-size="9" fill="#6ee7b7" text-anchor="middle">Cloudflare Edge Cert</text>
+        <text x="100" y="46" font-family="'JetBrains Mono', monospace" font-size="8" fill="#34d399" text-anchor="middle">Origin CA Handshake</text>
+      </g>
+
+      <g transform="translate(830, 50)">
+        <rect width="180" height="52" rx="8" fill="#182234" stroke="#0284c7" stroke-width="1"/>
+        <text x="90" y="20" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#38bdf8" text-anchor="middle">Edge Static Caching</text>
+        <text x="90" y="38" font-family="'JetBrains Mono', monospace" font-size="9" fill="#bae6fd" text-anchor="middle">JS, CSS, SVGs, Fonts</text>
+      </g>
+
+      <!-- Section 2: Hostinger KVM Host Environment (Middle) -->
+      <rect x="20" y="135" width="700" height="495" rx="12" fill="#0d1424" stroke="#3b82f6" stroke-width="2"/>
+      <rect x="20" y="135" width="700" height="34" rx="12" fill="#1e293b"/>
+      <text x="40" y="157" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="800" fill="#38bdf8">2. PROPOSED APPLICATION TIER — HOSTINGER KVM (RECOMMENDED: UBUNTU 24.04 LTS)</text>
+      <text x="690" y="157" font-family="'JetBrains Mono', monospace" font-size="11" fill="#64748b" text-anchor="end">KVM 4 / 8 vCPU • 16-32 GB RAM</text>
+
+      <!-- Firewall & SSH -->
+      <g transform="translate(40, 185)">
+        <rect width="180" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+        <text x="90" y="22" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#f8fafc" text-anchor="middle">UFW / iptables Firewall</text>
+        <line x1="10" y1="30" x2="170" y2="30" stroke="#334155"/>
+        <text x="90" y="46" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94a3b8" text-anchor="middle">Allow: 443 (CF IPs only)</text>
+        <text x="90" y="60" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94a3b8" text-anchor="middle">SSH: Custom Port + Key Only</text>
+      </g>
+
+      <!-- Traffic Entry Point: Nginx Web Server -->
+      <g transform="translate(240, 185)">
+        <rect width="210" height="70" rx="8" fill="#064e3b" stroke="#059669" stroke-width="1.5"/>
+        <text x="105" y="22" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="800" fill="#a7f3d0" text-anchor="middle">Nginx 1.26+ Web Server</text>
+        <line x1="10" y1="30" x2="200" y2="30" stroke="#065f46"/>
+        <text x="105" y="46" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#e2e8f0" text-anchor="middle">HTTP/2 • gzip/brotli</text>
+        <text x="105" y="60" font-family="'JetBrains Mono', monospace" font-size="9" fill="#6ee7b7" text-anchor="middle">X-Accel-Redirect (Moodledata)</text>
+      </g>
+
+      <path d="M 130 115 L 130 185" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+      <path d="M 220 220 L 235 220" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+      <!-- PHP-FPM Workers -->
+      <g transform="translate(470, 185)">
+        <rect width="230" height="70" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+        <text x="115" y="22" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="800" fill="#c7d2fe" text-anchor="middle">PHP 8.2 / 8.3 FPM Pool</text>
+        <line x1="10" y1="30" x2="220" y2="30" stroke="#312e81"/>
+        <text x="115" y="46" font-family="'JetBrains Mono', monospace" font-size="9" fill="#e2e8f0" text-anchor="middle">OPcache + JIT Enabled (128M)</text>
+        <text x="115" y="60" font-family="'JetBrains Mono', monospace" font-size="9" fill="#a5b4fc" text-anchor="middle">pm.max_children = 60-120</text>
+      </g>
+
+      <path d="M 450 220 L 465 220" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- Moodle Application Root Directory -->
+      <g transform="translate(40, 275)">
+        <rect width="660" height="155" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+        <text x="60" y="300" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="800" fill="#f8fafc">Moodle Application Root: /var/www/html/moodle</text>
+
+        <!-- Sub-box Core -->
+        <rect x="60" y="315" width="280" height="95" rx="6" fill="#1e293b" stroke="#475569"/>
+        <text x="200" y="335" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#94a3b8" text-anchor="middle">MOODLE CORE (5.2.3+)</text>
+        <text x="75" y="355" font-family="'JetBrains Mono', monospace" font-size="9" fill="#cbd5e1">• /lib/moodlelib.php</text>
+        <text x="75" y="372" font-family="'JetBrains Mono', monospace" font-size="9" fill="#cbd5e1">• /course, /user, /mod/lti</text>
+        <text x="75" y="389" font-family="'JetBrains Mono', monospace" font-size="9" fill="#cbd5e1">• /enrol/fee, /payment/gateway</text>
+        <text x="75" y="403" font-family="'JetBrains Mono', monospace" font-size="8" fill="#10b981">STRICTLY UNMODIFIED CORE CODE</text>
+
+        <!-- Sub-box Acuitey -->
+        <rect x="360" y="315" width="320" height="95" rx="6" fill="#172554" stroke="#2563eb" stroke-width="1.5"/>
+        <text x="520" y="335" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="800" fill="#93c5fd" text-anchor="middle">ACUITEY EXTENSIONS (/local/acuitey)</text>
+        <text x="375" y="355" font-family="'JetBrains Mono', monospace" font-size="9" fill="#bfdbfe">• \local_acuitey\routing_service</text>
+        <text x="375" y="372" font-family="'JetBrains Mono', monospace" font-size="9" fill="#bfdbfe">• \local_acuitey\faculty_matcher</text>
+        <text x="375" y="389" font-family="'JetBrains Mono', monospace" font-size="9" fill="#bfdbfe">• db/events.php & db/tasks.php</text>
+        <text x="375" y="403" font-family="'JetBrains Mono', monospace" font-size="8" fill="#38bdf8">ROUTING ENGINE + ISOLATED XMLDB TABLES</text>
+      </g>
+
+      <!-- Local Redis & Background Cron -->
+      <!-- Redis Box -->
+      <g transform="translate(40, 450)">
+        <rect width="200" height="85" rx="8" fill="#450a0a" stroke="#dc2626" stroke-width="1.5"/>
+        <text x="100" y="22" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="800" fill="#fca5a5" text-anchor="middle">Redis (Proposed UNIX/TCP)</text>
+        <line x1="10" y1="30" x2="190" y2="30" stroke="#7f1d1d"/>
+        <text x="100" y="46" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" fill="#fee2e2" text-anchor="middle">Moodle MUC Session Cache</text>
+        <text x="100" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" fill="#fee2e2" text-anchor="middle">Application Cache Store</text>
+        <text x="100" y="74" font-family="'JetBrains Mono', monospace" font-size="8" fill="#fecaca" text-anchor="middle">Config to be finalized</text>
+      </g>
+
+      <!-- Cron & Ad-Hoc Task Daemon -->
+      <g transform="translate(260, 450)">
+        <rect width="210" height="85" rx="8" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+        <text x="105" y="22" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#f8fafc" text-anchor="middle">CLI Cron & Task Worker</text>
+        <line x1="10" y1="30" x2="200" y2="30" stroke="#334155"/>
+        <text x="105" y="46" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94a3b8" text-anchor="middle">*/1 * * * * php admin/cli/cron.php</text>
+        <text x="105" y="60" font-family="'JetBrains Mono', monospace" font-size="9" fill="#38bdf8" text-anchor="middle">php admin/cli/adhoc_task.php</text>
+        <text x="105" y="74" font-family="'JetBrains Mono', monospace" font-size="8" fill="#cbd5e1" text-anchor="middle">Processes Pending Routing Queue</text>
+      </g>
+
+      <!-- Moodledata Storage -->
+      <g transform="translate(490, 450)">
+        <rect width="210" height="85" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+        <text x="105" y="22" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#f8fafc" text-anchor="middle">Moodledata Storage</text>
+        <line x1="10" y1="30" x2="200" y2="30" stroke="#334155"/>
+        <text x="105" y="46" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94a3b8" text-anchor="middle">/var/moodledata (Outside Webroot)</text>
+        <text x="105" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">NVMe Local Storage</text>
+        <text x="105" y="74" font-family="'JetBrains Mono', monospace" font-size="8" fill="#a5b4fc" text-anchor="middle">Filedir • Certificates • Submissions</text>
+      </g>
+
+      <!-- Inter-host interconnects -->
+      <path d="M 140 430 L 140 450" stroke="#dc2626" stroke-width="1.5"/>
+      <path d="M 360 430 L 360 450" stroke="#64748b" stroke-width="1.5"/>
+      <path d="M 590 430 L 590 450" stroke="#334155" stroke-width="1.5"/>
+
+      <!-- Operational Pipeline (Hostinger Bottom) -->
+      <g transform="translate(40, 550)">
+        <rect width="660" height="65" rx="8" fill="#0b1326" stroke="#1e293b" stroke-width="1"/>
+        <text x="60" y="570" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#60a5fa">PROPOSED MONITORING & OPERATIONS LAYER:</text>
+        <text x="60" y="590" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94a3b8">• Proposed Prometheus Node Exporter + Grafana Dashboards (CPU/Memory/I/O)</text>
+        <text x="60" y="604" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94a3b8">• Proposed Hostinger Snapshots + Off-site backup scripts (Subject to configuration)</text>
+      </g>
+
+      <!-- Section 3: Managed Database Tier (Right Top) -->
+      <rect x="740" y="135" width="300" height="230" rx="12" fill="#081816" stroke="#059669" stroke-width="2"/>
+      <rect x="740" y="135" width="300" height="34" rx="12" fill="#064e3b"/>
+      <text x="890" y="157" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" font-weight="800" fill="#6ee7b7" text-anchor="middle">3. PROPOSED MANAGED DATABASE</text>
+
+      <g transform="translate(760, 185)">
+        <rect width="260" height="165" rx="8" fill="#062e24" stroke="#10b981" stroke-width="1.5"/>
+        <text x="130" y="24" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="800" fill="#a7f3d0" text-anchor="middle">PostgreSQL / Supabase</text>
+        <line x1="10" y1="34" x2="250" y2="34" stroke="#047857"/>
+        <text x="20" y="55" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#ecfdf5">• Final configuration to be confirmed</text>
+        <text x="20" y="73" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#ecfdf5">• Proposed PgBouncer Transaction Pooling</text>
+        <text x="20" y="91" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#ecfdf5">• Point-in-Time Recovery (PITR)</text>
+        <text x="20" y="109" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#ecfdf5">• Multi-AZ Automated Daily Backups</text>
+        <text x="20" y="127" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" fill="#ecfdf5">• Stores mdl_* core + Acuitey tables</text>
+        <text x="20" y="148" font-family="'JetBrains Mono', monospace" font-size="9" fill="#34d399">High concurrency isolation</text>
+      </g>
+
+      <!-- App to Database connection line -->
+      <path d="M 700 350 L 740 350 L 740 270 L 755 270" stroke="#10b981" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+      <text x="735" y="320" font-family="'JetBrains Mono', monospace" font-size="9" fill="#34d399" transform="rotate(-90 735 320)" text-anchor="middle">Proposed TLS Connection</text>
+
+      <!-- Section 4: External Integrations Cloud (Right Bottom) -->
+      <rect x="740" y="380" width="300" height="250" rx="12" fill="#14142b" stroke="#7c3aed" stroke-width="2"/>
+      <rect x="740" y="380" width="300" height="34" rx="12" fill="#2e1065"/>
+      <text x="890" y="402" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="800" fill="#d8b4fe" text-anchor="middle">4. EXTERNAL SAAS PLATFORMS</text>
+
+      <g transform="translate(760, 425)">
+        <rect width="260" height="42" rx="6" fill="#1e1b4b" stroke="#4338ca"/>
+        <text x="15" y="26" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#c7d2fe">Zoom LTI Pro Cloud</text>
+        <text x="245" y="26" font-family="'JetBrains Mono', monospace" font-size="9" fill="#818cf8" text-anchor="end">LTI 1.3 / OIDC</text>
+      </g>
+
+      <g transform="translate(760, 477)">
+        <rect width="260" height="42" rx="6" fill="#064e3b" stroke="#059669"/>
+        <text x="15" y="26" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#a7f3d0">Razorpay / PhonePe</text>
+        <text x="245" y="26" font-family="'JetBrains Mono', monospace" font-size="9" fill="#6ee7b7" text-anchor="end">Gateway Webhooks</text>
+      </g>
+
+      <g transform="translate(760, 529)">
+        <rect width="260" height="42" rx="6" fill="#182234" stroke="#0284c7"/>
+        <text x="15" y="26" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#bae6fd">Transactional Email / SMS</text>
+        <text x="245" y="26" font-family="'JetBrains Mono', monospace" font-size="9" fill="#38bdf8" text-anchor="end">Proposed Providers</text>
+      </g>
+
+      <g transform="translate(760, 581)">
+        <rect width="260" height="40" rx="6" fill="#2d1515" stroke="#991b1b"/>
+        <text x="15" y="25" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#fca5a5">Proposed Off-Site Backup</text>
+        <text x="245" y="25" font-family="'JetBrains Mono', monospace" font-size="9" fill="#f87171" text-anchor="end">Encrypted Storage</text>
+      </g>
+
+      <path d="M 700 498 L 755 498" stroke="#a855f7" stroke-width="2" marker-end="url(#arrow)"/>
+    </svg>
+  </div>
+
+  <div class="infra-grid">
+    <div class="infra-card">
+      <div class="infra-title" style="color: #38bdf8;">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+        Proposed Cloudflare Edge
+      </div>
+      <div class="infra-desc">
+        Recommended edge perimeter for terminating HTTPS traffic, filtering DDoS, enforcing WAF rules, and caching static assets.
+      </div>
+    </div>
+    <div class="infra-card">
+      <div class="infra-title" style="color: #6366f1;">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
+        Proposed Hostinger KVM
+      </div>
+      <div class="infra-desc">
+        Dedicated compute running Nginx, PHP-FPM 8.2/8.3, Redis (configuration to be finalized), and CLI cron task workers.
+      </div>
+    </div>
+    <div class="infra-card">
+      <div class="infra-title" style="color: #10b981;">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+        PostgreSQL / Supabase
+      </div>
+      <div class="infra-desc">
+        Managed PostgreSQL database tier (final configuration to be confirmed), connection pooling, and automated backups.
+      </div>
+    </div>
+    <div class="infra-card">
+      <div class="infra-title" style="color: #f59e0b;">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        Proposed Operations
+      </div>
+      <div class="infra-desc">
+        Proposed monitoring layer, automated snapshots, off-site backup storage, and SSH key-based access control.
+      </div>
+    </div>
+  </div>
+</body>
+</html>

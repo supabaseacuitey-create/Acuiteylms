@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Implementation Roadmap &amp; Architecture Confirmation - Acuitey Solutions LMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #F7F7F5;
+      --color-ink:     #252B36;
+      --color-muted:   #657080;
+      --color-accent:  #EF6A3A;
+      --color-link:    #315FA8;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+    .frame { width: 100%; max-width: 1140px; }
+    svg { width: 100%; height: auto; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <svg viewBox="0 0 1140 680" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="road-title road-desc">
+      <title id="road-title">Acuitey Solutions LMS - Implementation Roadmap &amp; Architecture Confirmation</title>
+      <desc id="road-desc">Eight-stage linear implementation timeline and institutional architecture confirmation principles governing the Acuitey Solutions LMS platform deployment.</desc>
+      <defs>
+        <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="0.9" fill="rgba(37,43,54,0.08)"/>
+        </pattern>
+        <marker id="arr-muted" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#657080"/>
+        </marker>
+        <marker id="arr-accent" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#EF6A3A"/>
+        </marker>
+        <marker id="arr-blue" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#315FA8"/>
+        </marker>
+      </defs>
+
+      <!-- Background -->
+      <rect width="100%" height="100%" fill="#F7F7F5"/>
+      <rect width="100%" height="100%" fill="url(#dots)"/>
+
+      <!-- Large Faded Section Number -->
+      <text x="1100" y="70" font-family="'Geist Mono', monospace" font-size="76" font-weight="700" fill="rgba(37,43,54,0.05)" text-anchor="end">09</text>
+
+      <!-- Phase Banner / Top Flow Label -->
+      <g transform="translate(40, 20)">
+        <polygon points="0,0 520,0 532,14 520,28 0,28" fill="#252B36"/>
+        <polygon points="532,0 1060,0 1060,28 532,28 544,14" fill="#3A4354"/>
+
+        <text x="260" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="700" letter-spacing="0.14em" text-anchor="middle">SECTION 1: IMPLEMENTATION ROADMAP (8 STAGES)</text>
+        <text x="796" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="700" letter-spacing="0.14em" text-anchor="middle">SECTION 2: ARCHITECTURE CONFIRMATION &amp; DESIGN PRINCIPLES</text>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           TOP SECTION: 8-STAGE LINEAR ROADMAP (Timeline)
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(40, 75)">
+        <rect width="1060" height="245" rx="4" fill="#ffffff" stroke="rgba(37,43,54,0.2)" stroke-width="1"/>
+        <text x="20" y="28" font-family="'Geist Mono', monospace" font-size="8.5" font-weight="600" fill="#657080" letter-spacing="0.12em">CHRONOLOGICAL ENGINEERING ROADMAP</text>
+
+        <!-- Main Timeline Rail -->
+        <line x1="20" y1="52" x2="1040" y2="52" stroke="rgba(37,43,54,0.18)" stroke-width="2"/>
+
+        <!-- 8 Stages -->
+        <!-- Stage 01 -->
+        <g transform="translate(20, 42)">
+          <circle cx="10" cy="10" r="8" fill="#252B36"/>
+          <text x="10" y="13" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+          
+          <rect x="0" y="28" width="120" height="155" rx="2" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.12)"/>
+          <text x="8" y="44" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#252B36">01 INFRA</text>
+          <text x="8" y="58" font-family="'Geist', sans-serif" font-size="10" font-weight="700" fill="#252B36">Cloud Setup</text>
+          <line x1="8" y1="66" x2="112" y2="66" stroke="rgba(37,43,54,0.1)"/>
+          <text x="8" y="80" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Hostinger KVM provisioning,</text>
+          <text x="8" y="92" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Ubuntu 24.04 OS baseline,</text>
+          <text x="8" y="104" font-family="'Geist', sans-serif" font-size="8" fill="#657080">PostgreSQL managed cloud,</text>
+          <text x="8" y="116" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Redis deployment.</text>
+        </g>
+
+        <!-- Stage 02 -->
+        <g transform="translate(150, 42)">
+          <circle cx="10" cy="10" r="8" fill="#252B36"/>
+          <text x="10" y="13" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+          
+          <rect x="0" y="28" width="120" height="155" rx="2" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.12)"/>
+          <text x="8" y="44" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#252B36">02 CORE</text>
+          <text x="8" y="58" font-family="'Geist', sans-serif" font-size="10" font-weight="700" fill="#252B36">Moodle 5.2</text>
+          <line x1="8" y1="66" x2="112" y2="66" stroke="rgba(37,43,54,0.1)"/>
+          <text x="8" y="80" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Moodle 5.2.3+ setup,</text>
+          <text x="8" y="92" font-family="'Geist', sans-serif" font-size="8" fill="#657080">PHP 8.3 OPcache,</text>
+          <text x="8" y="104" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Nginx reverse proxy,</text>
+          <text x="8" y="116" font-family="'Geist', sans-serif" font-size="8" fill="#657080">TLS 1.3 hardening.</text>
+        </g>
+
+        <!-- Stage 03 -->
+        <g transform="translate(280, 42)">
+          <circle cx="10" cy="10" r="8" fill="#252B36"/>
+          <text x="10" y="13" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+          
+          <rect x="0" y="28" width="120" height="155" rx="2" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.12)"/>
+          <text x="8" y="44" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#252B36">03 EXTENSION</text>
+          <text x="8" y="58" font-family="'Geist', sans-serif" font-size="10" font-weight="700" fill="#252B36">local_acuitey</text>
+          <line x1="8" y1="66" x2="112" y2="66" stroke="rgba(37,43,54,0.1)"/>
+          <text x="8" y="80" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Plugin skeleton creation,</text>
+          <text x="8" y="92" font-family="'Geist', sans-serif" font-size="8" fill="#657080">XMLDB tables install,</text>
+          <text x="8" y="104" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Event observers,</text>
+          <text x="8" y="116" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Task subsystem bindings.</text>
+        </g>
+
+        <!-- Stage 04: Routing Engine (Focal Accent) -->
+        <g transform="translate(410, 42)">
+          <circle cx="10" cy="10" r="8" fill="#EF6A3A"/>
+          <text x="10" y="13" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+          
+          <rect x="0" y="28" width="120" height="155" rx="2" fill="rgba(239,106,58,0.04)" stroke="#EF6A3A" stroke-width="1.2"/>
+          <text x="8" y="44" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#EF6A3A">04 ROUTING</text>
+          <text x="8" y="58" font-family="'Geist', sans-serif" font-size="10" font-weight="700" fill="#252B36">Routing Engine</text>
+          <line x1="8" y1="66" x2="112" y2="66" stroke="rgba(239,106,58,0.2)"/>
+          <text x="8" y="80" font-family="'Geist', sans-serif" font-size="8" fill="#252B36">Matching algorithm,</text>
+          <text x="8" y="92" font-family="'Geist', sans-serif" font-size="8" fill="#252B36">workload calculator,</text>
+          <text x="8" y="104" font-family="'Geist', sans-serif" font-size="8" fill="#252B36">availability checker,</text>
+          <text x="8" y="116" font-family="'Geist', sans-serif" font-size="8" fill="#252B36">pending queue retries.</text>
+        </g>
+
+        <!-- Stage 05 -->
+        <g transform="translate(540, 42)">
+          <circle cx="10" cy="10" r="8" fill="#252B36"/>
+          <text x="10" y="13" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+          
+          <rect x="0" y="28" width="120" height="155" rx="2" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.12)"/>
+          <text x="8" y="44" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#252B36">05 INTEGRATE</text>
+          <text x="8" y="58" font-family="'Geist', sans-serif" font-size="10" font-weight="700" fill="#252B36">LTI &amp; Pay</text>
+          <line x1="8" y1="66" x2="112" y2="66" stroke="rgba(37,43,54,0.1)"/>
+          <text x="8" y="80" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Zoom LTI 1.3 Advantage,</text>
+          <text x="8" y="92" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Razorpay gateway,</text>
+          <text x="8" y="104" font-family="'Geist', sans-serif" font-size="8" fill="#657080">PhonePe gateway,</text>
+          <text x="8" y="116" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Server webhook security.</text>
+        </g>
+
+        <!-- Stage 06 -->
+        <g transform="translate(670, 42)">
+          <circle cx="10" cy="10" r="8" fill="#252B36"/>
+          <text x="10" y="13" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">6</text>
+          
+          <rect x="0" y="28" width="120" height="155" rx="2" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.12)"/>
+          <text x="8" y="44" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#252B36">06 CONSOLE</text>
+          <text x="8" y="58" font-family="'Geist', sans-serif" font-size="10" font-weight="700" fill="#252B36">Dashboards</text>
+          <line x1="8" y1="66" x2="112" y2="66" stroke="rgba(37,43,54,0.1)"/>
+          <text x="8" y="80" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Academic routing admin,</text>
+          <text x="8" y="92" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Finance audit screens,</text>
+          <text x="8" y="104" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Prometheus telemetry,</text>
+          <text x="8" y="116" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Observability dashboards.</text>
+        </g>
+
+        <!-- Stage 07 -->
+        <g transform="translate(800, 42)">
+          <circle cx="10" cy="10" r="8" fill="#252B36"/>
+          <text x="10" y="13" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">7</text>
+          
+          <rect x="0" y="28" width="120" height="155" rx="2" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.12)"/>
+          <text x="8" y="44" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#252B36">07 AUDIT</text>
+          <text x="8" y="58" font-family="'Geist', sans-serif" font-size="10" font-weight="700" fill="#252B36">QA &amp; Stress</text>
+          <line x1="8" y1="66" x2="112" y2="66" stroke="rgba(37,43,54,0.1)"/>
+          <text x="8" y="80" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Automated routing stress,</text>
+          <text x="8" y="92" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Concurrency testing,</text>
+          <text x="8" y="104" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Security vulnerability scan,</text>
+          <text x="8" y="116" font-family="'Geist', sans-serif" font-size="8" fill="#657080">Pilot cohort trial.</text>
+        </g>
+
+        <!-- Stage 08 -->
+        <g transform="translate(930, 42)">
+          <circle cx="10" cy="10" r="8" fill="#166534"/>
+          <text x="10" y="13" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">8</text>
+          
+          <rect x="0" y="28" width="110" height="155" rx="2" fill="rgba(22,101,52,0.04)" stroke="#166534" stroke-width="1.2"/>
+          <text x="8" y="44" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#166534">08 LAUNCH</text>
+          <text x="8" y="58" font-family="'Geist', sans-serif" font-size="10" font-weight="700" fill="#252B36">Production</text>
+          <line x1="8" y1="66" x2="102" y2="66" stroke="rgba(22,101,52,0.2)"/>
+          <text x="8" y="80" font-family="'Geist', sans-serif" font-size="8" fill="#252B36">DNS cutover,</text>
+          <text x="8" y="92" font-family="'Geist', sans-serif" font-size="8" fill="#252B36">Staff enablement,</text>
+          <text x="8" y="104" font-family="'Geist', sans-serif" font-size="8" fill="#252B36">Go-live monitoring,</text>
+          <text x="8" y="116" font-family="'Geist', sans-serif" font-size="8" fill="#252B36">SLA tracking.</text>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           BOTTOM SECTION: ARCHITECTURE CONFIRMATION
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(40, 335)">
+        <rect width="1060" height="265" rx="4" fill="#ffffff" stroke="rgba(37,43,54,0.2)" stroke-width="1"/>
+        
+        <!-- Header badge -->
+        <rect x="20" y="16" width="180" height="18" rx="2" fill="#252B36"/>
+        <text x="110" y="29" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">ARCHITECTURE CONFIRMATION</text>
+        <text x="215" y="30" font-family="'Geist', sans-serif" font-size="13" font-weight="700" fill="#252B36">Design Principles &amp; Governance Declarations</text>
+
+        <!-- Statement 1: Core Integrity -->
+        <g transform="translate(20, 48)">
+          <rect width="500" height="120" rx="3" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.12)"/>
+          <text x="14" y="22" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#252B36">MOODLE CORE INTEGRITY DECLARATION</text>
+          
+          <rect x="14" y="32" width="472" height="74" rx="2" fill="#ffffff" stroke="rgba(49,95,168,0.3)"/>
+          <line x1="14" y1="32" x2="14" y2="106" stroke="#315FA8" stroke-width="3"/>
+          <text x="24" y="48" font-family="'Geist', sans-serif" font-size="8.5" font-style="italic" fill="#252B36">“The Acuitey automated student-to-faculty workflow will be implemented using</text>
+          <text x="24" y="62" font-family="'Geist', sans-serif" font-size="8.5" font-style="italic" fill="#252B36">Moodle's supported extension architecture. Moodle core files will not be modified</text>
+          <text x="24" y="76" font-family="'Geist', sans-serif" font-size="8.5" font-style="italic" fill="#252B36">for this functionality. Moodle APIs, events, capabilities, tasks and messaging</text>
+          <text x="24" y="90" font-family="'Geist', sans-serif" font-size="8.5" font-style="italic" fill="#252B36">mechanisms will be used where appropriate, while Acuitey-specific routing logic</text>
+          <text x="24" y="102" font-family="'Geist', sans-serif" font-size="8.5" font-style="italic" fill="#252B36">will remain isolated within controlled custom extensions.”</text>
+        </g>
+
+        <!-- Statement 2: Plugin Governance -->
+        <g transform="translate(540, 48)">
+          <rect width="500" height="120" rx="3" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.12)"/>
+          <text x="14" y="22" font-family="'Geist Mono', monospace" font-size="8" font-weight="700" fill="#252B36">THIRD-PARTY PLUGIN GOVERNANCE STATEMENT</text>
+          
+          <rect x="14" y="32" width="472" height="74" rx="2" fill="#ffffff" stroke="rgba(239,106,58,0.4)"/>
+          <line x1="14" y1="32" x2="14" y2="106" stroke="#EF6A3A" stroke-width="3"/>
+          <text x="24" y="54" font-family="'Geist', sans-serif" font-size="8.5" font-style="italic" fill="#252B36">“Third-party Moodle plugins will only be introduced where they provide a</text>
+          <text x="24" y="70" font-family="'Geist', sans-serif" font-size="8.5" font-style="italic" fill="#252B36">justified and maintainable capability that is not appropriately delivered through</text>
+          <text x="24" y="86" font-family="'Geist', sans-serif" font-size="8.5" font-style="italic" fill="#252B36">Moodle native functionality or the Acuitey custom extension.”</text>
+        </g>
+
+        <!-- Baseline Specification Parameters Grid -->
+        <g transform="translate(20, 180)">
+          <rect width="1020" height="70" rx="3" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.15)"/>
+          
+          <g transform="translate(20, 14)">
+            <text x="0" y="16" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#657080">TARGET MOODLE RELEASE:</text>
+            <text x="0" y="32" font-family="'Geist', sans-serif" font-size="10" font-weight="700" fill="#252B36">Moodle LMS 5.2.3+ (Build 20260916)</text>
+
+            <text x="260" y="16" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#657080">CUSTOM EXTENSION ID:</text>
+            <text x="260" y="32" font-family="'Geist Mono', monospace" font-size="10" font-weight="700" fill="#EF6A3A">local_acuitey (Isolated Subsystem)</text>
+
+            <text x="540" y="16" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#657080">APPLICATION RUNTIME:</text>
+            <text x="540" y="32" font-family="'Geist', sans-serif" font-size="10" font-weight="700" fill="#252B36">PHP 8.3-FPM · OPcache · Hostinger KVM</text>
+
+            <text x="800" y="16" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#657080">ARCHITECTURAL STATUS:</text>
+            <text x="800" y="32" font-family="'Geist', sans-serif" font-size="10" font-weight="700" fill="#166534">Approved Initial System Design</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           BOTTOM LEGEND & FOOTNOTE
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(40, 615)">
+        <rect width="1060" height="42" rx="3" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.12)"/>
+        
+        <text x="20" y="25" font-family="'Geist Mono', monospace" font-size="8" font-weight="600" fill="#657080">DOCUMENT CONFIRMATION:</text>
+        <text x="180" y="25" font-family="'Geist', sans-serif" font-size="9" fill="#252B36">This specification establishes the agreed design principles for all Acuitey LMS engineering and integration activities.</text>
+        
+        <text x="1040" y="25" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080" text-anchor="end">CONFIDENTIAL · ACUITEY SOLUTIONS</text>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>

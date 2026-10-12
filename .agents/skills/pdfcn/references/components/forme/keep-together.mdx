@@ -1,0 +1,108 @@
+---
+title: "Keep Together"
+description: "Keeps children on the same PDF page."
+---
+
+<ComponentPreview base="forme" name="keep-together" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/forme/keep-together
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @formepdf/react @formepdf/core
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/forme/components/keep-together/keep-together.tsx"
+  base="forme"
+  title="components/pdf/keep-together/keep-together.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/components/theme-provider.tsx"
+  base="forme"
+  title="components/pdf/theme-provider.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/resolve-color.ts"
+  base="forme"
+  title="lib/resolve-color.ts"
+/>
+
+<ComponentSource
+  src="registry/themes/professional.ts"
+  base="forme"
+  title="lib/pdf-themes/professional.ts"
+/>
+
+<ComponentSource
+  src="registry/themes/primitives.ts"
+  base="forme"
+  title="lib/pdf-themes/primitives.ts"
+/>
+
+<ComponentSource
+  src="registry/types/pdf-themes.ts"
+  base="forme"
+  title="types/pdf-themes.ts"
+/>
+
+<ComponentSource
+  src="registry/types/pdf-components.ts"
+  base="forme"
+  title="types/pdf-components.ts"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { KeepTogether } from "@/components/pdf/keep-together";
+import { Text } from "@/components/pdf/text";
+```
+
+```tsx
+<KeepTogether>
+  <Text>Keep these lines together.</Text>
+</KeepTogether>
+```
+
+## API Reference
+
+### KeepTogether
+
+| Prop               | Type        | Default |
+| ------------------ | ----------- | ------- |
+| `children`         | `ReactNode` | -       |
+| `minPresenceAhead` | `number`    | -       |
+| `style`            | `Style`     | -       |

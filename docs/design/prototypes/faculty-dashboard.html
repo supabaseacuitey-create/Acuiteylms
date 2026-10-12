@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Dashboard — Acuitey Solutions Enterprise LMS</title>
+  <meta name="description" content="Acuitey Solutions Enterprise LMS Faculty Operations Workspace. Student allocation routing queue, active mentorship supervision, grading workloads, and live session management.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Acuitey Design Tokens (ACUITEY-DESIGN.md) */
+      --acuitey-bg-canvas: #F9FAFB;
+      --acuitey-bg-surface: #FFFFFF;
+      --acuitey-bg-subtle: #F3F4F6;
+      --acuitey-bg-muted: #E5E7EB;
+
+      --acuitey-border-hairline: #E5E7EB;
+      --acuitey-border-subtle: #D1D5DB;
+      --acuitey-border-strong: #9CA3AF;
+
+      --acuitey-text-primary: #0F172A;
+      --acuitey-text-secondary: #334155;
+      --acuitey-text-muted: #64748B;
+      --acuitey-text-disabled: #94A3B8;
+
+      --acuitey-navy-900: #0C192C;
+      --acuitey-navy-800: #13243D;
+      --acuitey-cobalt-700: #1D4ED8;
+      --acuitey-cobalt-800: #1E40AF;
+      --acuitey-cobalt-50: #EFF6FF;
+
+      --acuitey-status-success-fg: #065F46;
+      --acuitey-status-success-bg: #ECFDF5;
+      --acuitey-status-success-border: #A7F3D0;
+
+      --acuitey-status-warning-fg: #92400E;
+      --acuitey-status-warning-bg: #FFFBEB;
+      --acuitey-status-warning-border: #FDE68A;
+
+      --acuitey-status-danger-fg: #991B1B;
+      --acuitey-status-danger-bg: #FEF2F2;
+      --acuitey-status-danger-border: #FECACA;
+
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+      --radius-badge: 3px;
+      --radius-control: 5px;
+      --radius-card: 6px;
+      --radius-modal: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--acuitey-bg-canvas);
+      color: var(--acuitey-text-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Top Moodle Navbar (theme_acuitey/navbar) */
+    .moodle-navbar {
+      background: var(--acuitey-bg-surface);
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .drawer-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--acuitey-border-hairline);
+      background: var(--acuitey-bg-surface);
+      color: var(--acuitey-text-secondary);
+      cursor: pointer;
+    }
+
+    .drawer-toggle-btn:hover {
+      background: var(--acuitey-bg-subtle);
+      color: var(--acuitey-text-primary);
+    }
+
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      background: var(--acuitey-navy-900);
+      border-radius: var(--radius-control);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .brand-subtitle {
+      font-size: 10px;
+      color: var(--acuitey-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--acuitey-text-secondary);
+      padding: 6px 0;
+      transition: color 0.15s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--acuitey-cobalt-700);
+    }
+
+    .nav-link.active {
+      color: var(--acuitey-cobalt-700);
+      font-weight: 600;
+      border-bottom: 2px solid var(--acuitey-cobalt-700);
+    }
+
+    .nav-user-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .icon-action-btn {
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--acuitey-text-secondary);
+      padding: 6px;
+      border-radius: var(--radius-control);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-action-btn:hover {
+      background: var(--acuitey-bg-subtle);
+      color: var(--acuitey-text-primary);
+    }
+
+    .notif-badge-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 7px;
+      height: 7px;
+      background: var(--acuitey-cobalt-700);
+      border: 1px solid var(--acuitey-bg-surface);
+      border-radius: 50%;
+    }
+
+    .user-profile-menu {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 8px;
+      border-radius: var(--radius-control);
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .user-profile-menu:hover {
+      background: var(--acuitey-bg-subtle);
+      border-color: var(--acuitey-border-hairline);
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--acuitey-navy-900);
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .user-info-text {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .user-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+    }
+
+    .user-role-badge {
+      font-size: 10px;
+      color: var(--acuitey-cobalt-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    /* Restrained Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: var(--radius-control);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--acuitey-cobalt-700);
+      outline-offset: 1px;
+    }
+
+    .btn-primary {
+      background: var(--acuitey-navy-900);
+      color: #FFFFFF;
+      border-color: var(--acuitey-navy-900);
+    }
+
+    .btn-primary:hover {
+      background: var(--acuitey-navy-800);
+      border-color: var(--acuitey-navy-800);
+    }
+
+    .btn-action {
+      background: var(--acuitey-cobalt-700);
+      color: #FFFFFF;
+      border-color: var(--acuitey-cobalt-700);
+    }
+
+    .btn-action:hover {
+      background: var(--acuitey-cobalt-800);
+      border-color: var(--acuitey-cobalt-800);
+    }
+
+    .btn-secondary {
+      background: var(--acuitey-bg-surface);
+      color: var(--acuitey-text-primary);
+      border-color: var(--acuitey-border-subtle);
+    }
+
+    .btn-secondary:hover {
+      background: var(--acuitey-bg-subtle);
+      border-color: var(--acuitey-border-strong);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--acuitey-text-secondary);
+      border-color: transparent;
+      padding: 6px 10px;
+    }
+
+    .btn-ghost:hover {
+      background: var(--acuitey-bg-subtle);
+      color: var(--acuitey-text-primary);
+    }
+
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+
+    .sample-pill {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--acuitey-status-warning-fg);
+      background: var(--acuitey-status-warning-bg);
+      border: 1px solid var(--acuitey-status-warning-border);
+      padding: 1px 5px;
+      border-radius: var(--radius-badge);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Reviewer Demonstration Control Bar */
+    .prototype-controller-bar {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .controller-label-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--acuitey-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .state-switch-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--acuitey-bg-canvas);
+      padding: 2px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--acuitey-border-hairline);
+    }
+
+    .state-btn {
+      padding: 3px 8px;
+      border: none;
+      background: transparent;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--acuitey-text-secondary);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .state-btn.active {
+      background: var(--acuitey-bg-surface);
+      color: var(--acuitey-text-primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    /* Main Dashboard Layout Container (3 Columns: Drawer + Main Workspace + Block Region) */
+    .dashboard-layout-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 240px 1fr 340px;
+      gap: 24px;
+      padding: 24px;
+      align-items: start;
+    }
+
+    /* Left Navigation Drawer (Moodle theme_boost_drawer) */
+    .moodle-drawer {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: sticky;
+      top: 84px;
+    }
+
+    .drawer-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--acuitey-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 8px 10px 4px;
+    }
+
+    .drawer-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: var(--radius-control);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--acuitey-text-secondary);
+      transition: all 0.15s ease;
+    }
+
+    .drawer-item:hover {
+      background: var(--acuitey-bg-subtle);
+      color: var(--acuitey-text-primary);
+    }
+
+    .drawer-item.active {
+      background: var(--acuitey-cobalt-50);
+      color: var(--acuitey-cobalt-700);
+      font-weight: 600;
+    }
+
+    .drawer-item svg {
+      width: 16px;
+      height: 16px;
+      color: currentColor;
+    }
+
+    .drawer-badge {
+      margin-left: auto;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: var(--radius-badge);
+      background: var(--acuitey-bg-subtle);
+      color: var(--acuitey-text-muted);
+    }
+
+    .drawer-badge.badge-highlight {
+      background: var(--acuitey-cobalt-50);
+      color: var(--acuitey-cobalt-700);
+      border: 1px solid rgba(29, 78, 216, 0.2);
+    }
+
+    /* Middle Academic Operations Workspace */
+    .operations-workspace {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      min-width: 0;
+    }
+
+    /* Faculty Welcome & Availability Status Bar */
+    .faculty-header-card {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .faculty-header-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .faculty-welcome-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .faculty-context-line {
+      font-size: 13px;
+      color: var(--acuitey-text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Operational Faculty Availability Segment Control */
+    .availability-control-panel {
+      background: var(--acuitey-bg-canvas);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-control);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .availability-desc-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .availability-desc-text {
+      font-size: 12px;
+      color: var(--acuitey-text-secondary);
+    }
+
+    .availability-button-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-subtle);
+      border-radius: var(--radius-control);
+      padding: 2px;
+    }
+
+    .avail-status-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      background: transparent;
+      padding: 5px 10px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--acuitey-text-secondary);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .avail-status-btn.active {
+      background: var(--acuitey-navy-900);
+      color: #FFFFFF;
+    }
+
+    .avail-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10B981;
+    }
+
+    /* Section Headers */
+    .section-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Student Allocation / Routing Queue Component (Core Feature) */
+    .allocation-queue-card {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-left: 3px solid var(--acuitey-cobalt-700);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .queue-intro-text {
+      font-size: 12px;
+      color: var(--acuitey-text-secondary);
+      line-height: 1.5;
+    }
+
+    .queue-items-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .queue-item-box {
+      background: var(--acuitey-bg-canvas);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-control);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.15s ease;
+    }
+
+    .queue-item-box:hover {
+      border-color: var(--acuitey-border-subtle);
+    }
+
+    .queue-item-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .queue-student-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .queue-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--acuitey-navy-900);
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .queue-student-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .queue-student-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+    }
+
+    .queue-course-text {
+      font-size: 11px;
+      color: var(--acuitey-text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .status-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .routing-status-badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: var(--radius-badge);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .status-offered {
+      color: var(--acuitey-cobalt-700);
+      background: var(--acuitey-cobalt-50);
+      border: 1px solid rgba(29, 78, 216, 0.2);
+    }
+
+    .status-waiting {
+      color: var(--acuitey-status-warning-fg);
+      background: var(--acuitey-status-warning-bg);
+      border: 1px solid var(--acuitey-status-warning-border);
+    }
+
+    .queue-topic-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+      line-height: 1.4;
+    }
+
+    .queue-match-context-bar {
+      font-size: 11px;
+      color: var(--acuitey-text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      padding: 6px 10px;
+      border-radius: 3px;
+    }
+
+    .queue-actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 6px;
+    }
+
+    .action-group-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Assigned Students Table / Card List */
+    .assigned-students-card {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .data-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-control);
+    }
+
+    .acuitey-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    .acuitey-table th {
+      background: var(--acuitey-bg-canvas);
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      white-space: nowrap;
+    }
+
+    .acuitey-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      color: var(--acuitey-text-primary);
+      vertical-align: middle;
+    }
+
+    .acuitey-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .acuitey-table tr:hover td {
+      background: var(--acuitey-bg-subtle);
+    }
+
+    /* Pending Assessments (Grading Queue) */
+    .assessments-card {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .assessment-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--acuitey-border-hairline);
+      gap: 12px;
+    }
+
+    .assessment-item-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .assessment-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .assessment-name-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--acuitey-text-primary);
+    }
+
+    .assessment-subtext {
+      font-size: 11px;
+      color: var(--acuitey-text-muted);
+    }
+
+    /* Right Operational Context Block Region */
+    .contextual-block-region {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Workload / Capacity Configuration Widget */
+    .workload-widget {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .workload-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .workload-metric-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .workload-number-mono {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+    }
+
+    .workload-capacity-label {
+      font-size: 12px;
+      color: var(--acuitey-text-muted);
+    }
+
+    .capacity-track {
+      width: 100%;
+      height: 6px;
+      background: var(--acuitey-bg-subtle);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .capacity-fill {
+      height: 100%;
+      background: var(--acuitey-cobalt-700);
+      border-radius: 3px;
+    }
+
+    /* Live Session Teaching Launcher Widget */
+    .live-session-widget {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-top: 3px solid var(--acuitey-cobalt-700);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .session-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--acuitey-cobalt-700);
+      background: var(--acuitey-cobalt-50);
+      padding: 2px 8px;
+      border-radius: var(--radius-badge);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      width: fit-content;
+    }
+
+    .session-title-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      line-height: 1.35;
+    }
+
+    .session-meta-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--acuitey-text-secondary);
+    }
+
+    /* Student Support Messages Widget */
+    .student-inquiries-widget {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .inquiry-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--acuitey-border-hairline);
+    }
+
+    .inquiry-meta {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    /* Reviewer States Viewports (Empty Queue / Skeleton) */
+    .empty-queue-panel {
+      display: none;
+      background: var(--acuitey-bg-surface);
+      border: 1px dashed var(--acuitey-border-subtle);
+      border-radius: var(--radius-card);
+      padding: 40px 24px;
+      text-align: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .skeleton-workspace {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .skeleton-box {
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .skeleton-line {
+      height: 14px;
+      background: var(--acuitey-bg-subtle);
+      border-radius: 3px;
+      animation: pulse 1.6s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+
+    /* Moodle Technical Architecture & Routing Engine Governance Notice */
+    .moodle-arch-notice {
+      grid-column: 1 / -1;
+      margin-top: 16px;
+      background: var(--acuitey-bg-surface);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-left: 3px solid var(--acuitey-cobalt-700);
+      border-radius: var(--radius-card);
+      padding: 22px 26px;
+    }
+
+    .arch-notice-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .arch-notice-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--acuitey-text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .arch-notice-text {
+      font-size: 13px;
+      color: var(--acuitey-text-secondary);
+      line-height: 1.6;
+    }
+
+    .arch-tier-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .arch-tier-card {
+      background: var(--acuitey-bg-canvas);
+      border: 1px solid var(--acuitey-border-hairline);
+      border-radius: var(--radius-control);
+      padding: 10px 12px;
+    }
+
+    .arch-tier-name {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--acuitey-cobalt-700);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .arch-tier-desc {
+      font-size: 11px;
+      color: var(--acuitey-text-secondary);
+      line-height: 1.4;
+    }
+
+    /* Moodle Boost Footer */
+    .moodle-footer {
+      background: var(--acuitey-bg-surface);
+      border-top: 1px solid var(--acuitey-border-hairline);
+      padding: 32px 24px 24px;
+      margin-top: 48px;
+    }
+
+    .footer-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-left {
+      font-size: 12px;
+      color: var(--acuitey-text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .footer-link {
+      font-size: 12px;
+      color: var(--acuitey-text-secondary);
+    }
+
+    .footer-link:hover {
+      color: var(--acuitey-text-primary);
+    }
+
+    /* Responsive Governance */
+    @media (max-width: 1024px) {
+      .dashboard-layout-container {
+        grid-template-columns: 1fr 320px;
+        padding: 20px;
+        gap: 20px;
+      }
+      .moodle-drawer {
+        display: none;
+      }
+      .nav-links {
+        display: none;
+      }
+      .arch-tier-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-layout-container {
+        grid-template-columns: 1fr;
+        padding: 16px;
+        gap: 16px;
+      }
+      .navbar-container {
+        padding: 0 16px;
+      }
+      .prototype-controller-bar {
+        padding: 8px 16px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .state-switch-btn-group {
+        display: flex;
+        width: 100%;
+        overflow-x: auto;
+      }
+      .state-btn {
+        flex: 1;
+        padding: 5px 6px;
+        font-size: 10px;
+        text-align: center;
+        white-space: nowrap;
+      }
+      .faculty-header-card {
+        padding: 16px;
+      }
+      .section-header-row {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .availability-control-panel {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .availability-button-group {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      .avail-status-btn {
+        flex: 1 1 calc(50% - 4px);
+        text-align: center;
+        justify-content: center;
+        padding: 8px 6px;
+      }
+      .queue-item-box {
+        padding: 14px;
+      }
+      .queue-actions-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .action-group-left {
+        flex-direction: column;
+        width: 100%;
+      }
+      .action-group-left .btn {
+        width: 100%;
+      }
+      .queue-actions-row .btn-ghost {
+        width: 100%;
+        text-align: center;
+      }
+      .user-info-text {
+        display: none;
+      }
+      .arch-tier-grid {
+        grid-template-columns: 1fr;
+      }
+      .moodle-footer {
+        padding: 24px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Moodle Boost Child Theme Navbar (theme_acuitey/navbar) -->
+  <header class="moodle-navbar">
+    <div class="navbar-container">
+      <div class="brand-group">
+        <button type="button" class="drawer-toggle-btn" aria-label="Toggle Navigation Drawer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <a href="homepage.html" style="display: flex; align-items: center; gap: 10px;">
+          <div class="brand-mark">AS</div>
+          <div class="brand-text">
+            <span class="brand-title">Acuitey Solutions</span>
+            <span class="brand-subtitle">Enterprise LMS</span>
+          </div>
+        </a>
+      </div>
+
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="homepage.html" class="nav-link">Home</a></li>
+          <li><a href="course-catalogue.html" class="nav-link">Curriculums</a></li>
+          <li><a href="student-dashboard.html" class="nav-link">Student View</a></li>
+          <li><a href="faculty-dashboard.html" class="nav-link active">Faculty Workspace</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-user-actions">
+        <button type="button" class="icon-action-btn" aria-label="View messages">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          <span class="notif-badge-dot"></span>
+        </button>
+
+        <button type="button" class="icon-action-btn" aria-label="View notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        </button>
+
+        <div class="user-profile-menu" tabindex="0" role="button" aria-label="Faculty profile for Dr. V. Ramanathan">
+          <span class="user-avatar">VR</span>
+          <div class="user-info-text">
+            <span class="user-name">Dr. V. Ramanathan <span class="sample-pill">[SAMPLE DATA]</span></span>
+            <span class="user-role-badge">Faculty Lead &bull; Systems</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Prototype Reviewer Control Panel -->
+  <aside class="prototype-controller-bar" aria-label="Prototype state switcher">
+    <div class="controller-label-group">
+      <span>Prototype Reviewer Mode:</span>
+      <span class="sample-pill">[DEMO ONLY]</span>
+    </div>
+    <div class="state-switch-btn-group">
+      <button type="button" class="state-btn active" id="btn-state-normal">Active Operations</button>
+      <button type="button" class="state-btn" id="btn-state-empty">Queue Empty</button>
+      <button type="button" class="state-btn" id="btn-state-capacity">Capacity Reached</button>
+      <button type="button" class="state-btn" id="btn-state-offline">Offline State</button>
+      <button type="button" class="state-btn" id="btn-state-skeleton">Skeleton Loading</button>
+    </div>
+  </aside>
+
+  <!-- Main 3-Column Operational Layout Container -->
+  <main class="dashboard-layout-container">
+
+    <!-- 1. Left Navigation Drawer (Moodle theme_boost_drawer) -->
+    <aside class="moodle-drawer" aria-label="Faculty Navigation">
+      <div class="drawer-section-title">Academic Operations</div>
+      <a href="faculty-dashboard.html" class="drawer-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="#allocation-queue" class="drawer-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+        <span>Allocation Queue</span>
+        <span class="drawer-badge badge-highlight" id="drawer-queue-count">2 New</span>
+      </a>
+      <a href="#my-students" class="drawer-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <span>My Students</span>
+        <span class="drawer-badge">14</span>
+      </a>
+      <a href="#courses" class="drawer-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <span>Assigned Courses</span>
+      </a>
+      <a href="#assessments" class="drawer-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+        <span>Assessments</span>
+        <span class="drawer-badge">2 Pending</span>
+      </a>
+      <a href="#live-sessions" class="drawer-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+        <span>Live Sessions</span>
+        <span class="drawer-badge badge-highlight">Today</span>
+      </a>
+
+      <div class="drawer-section-title" style="margin-top: 12px;">Communications &amp; Config</div>
+      <a href="#messages" class="drawer-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span>Messages</span>
+      </a>
+      <a href="#availability" class="drawer-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+        <span>Availability</span>
+      </a>
+      <a href="#support" class="drawer-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        <span>Academic Support</span>
+      </a>
+    </aside>
+
+    <!-- 2. Middle Operational Workspace (Primary Workflow) -->
+    <section class="operations-workspace" id="normal-operations-view" data-od-id="faculty-workspace">
+
+      <!-- Faculty Header & Operational Availability Control -->
+      <div class="faculty-header-card">
+        <div class="faculty-header-top">
+          <div>
+            <h1 class="faculty-welcome-title">Faculty Operations Workspace</h1>
+            <p class="faculty-context-line">Faculty Chair &bull; Distributed Systems Track &bull; Term 1 Academic Supervision <span class="sample-pill">[SAMPLE DATA]</span></p>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <a href="#assessments" class="btn btn-secondary btn-sm">Review Assessments</a>
+            <a href="#allocation-queue" class="btn btn-action btn-sm">Inspect Queue</a>
+          </div>
+        </div>
+
+        <!-- Availability Segment Control (Governs Allocation Engine) -->
+        <div class="availability-control-panel">
+          <div class="availability-desc-group">
+            <span class="avail-dot" id="header-avail-dot"></span>
+            <span class="availability-desc-text" id="header-avail-text">
+              <strong>Status: Available.</strong> Accepting new student routing allocations within configured capacity.
+            </span>
+          </div>
+
+          <div class="availability-button-group" role="radiogroup" aria-label="Faculty Availability Status">
+            <button type="button" class="avail-status-btn active" id="btn-avail-online" role="radio" aria-checked="true">
+              Available
+            </button>
+            <button type="button" class="avail-status-btn" id="btn-avail-session" role="radio" aria-checked="false">
+              In Session
+            </button>
+            <button type="button" class="avail-status-btn" id="btn-avail-unavailable" role="radio" aria-checked="false">
+              Unavailable
+            </button>
+            <button type="button" class="avail-status-btn" id="btn-avail-offline" role="radio" aria-checked="false">
+              Offline
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Student Allocation / Routing Queue Component (Core Product Highlight) -->
+      <section class="allocation-queue-card" id="allocation-queue" data-od-id="student-allocation-queue">
+        <div class="section-header-row" style="margin-bottom: 4px;">
+          <div>
+            <h2 class="section-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+              Incoming Student Allocation Queue
+            </h2>
+          </div>
+          <span class="drawer-badge badge-highlight" id="queue-header-count">2 Pending Allocation Requests <span class="sample-pill">[SAMPLE DATA]</span></span>
+        </div>
+        <p class="queue-intro-text">
+          Incoming student consultation and thesis supervision requests routed via Student Allocation Service based on discipline specialization, live availability, and available supervisor capacity.
+        </p>
+
+        <div class="queue-items-container" id="active-queue-items">
+          <!-- Request 1 -->
+          <article class="queue-item-box">
+            <div class="queue-item-header">
+              <div class="queue-student-profile">
+                <span class="queue-avatar">AP</span>
+                <div class="queue-student-meta">
+                  <span class="queue-student-name">Aarav Patel <span class="sample-pill">[SAMPLE DATA]</span></span>
+                  <span class="queue-course-text">ACU-CS502 High-Concurrency Distributed Systems</span>
+                </div>
+              </div>
+              <div class="status-badge-row">
+                <span class="routing-status-badge status-offered">Offered to Faculty</span>
+                <span style="font-size: 11px; color: var(--acuitey-text-muted); font-family: var(--font-mono);">12m ago</span>
+              </div>
+            </div>
+
+            <div class="queue-topic-text">
+              Thesis Milestone 8: Raft Consensus State Machine &amp; Partition Recovery Evaluation
+            </div>
+
+            <!-- Understandable Matching Context (No Fake AI/Percentages) -->
+            <div class="queue-match-context-bar">
+              <span><strong>Subject Match:</strong> Distributed Systems &bull; Consensus</span>
+              <span><strong>Workload:</strong> Within Available Capacity</span>
+              <span><strong>Support Type:</strong> 1:1 Milestone Supervision</span>
+            </div>
+
+            <div class="queue-actions-row">
+              <div class="action-group-left">
+                <button type="button" class="btn btn-action btn-sm">Accept Allocation</button>
+                <button type="button" class="btn btn-secondary btn-sm">Review Syllabus Details</button>
+              </div>
+              <button type="button" class="btn btn-ghost btn-sm" style="color: var(--acuitey-text-muted);">
+                Unable to Accept / Request Reassignment
+              </button>
+            </div>
+          </article>
+
+          <!-- Request 2 -->
+          <article class="queue-item-box">
+            <div class="queue-item-header">
+              <div class="queue-student-profile">
+                <span class="queue-avatar" style="background: var(--acuitey-cobalt-700);">ND</span>
+                <div class="queue-student-meta">
+                  <span class="queue-student-name">Neha Deshmukh <span class="sample-pill">[SAMPLE DATA]</span></span>
+                  <span class="queue-course-text">ACU-SE301 Advanced Event-Driven Microservices</span>
+                </div>
+              </div>
+              <div class="status-badge-row">
+                <span class="routing-status-badge status-waiting">Waiting for Faculty Review</span>
+                <span style="font-size: 11px; color: var(--acuitey-text-muted); font-family: var(--font-mono);">28m ago</span>
+              </div>
+            </div>
+
+            <div class="queue-topic-text">
+              Laboratory Consultation: Transactional Outbox Pattern &amp; Idempotent Kafka Handlers
+            </div>
+
+            <!-- Understandable Matching Context -->
+            <div class="queue-match-context-bar">
+              <span><strong>Subject Match:</strong> Event Sourcing &bull; Microservices</span>
+              <span><strong>Workload:</strong> Within Available Capacity</span>
+              <span><strong>Support Type:</strong> Technical Lab Review</span>
+            </div>
+
+            <div class="queue-actions-row">
+              <div class="action-group-left">
+                <button type="button" class="btn btn-action btn-sm">Accept Allocation</button>
+                <button type="button" class="btn btn-secondary btn-sm">Review Syllabus Details</button>
+              </div>
+              <button type="button" class="btn btn-ghost btn-sm" style="color: var(--acuitey-text-muted);">
+                Unable to Accept / Request Reassignment
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Assigned Students Section -->
+      <section class="assigned-students-card" id="my-students" data-od-id="assigned-students-table">
+        <div class="section-header-row">
+          <h2 class="section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+            Currently Assigned Students
+          </h2>
+          <span style="font-size: 12px; color: var(--acuitey-text-muted);">14 Supervised Candidates <span class="sample-pill">[SAMPLE DATA]</span></span>
+        </div>
+
+        <div class="data-table-wrap">
+          <table class="acuitey-table" aria-label="Assigned Students Roster">
+            <thead>
+              <tr>
+                <th>Student Candidate</th>
+                <th>Course / Discipline</th>
+                <th>Allocation Date</th>
+                <th>Supervision Track</th>
+                <th>Next Interaction</th>
+                <th style="text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="queue-avatar" style="width: 24px; height: 24px; font-size: 10px;">PS</span>
+                    <span style="font-weight: 600;">Priya Sharma <span class="sample-pill">[SAMPLE]</span></span>
+                  </div>
+                </td>
+                <td><span class="code-mono">ACU-CS502 High-Concurrency</span></td>
+                <td><span class="code-mono">12 Sep 2026</span></td>
+                <td>1:1 Thesis Supervision</td>
+                <td>Live Clinic (Tomorrow)</td>
+                <td style="text-align: right;">
+                  <a href="#" class="btn btn-secondary btn-sm">Message</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="queue-avatar" style="width: 24px; height: 24px; font-size: 10px; background: var(--acuitey-cobalt-700);">VM</span>
+                    <span style="font-weight: 600;">Vikram Malhotra <span class="sample-pill">[SAMPLE]</span></span>
+                  </div>
+                </td>
+                <td><span class="code-mono">ACU-CS502 High-Concurrency</span></td>
+                <td><span class="code-mono">14 Sep 2026</span></td>
+                <td>Milestone Rubric Review</td>
+                <td>Lab Review (26 Sep)</td>
+                <td style="text-align: right;">
+                  <a href="#" class="btn btn-secondary btn-sm">Message</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="queue-avatar" style="width: 24px; height: 24px; font-size: 10px;">AK</span>
+                    <span style="font-weight: 600;">Ananya Kulkarni <span class="sample-pill">[SAMPLE]</span></span>
+                  </div>
+                </td>
+                <td><span class="code-mono">ACU-SE301 Event-Driven</span></td>
+                <td><span class="code-mono">18 Sep 2026</span></td>
+                <td>Postgraduate Thesis Track</td>
+                <td>Office Hours (29 Sep)</td>
+                <td style="text-align: right;">
+                  <a href="#" class="btn btn-secondary btn-sm">Message</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Pending Assessments Workload (Moodle mod_assign / mod_quiz mapping) -->
+      <section class="assessments-card" id="assessments" data-od-id="pending-assessments-workload">
+        <div class="section-header-row">
+          <h2 class="section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            Pending Assessments &amp; Grading Queue
+          </h2>
+          <span style="font-size: 11px; font-weight: 600; color: var(--acuitey-text-muted); text-transform: uppercase; letter-spacing: 0.08em;">Moodle mod_assign Integration</span>
+        </div>
+
+        <div class="assessment-item-row">
+          <div class="assessment-left">
+            <span class="assessment-name-text">Lab 4: Raft Consensus Machine &bull; Priya Sharma</span>
+            <span class="assessment-subtext">ACU-CS502 &bull; Submitted 4h ago &bull; Status: Ungraded <span class="sample-pill">[SAMPLE DATA]</span></span>
+          </div>
+          <a href="#" class="btn btn-action btn-sm">Open Grading Interface</a>
+        </div>
+
+        <div class="assessment-item-row">
+          <div class="assessment-left">
+            <span class="assessment-name-text">Milestone 2: Outbox Microservice &bull; Vikram Malhotra</span>
+            <span class="assessment-subtext">ACU-SE301 &bull; Submitted Yesterday &bull; Status: Rubric Review <span class="sample-pill">[SAMPLE DATA]</span></span>
+          </div>
+          <a href="#" class="btn btn-secondary btn-sm">Open Grading Interface</a>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- Reviewer State: Empty Allocation Queue -->
+    <section class="empty-queue-panel" id="empty-queue-view" data-od-id="empty-queue-view">
+      <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--acuitey-bg-subtle); display: flex; align-items: center; justify-content: center; color: var(--acuitey-text-muted);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+      </div>
+      <h3 style="font-size: 15px; font-weight: 700; color: var(--acuitey-text-primary);">Allocation Queue Empty</h3>
+      <p style="font-size: 13px; color: var(--acuitey-text-secondary); max-width: 440px; line-height: 1.5;">There are currently no unassigned students in the routing queue matching your curriculum discipline. You will be notified when new requests are offered.</p>
+    </section>
+
+    <!-- Reviewer State: Skeleton Loading -->
+    <section class="skeleton-workspace" id="skeleton-operations-view" data-od-id="skeleton-operations-view">
+      <div class="skeleton-box">
+        <div class="skeleton-line" style="width: 45%; height: 22px;"></div>
+        <div class="skeleton-line" style="width: 65%; height: 14px;"></div>
+      </div>
+      <div class="skeleton-box">
+        <div class="skeleton-line" style="width: 30%; height: 18px;"></div>
+        <div class="skeleton-line" style="width: 100%; height: 48px;"></div>
+        <div class="skeleton-line" style="width: 100%; height: 48px;"></div>
+      </div>
+    </section>
+
+    <!-- 3. Right Contextual Operational Block Region -->
+    <aside class="contextual-block-region" aria-label="Faculty Contextual Blocks">
+
+      <!-- Workload & Capacity Configuration Widget -->
+      <section class="workload-widget" data-od-id="workload-capacity-widget">
+        <div class="workload-header-row">
+          <h2 class="section-title" style="font-size: 14px;">Current Load &amp; Capacity</h2>
+          <span class="sample-pill">[SAMPLE DATA]</span>
+        </div>
+
+        <div class="workload-metric-row">
+          <span class="workload-number-mono" id="capacity-num-display">14</span>
+          <span class="workload-capacity-label">/ 20 Allocated Students [SAMPLE DATA]</span>
+        </div>
+
+        <div class="capacity-track" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" aria-label="Faculty supervision capacity utilization">
+          <div class="capacity-fill" id="capacity-fill-bar" style="width: 70%;"></div>
+        </div>
+
+        <p style="font-size: 11px; color: var(--acuitey-text-secondary); line-height: 1.4;">
+          Configurable capacity ceiling for active thesis supervision. Capacity may be used by the allocation workflow when determining eligibility for new requests.
+        </p>
+      </section>
+
+      <!-- Today's Teaching Live Session Widget -->
+      <section class="live-session-widget" data-od-id="teaching-live-session-widget">
+        <div class="session-badge">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--acuitey-cobalt-700);"></span>
+          Today's Live Session
+        </div>
+
+        <div>
+          <h2 class="session-title-text">Distributed Consensus &amp; Partition Tolerances Clinic</h2>
+          <div class="session-meta-row" style="margin-top: 6px;">
+            <span><strong>Course:</strong> ACU-CS502 High-Concurrency Systems</span>
+            <span><strong>Cohort:</strong> Term 1 Postgraduate Cohort <span class="sample-pill">[SAMPLE DATA]</span></span>
+            <span><strong>Schedule:</strong> Today &bull; 18:00 – 19:30 IST</span>
+          </div>
+        </div>
+
+        <!-- Strict Faculty-facing CTA: "Start Live Session" (Zero API/LTI exposure in visible copy) -->
+        <a href="#" class="btn btn-action" style="width: 100%; justify-content: center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+          Start Live Session
+        </a>
+
+        <div style="font-size: 11px; color: var(--acuitey-text-muted); text-align: center;">
+          <span>Authenticated conference host launch with native single sign-on integration</span>
+        </div>
+      </section>
+
+      <!-- Student Consultation Requests Widget -->
+      <section class="student-inquiries-widget" data-od-id="student-consultation-widget">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <h2 class="section-title" style="font-size: 14px;">Advising Messages</h2>
+          <span class="sample-pill">[SAMPLE DATA]</span>
+        </div>
+
+        <div class="inquiry-item">
+          <span class="queue-avatar" style="width: 26px; height: 26px; font-size: 10px;">PS</span>
+          <div class="inquiry-meta">
+            <span style="font-size: 12px; font-weight: 600; color: var(--acuitey-text-primary);">Priya Sharma</span>
+            <span style="font-size: 11px; color: var(--acuitey-text-secondary);">Query regarding Raft heartbeat timeouts in Lab 4.</span>
+            <div style="display: flex; gap: 8px; margin-top: 4px;">
+              <a href="#messages" style="font-size: 11px; color: var(--acuitey-cobalt-700); font-weight: 600;">Reply via Messages</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="inquiry-item">
+          <span class="queue-avatar" style="width: 26px; height: 26px; font-size: 10px; background: var(--acuitey-cobalt-700);">AK</span>
+          <div class="inquiry-meta">
+            <span style="font-size: 12px; font-weight: 600; color: var(--acuitey-text-primary);">Ananya Kulkarni</span>
+            <span style="font-size: 11px; color: var(--acuitey-text-secondary);">Requested confirmation for upcoming thesis review clinic.</span>
+            <div style="display: flex; gap: 8px; margin-top: 4px;">
+              <a href="#messages" style="font-size: 11px; color: var(--acuitey-cobalt-700); font-weight: 600;">Confirm Clinic</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </aside>
+
+    <!-- Moodle Technical Architecture & Routing Engine Governance Notice -->
+    <section class="moodle-arch-notice" data-od-id="faculty-dashboard-arch-notice">
+      <div class="arch-notice-header">
+        <span class="arch-notice-title">Moodle Technical Architecture &amp; Routing Engine Governance</span>
+        <span class="sample-pill">[PROPOSED WORKFLOW &bull; ZERO CORE EDITS]</span>
+      </div>
+      <p class="arch-notice-text">
+        The Faculty Operations Dashboard integrates natively with Moodle LMS 5.2.3+ Boost without modifying Moodle core code. Operational routing logic is decoupled into a dedicated <code>local_acuitey</code> plugin architecture:
+      </p>
+
+      <div class="arch-tier-grid">
+        <div class="arch-tier-card">
+          <div class="arch-tier-name">1. Existing Core/Boost</div>
+          <div class="arch-tier-desc"><code>theme_boost/navbar</code>, <code>theme_boost_drawer</code>, <code>mod_assign</code>, <code>mod_quiz</code>, <code>core_calendar</code>, <code>core_message</code>, and native grading APIs.</div>
+        </div>
+        <div class="arch-tier-card">
+          <div class="arch-tier-name">2. Proposed Theme Overrides</div>
+          <div class="arch-tier-desc"><code>theme_acuitey/templates/faculty_dashboard.mustache</code>, <code>faculty_workload.mustache</code>, and <code>live_session_card.mustache</code>.</div>
+        </div>
+        <div class="arch-tier-card">
+          <div class="arch-tier-name">3. Proposed local_acuitey Plugin</div>
+          <div class="arch-tier-desc"><code>local_acuitey/templates/allocation_queue.mustache</code>, <code>allocation_request.mustache</code>, <code>faculty_availability.mustache</code>, and <code>assigned_students.mustache</code>.</div>
+        </div>
+        <div class="arch-tier-card">
+          <div class="arch-tier-name">4. Standard APIs &amp; Modules</div>
+          <div class="arch-tier-desc"><code>mod_lti</code> (authenticated Zoom instructor launch); Moodle scheduled &amp; adhoc tasks for allocation dispatch.</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Moodle Boost Theme Footer -->
+  <footer class="moodle-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <span>&copy; 2026 Acuitey Solutions. Operating on Moodle LMS 5.2.3+ (Build: 20260916). Strict core separation preserved.</span>
+      </div>
+      <ul class="footer-links">
+        <li><a href="homepage.html" class="footer-link">Home</a></li>
+        <li><a href="course-catalogue.html" class="footer-link">Curriculums</a></li>
+        <li><a href="student-dashboard.html" class="footer-link">Student View</a></li>
+        <li><a href="faculty-dashboard.html" class="footer-link">Faculty Workspace</a></li>
+        <li><span class="sample-pill">[SAMPLE DATA DISCLOSED]</span></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript for Reviewer State Switcher & Availability Controls -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 1. Prototype Reviewer State Switcher
+      const btnNormal = document.getElementById('btn-state-normal');
+      const btnEmpty = document.getElementById('btn-state-empty');
+      const btnCapacity = document.getElementById('btn-state-capacity');
+      const btnOffline = document.getElementById('btn-state-offline');
+      const btnSkeleton = document.getElementById('btn-state-skeleton');
+
+      const normalView = document.getElementById('normal-operations-view');
+      const emptyView = document.getElementById('empty-queue-view');
+      const skeletonView = document.getElementById('skeleton-operations-view');
+
+      const availDot = document.getElementById('header-avail-dot');
+      const availText = document.getElementById('header-avail-text');
+      const capacityNum = document.getElementById('capacity-num-display');
+      const capacityFill = document.getElementById('capacity-fill-bar');
+
+      function resetViews() {
+        [btnNormal, btnEmpty, btnCapacity, btnOffline, btnSkeleton].forEach(b => b.classList.remove('active'));
+      }
+
+      if (btnNormal) {
+        btnNormal.addEventListener('click', function() {
+          resetViews();
+          btnNormal.classList.add('active');
+          normalView.style.display = 'flex';
+          emptyView.style.display = 'none';
+          skeletonView.style.display = 'none';
+          availDot.style.background = '#10B981';
+          availText.innerHTML = '<strong>Status: Available.</strong> Accepting new student routing allocations within configured capacity.';
+          capacityNum.textContent = '14';
+          capacityFill.style.width = '70%';
+        });
+      }
+
+      if (btnEmpty) {
+        btnEmpty.addEventListener('click', function() {
+          resetViews();
+          btnEmpty.classList.add('active');
+          normalView.style.display = 'none';
+          emptyView.style.display = 'flex';
+          skeletonView.style.display = 'none';
+        });
+      }
+
+      if (btnCapacity) {
+        btnCapacity.addEventListener('click', function() {
+          resetViews();
+          btnCapacity.classList.add('active');
+          normalView.style.display = 'flex';
+          emptyView.style.display = 'none';
+          skeletonView.style.display = 'none';
+          availDot.style.background = '#F59E0B';
+          availText.innerHTML = '<strong>Status: Capacity Reached (20/20).</strong> Automated student routing offers are currently paused.';
+          capacityNum.textContent = '20';
+          capacityFill.style.width = '100%';
+        });
+      }
+
+      if (btnOffline) {
+        btnOffline.addEventListener('click', function() {
+          resetViews();
+          btnOffline.classList.add('active');
+          normalView.style.display = 'flex';
+          emptyView.style.display = 'none';
+          skeletonView.style.display = 'none';
+          availDot.style.background = '#94A3B8';
+          availText.innerHTML = '<strong>Status: Offline / Unavailable.</strong> You are not receiving allocation queue offers.';
+        });
+      }
+
+      if (btnSkeleton) {
+        btnSkeleton.addEventListener('click', function() {
+          resetViews();
+          btnSkeleton.classList.add('active');
+          normalView.style.display = 'none';
+          emptyView.style.display = 'none';
+          skeletonView.style.display = 'flex';
+        });
+      }
+
+      // 2. Availability Button Controls
+      const availBtns = document.querySelectorAll('.avail-status-btn');
+      availBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          availBtns.forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-checked', 'false');
+          });
+          this.classList.add('active');
+          this.setAttribute('aria-checked', 'true');
+
+          const status = this.textContent.trim();
+          if (status === 'Available') {
+            availDot.style.background = '#10B981';
+            availText.innerHTML = '<strong>Status: Available.</strong> Accepting new student routing allocations within configured capacity.';
+          } else if (status === 'In Session') {
+            availDot.style.background = '#1D4ED8';
+            availText.innerHTML = '<strong>Status: In Session.</strong> Currently engaged in active live clinic.';
+          } else if (status === 'Unavailable') {
+            availDot.style.background = '#F59E0B';
+            availText.innerHTML = '<strong>Status: Unavailable.</strong> Scheduled break or capacity paused.';
+          } else if (status === 'Offline') {
+            availDot.style.background = '#94A3B8';
+            availText.innerHTML = '<strong>Status: Offline.</strong> Non-operational for student allocation offers.';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

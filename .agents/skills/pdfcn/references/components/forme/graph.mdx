@@ -1,0 +1,128 @@
+---
+title: "Graph"
+description: "Bar, line, and area charts drawn with SVG."
+---
+
+<ComponentPreview base="forme" name="graph" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/forme/graph
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @formepdf/react @formepdf/core
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/forme/components/graph/graph.tsx"
+  base="forme"
+  title="components/pdf/graph/graph.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/components/theme-provider.tsx"
+  base="forme"
+  title="components/pdf/theme-provider.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/resolve-color.ts"
+  base="forme"
+  title="lib/resolve-color.ts"
+/>
+
+<ComponentSource
+  src="registry/themes/professional.ts"
+  base="forme"
+  title="lib/pdf-themes/professional.ts"
+/>
+
+<ComponentSource
+  src="registry/themes/primitives.ts"
+  base="forme"
+  title="lib/pdf-themes/primitives.ts"
+/>
+
+<ComponentSource
+  src="registry/types/pdf-themes.ts"
+  base="forme"
+  title="types/pdf-themes.ts"
+/>
+
+<ComponentSource
+  src="registry/types/pdf-components.ts"
+  base="forme"
+  title="types/pdf-components.ts"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { PdfGraph } from "@/components/pdf/graph";
+```
+
+```tsx
+<PdfGraph variant="bar" data={[{ label: "Q1", value: 30 }]} />
+```
+
+### Variants
+
+```tsx
+<PdfGraph variant="line" data={series} showDots smooth />
+<PdfGraph variant="donut" data={totals} centerLabel="$48k" />
+```
+
+## API Reference
+
+### PdfGraph
+
+| Prop          | Type                                                                | Default    |
+| ------------- | ------------------------------------------------------------------- | ---------- |
+| `variant`     | `'bar' \| 'horizontal-bar' \| 'line' \| 'area' \| 'pie' \| 'donut'` | `'bar'`    |
+| `data`        | `GraphDataPoint[] \| GraphSeries[]`                                 | -          |
+| `title`       | `string`                                                            | -          |
+| `subtitle`    | `string`                                                            | -          |
+| `xLabel`      | `string`                                                            | -          |
+| `yLabel`      | `string`                                                            | -          |
+| `width`       | `number`                                                            | `420`      |
+| `height`      | `number`                                                            | `260`      |
+| `fullWidth`   | `boolean`                                                           | `false`    |
+| `colors`      | `string[]`                                                          | theme      |
+| `showValues`  | `boolean`                                                           | `false`    |
+| `showGrid`    | `boolean`                                                           | `true`     |
+| `legend`      | `'bottom' \| 'right' \| 'none'`                                     | `'bottom'` |
+| `centerLabel` | `string`                                                            | -          |
+| `showDots`    | `boolean`                                                           | `true`     |
+| `smooth`      | `boolean`                                                           | `false`    |
+| `yTicks`      | `number`                                                            | `5`        |
+| `noWrap`      | `boolean`                                                           | `true`     |
+| `style`       | `Style`                                                             | -          |

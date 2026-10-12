@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Role &amp; Security Model - Acuitey Solutions LMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #F7F7F5;
+      --color-ink:     #252B36;
+      --color-muted:   #657080;
+      --color-accent:  #EF6A3A;
+      --color-link:    #315FA8;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+    .frame { width: 100%; max-width: 1140px; }
+    svg { width: 100%; height: auto; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <svg viewBox="0 0 1140 680" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="sec-title sec-desc">
+      <title id="sec-title">Acuitey Solutions LMS - Role &amp; Security Architecture</title>
+      <desc id="sec-desc">Spatial access zone diagram illustrating five user personas mapped to protected institutional resource domains with least privilege segregation and Moodle capability evaluation.</desc>
+      <defs>
+        <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="0.9" fill="rgba(37,43,54,0.08)"/>
+        </pattern>
+        <marker id="arr-muted" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#657080"/>
+        </marker>
+        <marker id="arr-accent" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#EF6A3A"/>
+        </marker>
+        <marker id="arr-blue" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+          <polygon points="0 0, 7 3, 0 6" fill="#315FA8"/>
+        </marker>
+      </defs>
+
+      <!-- Background -->
+      <rect width="100%" height="100%" fill="#F7F7F5"/>
+      <rect width="100%" height="100%" fill="url(#dots)"/>
+
+      <!-- Large Faded Section Number -->
+      <text x="1100" y="70" font-family="'Geist Mono', monospace" font-size="76" font-weight="700" fill="rgba(37,43,54,0.05)" text-anchor="end">05</text>
+
+      <!-- Phase Banner / Top Flow Label -->
+      <g transform="translate(40, 20)">
+        <polygon points="0,0 340,0 352,14 340,28 0,28" fill="#252B36"/>
+        <polygon points="352,0 720,0 732,14 720,28 352,28 364,14" fill="#3A4354"/>
+        <polygon points="732,0 1060,0 1060,28 732,28 744,14" fill="#252B36"/>
+
+        <text x="170" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em" text-anchor="middle">ROLE PERSONAS &amp; AUTHENTICATION</text>
+        <text x="536" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em" text-anchor="middle">SPATIAL ACCESS ZONES &amp; BOUNDARIES</text>
+        <text x="896" y="18" fill="#F7F7F5" font-size="9" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em" text-anchor="middle">PROTECTED RESOURCE DOMAINS</text>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           LEFT COLUMN: 5 USER PERSONAS
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(40, 75)">
+        <rect width="250" height="490" rx="4" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.18)" stroke-width="1"/>
+        <text x="125" y="28" font-family="'Geist Mono', monospace" font-size="8.5" font-weight="600" fill="#657080" letter-spacing="0.12em" text-anchor="middle">AUTHENTICATED PERSONAS</text>
+
+        <!-- 1. Student -->
+        <g transform="translate(15, 45)">
+          <rect width="220" height="74" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="10" y="10" width="60" height="15" rx="2" fill="#252B36"/>
+          <text x="40" y="21" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#ffffff" text-anchor="middle">STUDENT</text>
+          <text x="80" y="22" font-family="'Geist', sans-serif" font-size="11" font-weight="600" fill="#252B36">Learner Archetype</text>
+          <text x="10" y="44" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Enrolled Course context only</text>
+          <text x="10" y="60" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">moodle/course:view · mod/*:submit</text>
+        </g>
+
+        <!-- 2. Faculty -->
+        <g transform="translate(15, 130)">
+          <rect width="220" height="74" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="10" y="10" width="60" height="15" rx="2" fill="#252B36"/>
+          <text x="40" y="21" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#ffffff" text-anchor="middle">FACULTY</text>
+          <text x="80" y="22" font-family="'Geist', sans-serif" font-size="11" font-weight="600" fill="#252B36">Teacher / Mentor</text>
+          <text x="10" y="44" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Allocated student cohorts only</text>
+          <text x="10" y="60" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">moodle/grade:view · mod_lti:launch</text>
+        </g>
+
+        <!-- 3. Academic Admin -->
+        <g transform="translate(15, 215)">
+          <rect width="220" height="74" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="10" y="10" width="105" height="15" rx="2" fill="#EF6A3A"/>
+          <text x="62" y="21" font-family="'Geist Mono', monospace" font-size="7" font-weight="700" fill="#ffffff" text-anchor="middle">ACADEMIC ADMIN</text>
+          <text x="10" y="44" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Curriculum &amp; Faculty Matching</text>
+          <text x="10" y="60" font-family="'Geist Mono', monospace" font-size="7.5" fill="#EF6A3A">local/acuitey:manage · moodle/course:update</text>
+        </g>
+
+        <!-- 4. Finance Admin -->
+        <g transform="translate(15, 300)">
+          <rect width="220" height="74" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="10" y="10" width="95" height="15" rx="2" fill="#252B36"/>
+          <text x="57" y="21" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#ffffff" text-anchor="middle">FINANCE ADMIN</text>
+          <text x="10" y="44" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Payment Audit &amp; Settlement</text>
+          <text x="10" y="60" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">moodle/payment:manage · No grade access</text>
+        </g>
+
+        <!-- 5. Super Admin -->
+        <g transform="translate(15, 385)">
+          <rect width="220" height="74" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="10" y="10" width="85" height="15" rx="2" fill="#252B36"/>
+          <text x="52" y="21" font-family="'Geist Mono', monospace" font-size="7" font-weight="600" fill="#ffffff" text-anchor="middle">SUPER ADMIN</text>
+          <text x="10" y="44" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Platform Infrastructure &amp; DevOps</text>
+          <text x="10" y="60" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">moodle/site:config · KVM / OS access</text>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           CENTER & RIGHT: 7 RESOURCE DOMAINS & PERIMETERS
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(325, 75)">
+        <rect width="775" height="490" rx="4" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.18)" stroke-width="1"/>
+        <text x="387" y="28" font-family="'Geist Mono', monospace" font-size="8.5" font-weight="600" fill="#657080" letter-spacing="0.12em" text-anchor="middle">PROTECTED RESOURCE DOMAINS (CONTEXT BOUNDARIES)</text>
+
+        <!-- Domain 1: Courses -->
+        <g transform="translate(20, 45)">
+          <rect width="360" height="95" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="12" y="10" width="70" height="16" rx="2" fill="#252B36"/>
+          <text x="47" y="22" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#ffffff" text-anchor="middle">COURSES</text>
+          <text x="92" y="23" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">Course Catalog &amp; Modules</text>
+          
+          <text x="12" y="44" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Syllabi, learning objects, video assets, forums, and LTI tools.</text>
+          <line x1="12" y1="56" x2="348" y2="56" stroke="rgba(37,43,54,0.1)"/>
+          
+          <text x="12" y="72" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">Access: Student (Read enrolled) · Faculty (Manage allocated)</text>
+          <text x="12" y="86" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">Academic Admin (Full curriculum) · Finance (No access)</text>
+        </g>
+
+        <!-- Domain 2: Students & Profiles -->
+        <g transform="translate(395, 45)">
+          <rect width="360" height="95" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="12" y="10" width="75" height="16" rx="2" fill="#252B36"/>
+          <text x="49" y="22" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#ffffff" text-anchor="middle">STUDENTS</text>
+          <text x="97" y="23" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">Learner Profiles &amp; PII</text>
+          
+          <text x="12" y="44" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Identity, contact data, enrolment records, GDPR consents.</text>
+          <line x1="12" y1="56" x2="348" y2="56" stroke="rgba(37,43,54,0.1)"/>
+          
+          <text x="12" y="72" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">Access: Student (Self only) · Faculty (Allocated cohort only)</text>
+          <text x="12" y="86" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">Cross-student record inspection strictly blocked by capability</text>
+        </g>
+
+        <!-- Domain 3: Assessments & Grades -->
+        <g transform="translate(20, 150)">
+          <rect width="360" height="95" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="12" y="10" width="95" height="16" rx="2" fill="#252B36"/>
+          <text x="59" y="22" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#ffffff" text-anchor="middle">ASSESSMENTS</text>
+          <text x="117" y="23" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">Grades, Rubrics &amp; Quizzes</text>
+          
+          <text x="12" y="44" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Exam submissions, faculty feedback rubrics, and gradebook.</text>
+          <line x1="12" y1="56" x2="348" y2="56" stroke="rgba(37,43,54,0.1)"/>
+          
+          <text x="12" y="72" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">Access: Faculty (Grade assigned cohort) · Student (View own)</text>
+          <text x="12" y="86" font-family="'Geist Mono', monospace" font-size="7.5" fill="#EF6A3A">Finance Admin: ZERO VISIBILITY (Isolated by capability)</text>
+        </g>
+
+        <!-- Domain 4: Finance & Payments -->
+        <g transform="translate(395, 150)">
+          <rect width="360" height="95" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="12" y="10" width="70" height="16" rx="2" fill="#252B36"/>
+          <text x="47" y="22" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#ffffff" text-anchor="middle">FINANCE</text>
+          <text x="92" y="23" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">Payment Records &amp; Payouts</text>
+          
+          <text x="12" y="44" font-family="'Geist', sans-serif" font-size="9" fill="#657080">core_payment logs, transaction IDs, gateway reconciliation.</text>
+          <line x1="12" y1="56" x2="348" y2="56" stroke="rgba(37,43,54,0.1)"/>
+          
+          <text x="12" y="72" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">Access: Finance Admin (Reconcile &amp; audit) · Super Admin</text>
+          <text x="12" y="86" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">Faculty / Students: ZERO ACCESS to institutional ledgers</text>
+        </g>
+
+        <!-- Domain 5: Routing & Workloads (The Focal Domain) -->
+        <g transform="translate(20, 255)">
+          <rect width="360" height="95" rx="3" fill="rgba(239,106,58,0.04)" stroke="#EF6A3A" stroke-width="1.2"/>
+          <rect x="12" y="10" width="75" height="16" rx="2" fill="#EF6A3A"/>
+          <text x="49" y="22" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">ROUTING</text>
+          <text x="97" y="23" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">Acuitey Routing &amp; Queues</text>
+          
+          <text x="12" y="44" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Dynamic allocation rules, pending retries, capacity limits.</text>
+          <line x1="12" y1="56" x2="348" y2="56" stroke="rgba(239,106,58,0.2)"/>
+          
+          <text x="12" y="72" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">Access: Academic Admin (Configure &amp; override queue)</text>
+          <text x="12" y="86" font-family="'Geist Mono', monospace" font-size="7.5" fill="#EF6A3A">Faculty: View own queue · Student: Trigger via enrolment</text>
+        </g>
+
+        <!-- Domain 6: Reporting & Analytics -->
+        <g transform="translate(395, 255)">
+          <rect width="360" height="95" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="12" y="10" width="80" height="16" rx="2" fill="#252B36"/>
+          <text x="52" y="22" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#ffffff" text-anchor="middle">REPORTING</text>
+          <text x="102" y="23" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">Institutional Intelligence</text>
+          
+          <text x="12" y="44" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Completion rates, faculty workloads, revenue summaries.</text>
+          <line x1="12" y1="56" x2="348" y2="56" stroke="rgba(37,43,54,0.1)"/>
+          
+          <text x="12" y="72" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">Access: Academic Admin (Pedagogy) · Finance (Revenue)</text>
+          <text x="12" y="86" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">Super Admin (Consolidated telemetry across domains)</text>
+        </g>
+
+        <!-- Domain 7: System & Infra -->
+        <g transform="translate(20, 360)">
+          <rect width="735" height="110" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.2)"/>
+          <rect x="12" y="10" width="65" height="16" rx="2" fill="#252B36"/>
+          <text x="44" y="22" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" fill="#ffffff" text-anchor="middle">SYSTEM</text>
+          <text x="87" y="23" font-family="'Geist', sans-serif" font-size="12" font-weight="700" fill="#252B36">System Infrastructure, Hostinger KVM &amp; Security</text>
+          
+          <text x="12" y="44" font-family="'Geist', sans-serif" font-size="9" fill="#657080">Hostinger KVM environment, Nginx reverse proxy, PostgreSQL, Redis, Cloudflare Edge, and secret key storage.</text>
+          <line x1="12" y1="56" x2="723" y2="56" stroke="rgba(37,43,54,0.1)"/>
+          
+          <g transform="translate(12, 68)">
+            <rect width="345" height="32" rx="2" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.1)"/>
+            <text x="10" y="20" font-family="'Geist Mono', monospace" font-size="7.5" fill="#252B36">Access: Super Admin / DevOps exclusively</text>
+
+            <rect x="365" y="0" width="345" height="32" rx="2" fill="rgba(37,43,54,0.02)" stroke="rgba(37,43,54,0.1)"/>
+            <text x="375" y="20" font-family="'Geist Mono', monospace" font-size="7.5" fill="#315FA8">Secrets never accessible via Moodle web interface</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- ════════════════════════════════════════════════
+           BOTTOM FORMULA / GOVERNANCE BANNER
+           ════════════════════════════════════════════════ -->
+      <g transform="translate(40, 580)">
+        <rect width="1060" height="78" rx="3" fill="#ffffff" stroke="rgba(37,43,54,0.22)" stroke-width="1"/>
+        
+        <text x="24" y="26" font-family="'Geist', sans-serif" font-size="11" font-weight="700" fill="#252B36">Moodle Contextual Access Control Equation</text>
+        <text x="310" y="26" font-family="'Geist Mono', monospace" font-size="8" fill="#657080">Every single database query and action executes strict context-level capability verification</text>
+
+        <!-- Big Visual Equation Box -->
+        <g transform="translate(24, 38)">
+          <rect width="210" height="28" rx="2" fill="rgba(37,43,54,0.03)" stroke="rgba(37,43,54,0.15)"/>
+          <text x="105" y="18" font-family="'Geist Mono', monospace" font-size="9" font-weight="600" fill="#252B36" text-anchor="middle">MOODLE CONTEXT</text>
+
+          <text x="248" y="19" font-family="'Geist', sans-serif" font-size="14" font-weight="700" fill="#657080">+</text>
+
+          <rect width="210" height="28" rx="2" fill="rgba(37,43,54,0.03)" stroke="rgba(37,43,54,0.15)" transform="translate(275, 0)"/>
+          <text x="380" y="18" font-family="'Geist Mono', monospace" font-size="9" font-weight="600" fill="#252B36" text-anchor="middle">CAPABILITY PERMISSION</text>
+
+          <text x="518" y="19" font-family="'Geist', sans-serif" font-size="14" font-weight="700" fill="#657080">=</text>
+
+          <rect width="260" height="28" rx="2" fill="rgba(22,101,52,0.08)" stroke="#166534" stroke-width="1" transform="translate(545, 0)"/>
+          <text x="675" y="18" font-family="'Geist Mono', monospace" font-size="9" font-weight="700" fill="#166534" text-anchor="middle">AUTHORIZED SYSTEM ACTION</text>
+
+          <text x="1010" y="18" font-family="'Geist Mono', monospace" font-size="7.5" fill="#657080" text-anchor="end">require_capability()</text>
+        </g>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>
