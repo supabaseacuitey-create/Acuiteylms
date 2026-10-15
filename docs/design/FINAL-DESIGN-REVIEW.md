@@ -1,7 +1,6 @@
 # Acuitey Solutions LMS — Final Design Review & Architecture Audit
 
 **Target Platform:** Moodle LMS 5.2.3+ (Boost Child Theme: `theme_acuitey` & Decoupled Plugin: `local_acuitey`)  
-**OpenDesign Project:** `acuitey-lms-design-system-d07c`  
 **Document Classification:** Final Cross-Page Consistency, Factual Integrity & Technical Architecture Audit  
 **Author:** Antigravity (AI Lead Systems Architect & Design Pair)  
 **Status:** Comprehensive Final Review Complete — Ready for Client Sign-Off  
@@ -23,7 +22,7 @@ The Acuitey LMS design system establishes an authoritative, sovereign, and educa
 
 ## 2. Four Prototype Inventory
 
-Four production-ready, fully responsive prototypes have been developed, synchronized to OpenDesign project `acuitey-lms-design-system-d07c`, validated via OpenDesign linter (`0 errors`), and captured across three standardized viewports:
+Four production-ready, fully responsive prototypes have been developed and captured across three standardized viewports:
 
 | Prototype Artifact | Local File System Path | Viewport Previews (1440px / 1024px / 390px) | Functional Scope |
 | :--- | :--- | :--- | :--- |
